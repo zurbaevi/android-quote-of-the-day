@@ -7,8 +7,13 @@ import androidx.lifecycle.viewModelScope
 import dev.zurbaevi.quoteoftheday.data.model.Quote
 import dev.zurbaevi.quoteoftheday.data.repository.QuoteRepository
 import dev.zurbaevi.quoteoftheday.util.Resource
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 class QuoteViewModel @Inject constructor(private val quoteRepository: QuoteRepository) :
     ViewModel() {
@@ -18,6 +23,7 @@ class QuoteViewModel @Inject constructor(private val quoteRepository: QuoteRepos
 
     init {
         getQuote()
+        timer()
     }
 
     fun getQuote() {
@@ -28,6 +34,16 @@ class QuoteViewModel @Inject constructor(private val quoteRepository: QuoteRepos
             } catch (exception: Exception) {
                 _quote.postValue(Resource.error(null, exception.message ?: "Error Occurred!"))
             }
+        }
+    }
+
+    private fun timer() {
+        viewModelScope.launch {
+            (0..Int.MAX_VALUE)
+                .asSequence()
+                .asFlow()
+                .onEach { delay(30_000L) }
+                .collect { getQuote() }
         }
     }
 
