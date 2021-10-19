@@ -1,6 +1,7 @@
 package dev.zurbaevi.quoteoftheday.ui.view.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,6 +54,7 @@ class QuoteFragment : Fragment() {
                             textViewText.visibility = View.GONE
                             textViewAuthor.visibility = View.GONE
                             progressBar.visibility = View.GONE
+                            Log.d("TAG", "onViewCreated: ${resource.message}")
                         }
                         Resource.Status.LOADING -> {
                             progressBar.visibility = View.VISIBLE
