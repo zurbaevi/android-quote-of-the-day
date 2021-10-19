@@ -21,8 +21,8 @@ class QuoteActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController = navHostFragment.findNavController()
-        val appBarConfiguration = AppBarConfiguration.Builder(R.id.quoteFragment).build()
-        setupActionBarWithNavController(navController, appBarConfiguration)
+
+        setupActionBarWithNavController(navController)
     }
 
     override fun onSupportNavigateUp(): Boolean {
