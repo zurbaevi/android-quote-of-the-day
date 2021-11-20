@@ -19,7 +19,7 @@ class NetworkModule {
 
     @Provides
     @Reusable
-    internal fun provideMovieApi(retrofit: Retrofit): ApiService =
+    internal fun provideQuoteApi(retrofit: Retrofit): ApiService =
         retrofit.create(ApiService::class.java)
 
 }
