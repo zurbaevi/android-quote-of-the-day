@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.view.fragment.QuoteFragment">
+    tools:context=".presentation.quote.QuoteFragment">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -45,8 +45,8 @@
             android:id="@+id/imageViewRefresh"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:clickable="true"
             android:focusable="true"
-            android:longClickable="true"
             android:src="@drawable/ic_refresh"
             tools:ignore="ContentDescription" />
 

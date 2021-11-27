@@ -16,7 +16,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
-            android:name=".ui.view.activity.QuoteActivity"
+            android:name=".presentation.main.QuoteActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
