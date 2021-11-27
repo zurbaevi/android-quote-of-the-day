@@ -6,6 +6,8 @@ ____
  
 ____
 
+###### Проект, основанный на чистой архитектуре [Quote with Clean Architecture](https://github.com/zurbaevi/android-quote-of-the-day/tree/clean_architecture)
+
 ## Скриншоты:
 
 | <img src="pictures/device_screen_1.png"> | <img src="pictures/device_screen_2.png"> |
