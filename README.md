@@ -22,7 +22,7 @@ ____
 - Retrofit
 - Coroutines
 - Room
-- Dagger 2
+- Hilt
 
 ____
 
