@@ -3,9 +3,7 @@ ____
 # Quote of the day
 
 > Этот проект является частью моего обучения на Kotlin для разработки приложений для Android.
-> 
-> Проект, основанный на чистой архитектуре [Quote with Clean Architecture](https://github.com/zurbaevi/android-quote-of-the-day/tree/clean_architecture)
-
+ 
 ____
 
 ## Скриншоты:
@@ -15,6 +13,9 @@ ____
 
 ____
 
+Проект, основанный на чистой архитектуре [Quote with Clean Architecture](https://github.com/zurbaevi/android-quote-of-the-day/tree/clean_architecture)
+
+____
 
 ### Техническое составляющее проекта:
 
