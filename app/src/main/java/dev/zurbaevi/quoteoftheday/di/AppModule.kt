@@ -9,14 +9,17 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.zurbaevi.quoteoftheday.data.local.QuoteDao
 import dev.zurbaevi.quoteoftheday.data.local.QuoteDatabase
+import dev.zurbaevi.quoteoftheday.data.local.datasource.LocalDataSource
+import dev.zurbaevi.quoteoftheday.data.local.datasource.LocalDataSourceImpl
 import dev.zurbaevi.quoteoftheday.data.local.mapper.LocalMapperImpl
 import dev.zurbaevi.quoteoftheday.data.remote.QuoteApi
+import dev.zurbaevi.quoteoftheday.data.remote.datasource.RemoteDataSource
+import dev.zurbaevi.quoteoftheday.data.remote.datasource.RemoteDataSourceImpl
 import dev.zurbaevi.quoteoftheday.data.remote.mapper.NetworkMapperImpl
 import dev.zurbaevi.quoteoftheday.data.repository.QuoteRepositoryImpl
 import dev.zurbaevi.quoteoftheday.domain.repository.QuoteRepository
 import dev.zurbaevi.quoteoftheday.domain.usecase.GetQuoteUseCase
 import dev.zurbaevi.quoteoftheday.domain.usecase.GetQuotesUseCase
-import kotlinx.coroutines.Job
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -40,13 +43,28 @@ object AppModule {
     @Provides
     @Singleton
     fun provideQuoteRepository(
-        quoteApi: QuoteApi,
-        quoteDao: QuoteDao,
+        remoteDataSource: RemoteDataSource,
+        localDataSource: LocalDataSource,
         networkMapperImpl: NetworkMapperImpl,
         localMapperImpl: LocalMapperImpl
     ): QuoteRepository {
-        return QuoteRepositoryImpl(quoteApi, quoteDao, networkMapperImpl, localMapperImpl)
+        return QuoteRepositoryImpl(
+            remoteDataSource,
+            localDataSource,
+            networkMapperImpl,
+            localMapperImpl
+        )
     }
+
+    @Provides
+    @Singleton
+    fun provideRemoteDataSource(quoteApi: QuoteApi): RemoteDataSource =
+        RemoteDataSourceImpl(quoteApi)
+
+    @Provides
+    @Singleton
+    fun provideLocalDataSource(quoteDao: QuoteDao): LocalDataSource =
+        LocalDataSourceImpl(quoteDao)
 
     @Provides
     @Singleton
