@@ -46,13 +46,13 @@ object AppModule {
         remoteDataSource: RemoteDataSource,
         localDataSource: LocalDataSource,
         networkMapperImpl: NetworkMapperImpl,
-        localMapperImpl: LocalMapperImpl
+        localMapperImpl: LocalMapperImpl,
     ): QuoteRepository {
         return QuoteRepositoryImpl(
             remoteDataSource,
             localDataSource,
             networkMapperImpl,
-            localMapperImpl
+            localMapperImpl,
         )
     }
 

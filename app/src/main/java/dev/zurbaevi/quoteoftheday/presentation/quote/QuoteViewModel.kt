@@ -8,9 +8,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.zurbaevi.quoteoftheday.domain.model.Quote
 import dev.zurbaevi.quoteoftheday.domain.usecase.GetQuoteUseCase
 import dev.zurbaevi.quoteoftheday.util.Resource
-import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,21 +19,15 @@ class QuoteViewModel @Inject constructor(
     private val _quote = MutableLiveData<Resource<Quote>>()
     val quote: LiveData<Resource<Quote>> get() = _quote
 
-    private var job: Job? = null
-
     init {
         getQuote()
     }
 
     fun getQuote() {
-        job = viewModelScope.launch {
+        viewModelScope.launch {
             _quote.value = Resource.loading(null)
             try {
-                job?.cancel()
-                delay(2000L)
                 _quote.value = Resource.success(getQuoteUseCase())
-            } catch (cancellationException: CancellationException) {
-                _quote.value = Resource.loading(null)
             } catch (exception: Exception) {
                 _quote.value = Resource.error(
                     message = exception.message ?: "Something went wrong",
