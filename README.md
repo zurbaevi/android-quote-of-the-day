@@ -13,10 +13,6 @@ ____
 
 ____
 
-Проект, основанный на чистой архитектуре [Quote with Clean Architecture](https://github.com/zurbaevi/android-quote-of-the-day/tree/clean_architecture)
-
-____
-
 ### Техническое составляющее проекта:
 
 - Kotlin
