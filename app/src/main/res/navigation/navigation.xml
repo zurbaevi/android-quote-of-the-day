@@ -6,20 +6,20 @@
     app:startDestination="@id/quoteFragment">
     <fragment
         android:id="@+id/quoteFragment"
-        android:name="dev.zurbaevi.quoteoftheday.ui.view.fragment.QuoteFragment"
+        android:name="dev.zurbaevi.quoteoftheday.presentation.quote.QuoteFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_quote">
         <action
             android:id="@+id/action_quoteFragment_to_quoteHistoryFragment"
-            app:destination="@id/quoteHistoryFragment"
+            app:destination="@id/historyFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
-        android:id="@+id/quoteHistoryFragment"
-        android:name="dev.zurbaevi.quoteoftheday.ui.view.fragment.QuoteHistoryFragment"
-        android:label="History"
-        tools:layout="@layout/fragment_quote_history" />
+        android:id="@+id/historyFragment"
+        android:name="dev.zurbaevi.quoteoftheday.presentation.history.HistoryFragment"
+        android:label="fragment_history"
+        tools:layout="@layout/fragment_history" />
 </navigation>
