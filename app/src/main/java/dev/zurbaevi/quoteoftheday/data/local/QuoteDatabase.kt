@@ -9,4 +9,8 @@ abstract class QuoteDatabase : RoomDatabase() {
 
     abstract fun quoteDao(): QuoteDao
 
+    companion object {
+        const val DATABASE_NAME = "quote_database"
+    }
+
 }

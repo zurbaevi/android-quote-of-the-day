@@ -1,12 +1,14 @@
 package dev.zurbaevi.quoteoftheday.domain.usecase
 
 import dev.zurbaevi.quoteoftheday.domain.model.Quote
-import dev.zurbaevi.quoteoftheday.domain.repository.QuoteRepository
+import dev.zurbaevi.quoteoftheday.domain.repository.QuoteLocalRepository
 
 class GetQuotesUseCase(
-    private val quoteRepository: QuoteRepository
+    private val quoteLocalRepository: QuoteLocalRepository
 ) {
+
     suspend operator fun invoke(): List<Quote> {
-        return quoteRepository.getQuotes()
+        return quoteLocalRepository.getQuotes()
     }
+
 }

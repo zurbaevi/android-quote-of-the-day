@@ -16,8 +16,10 @@ import dev.zurbaevi.quoteoftheday.data.remote.QuoteApi
 import dev.zurbaevi.quoteoftheday.data.remote.datasource.RemoteDataSource
 import dev.zurbaevi.quoteoftheday.data.remote.datasource.RemoteDataSourceImpl
 import dev.zurbaevi.quoteoftheday.data.remote.mapper.NetworkMapperImpl
-import dev.zurbaevi.quoteoftheday.data.repository.QuoteRepositoryImpl
-import dev.zurbaevi.quoteoftheday.domain.repository.QuoteRepository
+import dev.zurbaevi.quoteoftheday.data.repository.QuoteLocalRepositoryImpl
+import dev.zurbaevi.quoteoftheday.data.repository.QuoteRemoteRepositoryImpl
+import dev.zurbaevi.quoteoftheday.domain.repository.QuoteLocalRepository
+import dev.zurbaevi.quoteoftheday.domain.repository.QuoteRemoteRepository
 import dev.zurbaevi.quoteoftheday.domain.usecase.GetQuoteUseCase
 import dev.zurbaevi.quoteoftheday.domain.usecase.GetQuotesUseCase
 import retrofit2.Retrofit
@@ -30,29 +32,41 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideGetQuoteUseCase(repository: QuoteRepository): GetQuoteUseCase {
-        return GetQuoteUseCase(repository)
+    fun provideGetQuoteUseCase(quoteRemoteRepository: QuoteRemoteRepository): GetQuoteUseCase {
+        return GetQuoteUseCase(quoteRemoteRepository)
     }
 
     @Provides
     @Singleton
-    fun provideGetQuotesUseCase(repository: QuoteRepository): GetQuotesUseCase {
-        return GetQuotesUseCase(repository)
+    fun provideGetQuotesUseCase(quoteLocalRepository: QuoteLocalRepository): GetQuotesUseCase {
+        return GetQuotesUseCase(quoteLocalRepository)
     }
 
     @Provides
     @Singleton
-    fun provideQuoteRepository(
+    fun provideQuoteRemoteRepositoryImpl(
         remoteDataSource: RemoteDataSource,
         localDataSource: LocalDataSource,
         networkMapperImpl: NetworkMapperImpl,
         localMapperImpl: LocalMapperImpl,
-    ): QuoteRepository {
-        return QuoteRepositoryImpl(
+    ): QuoteRemoteRepository {
+        return QuoteRemoteRepositoryImpl(
             remoteDataSource,
             localDataSource,
             networkMapperImpl,
             localMapperImpl,
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideQuoteLocalRepositoryImpl(
+        localDataSource: LocalDataSource,
+        localMapperImpl: LocalMapperImpl,
+    ): QuoteLocalRepository {
+        return QuoteLocalRepositoryImpl(
+            localDataSource,
+            localMapperImpl
         )
     }
 
@@ -83,7 +97,7 @@ object AppModule {
     fun provideQuoteDatabase(@ApplicationContext context: Context) = Room.databaseBuilder(
         context,
         QuoteDatabase::class.java,
-        "quote_database"
+        QuoteDatabase.DATABASE_NAME
     ).build()
 
     @Singleton
