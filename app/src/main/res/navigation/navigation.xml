@@ -20,6 +20,6 @@
     <fragment
         android:id="@+id/historyFragment"
         android:name="dev.zurbaevi.quoteoftheday.presentation.history.HistoryFragment"
-        android:label="fragment_history"
+        android:label="History"
         tools:layout="@layout/fragment_history" />
 </navigation>
