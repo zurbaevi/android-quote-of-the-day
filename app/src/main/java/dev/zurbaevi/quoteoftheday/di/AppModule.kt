@@ -80,18 +80,6 @@ object AppModule {
     fun provideLocalDataSource(quoteDao: QuoteDao): LocalDataSource =
         LocalDataSourceImpl(quoteDao)
 
-    @Provides
-    @Singleton
-    fun provideRetrofitInterface(): Retrofit = Retrofit.Builder()
-        .addConverterFactory(GsonConverterFactory.create())
-        .baseUrl(QuoteApi.BASE_URL)
-        .build()
-
-    @Provides
-    @Singleton
-    fun provideQuoteApi(retrofit: Retrofit): QuoteApi =
-        retrofit.create(QuoteApi::class.java)
-
     @Singleton
     @Provides
     fun provideQuoteDatabase(@ApplicationContext context: Context) = Room.databaseBuilder(
