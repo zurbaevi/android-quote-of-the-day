@@ -12,8 +12,10 @@ import dev.zurbaevi.quoteoftheday.data.local.QuoteDatabase
 import dev.zurbaevi.quoteoftheday.data.local.datasource.LocalDataSource
 import dev.zurbaevi.quoteoftheday.data.local.datasource.LocalDataSourceImpl
 import dev.zurbaevi.quoteoftheday.data.local.mapper.LocalMapperImpl
-import dev.zurbaevi.quoteoftheday.data.repository.QuoteLocalRepositoryImpl
-import dev.zurbaevi.quoteoftheday.domain.repository.QuoteLocalRepository
+import dev.zurbaevi.quoteoftheday.data.remote.datasource.RemoteDataSource
+import dev.zurbaevi.quoteoftheday.data.remote.mapper.NetworkMapperImpl
+import dev.zurbaevi.quoteoftheday.data.repository.QuoteRepositoryImpl
+import dev.zurbaevi.quoteoftheday.domain.repository.QuoteRepository
 import dev.zurbaevi.quoteoftheday.domain.usecase.GetQuotesUseCase
 import javax.inject.Singleton
 
@@ -32,28 +34,5 @@ object DatabaseModule {
     @Singleton
     @Provides
     fun provideQuoteDao(database: QuoteDatabase) = database.quoteDao()
-
-    @Provides
-    @Singleton
-    fun provideLocalDataSource(quoteDao: QuoteDao): LocalDataSource =
-        LocalDataSourceImpl(quoteDao)
-
-    @Provides
-    @Singleton
-    fun provideQuoteLocalRepositoryImpl(
-        localDataSource: LocalDataSource,
-        localMapperImpl: LocalMapperImpl,
-    ): QuoteLocalRepository {
-        return QuoteLocalRepositoryImpl(
-            localDataSource,
-            localMapperImpl
-        )
-    }
-
-    @Provides
-    @Singleton
-    fun provideGetQuotesUseCase(quoteLocalRepository: QuoteLocalRepository): GetQuotesUseCase {
-        return GetQuotesUseCase(quoteLocalRepository)
-    }
 
 }
