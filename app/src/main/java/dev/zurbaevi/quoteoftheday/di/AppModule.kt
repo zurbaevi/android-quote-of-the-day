@@ -16,6 +16,7 @@ import dev.zurbaevi.quoteoftheday.data.repository.QuoteRepositoryImpl
 import dev.zurbaevi.quoteoftheday.domain.repository.QuoteRepository
 import dev.zurbaevi.quoteoftheday.domain.usecase.GetQuoteUseCase
 import dev.zurbaevi.quoteoftheday.domain.usecase.GetQuotesUseCase
+import dev.zurbaevi.quoteoftheday.domain.usecase.InsertQuoteUseCase
 import javax.inject.Singleton
 
 @Module
@@ -58,6 +59,12 @@ object AppModule {
     @Singleton
     fun provideGetQuotesUseCase(quoteRepository: QuoteRepository): GetQuotesUseCase {
         return GetQuotesUseCase(quoteRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideInsertQuoteUseCase(quoteRepository: QuoteRepository): InsertQuoteUseCase {
+        return InsertQuoteUseCase(quoteRepository)
     }
 
 }

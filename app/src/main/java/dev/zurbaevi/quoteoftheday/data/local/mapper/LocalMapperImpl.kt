@@ -14,4 +14,12 @@ class LocalMapperImpl @Inject constructor() : LocalMapper {
         )
     }
 
+    override fun mapDomainToEntityQuote(quote: Quote): QuoteEntity {
+        return QuoteEntity(
+            quoteAuthor = quote.quoteAuthor,
+            quoteId = quote.quoteId,
+            quoteText = quote.quoteText
+        )
+    }
+
 }

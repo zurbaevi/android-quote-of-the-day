@@ -9,7 +9,6 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 import dev.zurbaevi.quoteoftheday.databinding.FragmentHistoryBinding
-import dev.zurbaevi.quoteoftheday.util.Resource
 
 @AndroidEntryPoint
 class HistoryFragment : Fragment() {
@@ -41,22 +40,20 @@ class HistoryFragment : Fragment() {
             )
             recyclerView.adapter = historyAdapter
 
-            historyViewModel.quotes.observe(viewLifecycleOwner) {
-                it?.let { resource ->
-                    when (resource.status) {
-                        Resource.Status.SUCCESS -> {
-                            historyAdapter.submitList(it.data)
-                            progressBar.visibility = View.GONE
-                            recyclerView.visibility = View.VISIBLE
-                        }
-                        Resource.Status.ERROR -> {
-                            progressBar.visibility = View.GONE
-                            recyclerView.visibility = View.GONE
-                        }
-                        Resource.Status.LOADING -> {
-                            recyclerView.visibility = View.GONE
-                            progressBar.visibility = View.VISIBLE
-                        }
+            historyViewModel.historyUiState.observe(viewLifecycleOwner) {
+                when {
+                    it.isFetchingQuote -> {
+                        recyclerView.visibility = View.GONE
+                        progressBar.visibility = View.VISIBLE
+                    }
+                    it.error.isNotEmpty() -> {
+                        progressBar.visibility = View.GONE
+                        recyclerView.visibility = View.GONE
+                    }
+                    else -> {
+                        historyAdapter.submitList(it.quotes)
+                        progressBar.visibility = View.GONE
+                        recyclerView.visibility = View.VISIBLE
                     }
                 }
             }

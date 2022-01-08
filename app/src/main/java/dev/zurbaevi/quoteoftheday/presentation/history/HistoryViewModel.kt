@@ -5,9 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.zurbaevi.quoteoftheday.domain.model.Quote
 import dev.zurbaevi.quoteoftheday.domain.usecase.GetQuotesUseCase
-import dev.zurbaevi.quoteoftheday.util.Resource
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,8 +14,8 @@ class HistoryViewModel @Inject constructor(
     private val getQuotesUseCase: GetQuotesUseCase,
 ) : ViewModel() {
 
-    private val _quotes = MutableLiveData<Resource<List<Quote>>>()
-    val quotes: LiveData<Resource<List<Quote>>> get() = _quotes
+    private val _historyUiState = MutableLiveData(HistoryUiState())
+    val historyUiState: LiveData<HistoryUiState> get() = _historyUiState
 
     init {
         getQuotes()
@@ -25,11 +23,11 @@ class HistoryViewModel @Inject constructor(
 
     private fun getQuotes() {
         viewModelScope.launch {
-            _quotes.value = Resource.loading(null)
+            _historyUiState.value = HistoryUiState(isFetchingQuote = true)
             try {
-                _quotes.value = Resource.success(getQuotesUseCase())
+                _historyUiState.value = HistoryUiState(quotes = getQuotesUseCase())
             } catch (exception: Exception) {
-                _quotes.value = Resource.error(null, exception.message ?: "Error Occurred!")
+                _historyUiState.value = HistoryUiState(error = "Error Occurred!")
             }
         }
     }

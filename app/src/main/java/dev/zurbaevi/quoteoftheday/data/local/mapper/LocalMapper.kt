@@ -7,4 +7,6 @@ interface LocalMapper {
 
     fun mapEntityQuoteToDomain(quoteEntity: QuoteEntity): Quote
 
+    fun mapDomainToEntityQuote(quote: Quote): QuoteEntity
+
 }

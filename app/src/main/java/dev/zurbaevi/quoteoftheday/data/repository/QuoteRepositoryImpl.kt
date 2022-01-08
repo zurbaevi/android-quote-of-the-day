@@ -26,10 +26,13 @@ class QuoteRepositoryImpl @Inject constructor(
     override suspend fun getQuote(): Quote {
         return withContext(Dispatchers.IO) {
             networkMapper.mapQuoteDtoToDomain(remoteDataSource.getQuote()).let {
-                localDataSource.insertQuote(it)
                 localMapper.mapEntityQuoteToDomain(it)
             }
         }
+    }
+
+    override suspend fun insertQuote(quote: Quote) {
+        localDataSource.insertQuote(localMapper.mapDomainToEntityQuote(quote))
     }
 
 }

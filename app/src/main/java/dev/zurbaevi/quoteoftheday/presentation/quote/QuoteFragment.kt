@@ -9,7 +9,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.zurbaevi.quoteoftheday.databinding.FragmentQuoteBinding
-import dev.zurbaevi.quoteoftheday.util.Resource
 
 @AndroidEntryPoint
 class QuoteFragment : Fragment() {
@@ -31,26 +30,24 @@ class QuoteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            quoteViewModel.quote.observe(viewLifecycleOwner) {
-                it?.let { resource ->
-                    when (resource.status) {
-                        Resource.Status.SUCCESS -> {
-                            textViewAuthor.text = it.data?.quoteAuthor
-                            textViewText.text = it.data?.quoteText
-                            textViewText.visibility = View.VISIBLE
-                            textViewAuthor.visibility = View.VISIBLE
-                            progressBar.visibility = View.GONE
-                        }
-                        Resource.Status.ERROR -> {
-                            textViewText.visibility = View.GONE
-                            textViewAuthor.visibility = View.GONE
-                            progressBar.visibility = View.GONE
-                        }
-                        Resource.Status.LOADING -> {
-                            progressBar.visibility = View.VISIBLE
-                            textViewText.visibility = View.GONE
-                            textViewAuthor.visibility = View.GONE
-                        }
+            quoteViewModel.quoteUiState.observe(viewLifecycleOwner) {
+                when {
+                    it.isFetchingQuote -> {
+                        progressBar.visibility = View.VISIBLE
+                        textViewText.visibility = View.GONE
+                        textViewAuthor.visibility = View.GONE
+                    }
+                    it.error.isNotEmpty() -> {
+                        textViewText.visibility = View.GONE
+                        textViewAuthor.visibility = View.GONE
+                        progressBar.visibility = View.GONE
+                    }
+                    else -> {
+                        textViewAuthor.text = it.quote?.quoteAuthor
+                        textViewText.text = it.quote?.quoteText
+                        textViewText.visibility = View.VISIBLE
+                        textViewAuthor.visibility = View.VISIBLE
+                        progressBar.visibility = View.GONE
                     }
                 }
             }
