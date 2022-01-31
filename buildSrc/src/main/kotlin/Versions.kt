@@ -1,10 +1,12 @@
 object Versions {
 
-    const val GRADLE: String = "7.0.4"
+    const val GRADLE: String = "7.1.0"
+
+    const val BEN_MANES = "0.29.0"
 
     const val HILT: String = "2.40.5"
 
-    const val ROOM: String = "2.4.0"
+    const val ROOM: String = "2.4.1"
 
     const val NAVIGATION: String = "2.3.5"
 
@@ -20,11 +22,11 @@ object Versions {
 
     const val ESPRESSO: String = "3.4.0"
 
-    const val MATERIAL: String = "1.4.0"
+    const val MATERIAL: String = "1.5.0"
 
-    const val APPCOMPAT: String = "1.4.0"
+    const val APPCOMPAT: String = "1.4.1"
 
-    const val CONSTRAINT_LAYOUT: String = "2.1.2"
+    const val CONSTRAINT_LAYOUT: String = "2.1.3"
 
     const val CORE_KTX: String = "1.7.0"
 
