@@ -1,4 +1,9 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+
+plugins {
+    id("com.github.ben-manes.versions") version Versions.BEN_MANES
+}
+
 buildscript {
     repositories {
         google()
@@ -9,12 +14,34 @@ buildscript {
         classpath(BuildPlugins.KOTLIN_GRADLE)
         classpath(BuildPlugins.NAVIGATION_SAFE_ARGS)
         classpath(BuildPlugins.HILT_GRADLE)
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
     }
 }
 
 tasks.register(name = "type", type = Delete::class) {
     delete(rootProject.buildDir)
+}
+
+tasks {
+    named<DependencyUpdatesTask>("dependencyUpdates") {
+        resolutionStrategy {
+            componentSelection {
+                all {
+                    if (isNonStable(candidate.version) && !isNonStable(currentVersion)) {
+                        reject("Release candidate")
+                    }
+                }
+            }
+        }
+        checkForGradleUpdate = true
+        outputFormatter = "json"
+        outputDir = "build/dependencyUpdates"
+        reportfileName = "report"
+    }
+}
+
+fun isNonStable(version: String): Boolean {
+    val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }
+    val regex = "^[0-9,.v-]+(-r)?$".toRegex()
+    val isStable = stableKeyword || regex.matches(version)
+    return isStable.not()
 }
