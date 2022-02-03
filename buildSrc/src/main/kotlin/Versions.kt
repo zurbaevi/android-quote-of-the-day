@@ -14,7 +14,7 @@ object Versions {
 
     const val GSON_CONVERTER = "2.9.0"
 
-    const val KOTLIN_GRADLE: String = "1.6.10"
+    const val KOTLIN_GRADLE: String = "1.5.31"
 
     const val JUNIT: String = "4.13.2"
 

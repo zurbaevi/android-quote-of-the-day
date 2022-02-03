@@ -1,5 +1,3 @@
-import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
-
 plugins {
     id("com.github.ben-manes.versions") version Versions.BEN_MANES
 }
@@ -14,15 +12,12 @@ buildscript {
         classpath(BuildPlugins.KOTLIN_GRADLE)
         classpath(BuildPlugins.NAVIGATION_SAFE_ARGS)
         classpath(BuildPlugins.HILT_GRADLE)
+        classpath(BuildPlugins.KOTLIN_KSP_GRADLE)
     }
 }
 
-tasks.register(name = "type", type = Delete::class) {
-    delete(rootProject.buildDir)
-}
-
 tasks {
-    named<DependencyUpdatesTask>("dependencyUpdates") {
+    named<com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask>("dependencyUpdates") {
         resolutionStrategy {
             componentSelection {
                 all {
@@ -36,6 +31,9 @@ tasks {
         outputFormatter = "json"
         outputDir = "build/dependencyUpdates"
         reportfileName = "report"
+    }
+    register(name = "type", type = Delete::class) {
+        delete(rootProject.buildDir)
     }
 }
 

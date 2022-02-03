@@ -2,6 +2,7 @@ plugins {
     id(Plugins.ANDROID_APPLICATION)
     kotlin(Plugins.KOTLIN_ANDROID)
     kotlin(Plugins.KOTLIN_KAPT)
+    id(Plugins.KOTLIN_KSP)
     id(Plugins.HILT)
     id(Plugins.NAVIGATION_SAFE_ARGS)
 }
@@ -67,5 +68,5 @@ dependencies {
     //Room
     implementation(Dependencies.ROOM)
     implementation(Dependencies.ROOM_KTX)
-    kapt(Dependencies.ROOM_COMPILER)
+    ksp(Dependencies.ROOM_COMPILER)
 }

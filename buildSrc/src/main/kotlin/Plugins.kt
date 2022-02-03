@@ -4,6 +4,8 @@ object Plugins {
 
     const val KOTLIN_ANDROID: String = "android"
 
+    const val KOTLIN_KSP: String = "com.google.devtools.ksp"
+
     const val KOTLIN_KAPT: String = "kapt"
 
     const val NAVIGATION_SAFE_ARGS: String = "androidx.navigation.safeargs"
