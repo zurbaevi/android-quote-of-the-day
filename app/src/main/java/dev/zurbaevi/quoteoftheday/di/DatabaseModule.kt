@@ -7,7 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import dev.zurbaevi.quoteoftheday.data.local.QuoteDatabase
+import dev.zurbaevi.data.local.QuoteDatabase
 import javax.inject.Singleton
 
 @Module
