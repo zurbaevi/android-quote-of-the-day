@@ -16,7 +16,7 @@ ____
 ### Техническое составляющее проекта:
 
 - Kotlin
-- MVVM
+- MVVM + MVI (UDF)
 - Navigation Component
 - Retrofit
 - Coroutines
