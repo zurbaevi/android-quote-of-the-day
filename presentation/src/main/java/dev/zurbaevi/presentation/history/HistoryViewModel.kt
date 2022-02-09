@@ -1,10 +1,9 @@
 package dev.zurbaevi.presentation.history
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.zurbaevi.base.BaseViewModel
+import dev.zurbaevi.common.util.Resource
 import dev.zurbaevi.domain.usecase.GetQuotesUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -12,22 +11,41 @@ import javax.inject.Inject
 @HiltViewModel
 class HistoryViewModel @Inject constructor(
     private val getQuotesUseCase: GetQuotesUseCase,
-) : ViewModel() {
+) : BaseViewModel<HistoryContract.Event, HistoryContract.State, HistoryContract.Effect>() {
 
-    private val _historyUiState = MutableLiveData(HistoryUiState())
-    val historyUiState: LiveData<HistoryUiState> get() = _historyUiState
+    override fun createInitialState(): HistoryContract.State {
+        return HistoryContract.State(
+            historyState = HistoryContract.HistoryState.Idle
+        )
+    }
 
-    init {
-        getQuotes()
+    override fun handleEvent(event: HistoryContract.Event) {
+        viewModelScope.launch {
+            when (event) {
+                is HistoryContract.Event.OnGetQuotes -> {
+                    getQuotes()
+                }
+            }
+        }
     }
 
     private fun getQuotes() {
         viewModelScope.launch {
-            _historyUiState.value = HistoryUiState(isFetchingQuote = true)
-            try {
-                _historyUiState.value = HistoryUiState(quotes = getQuotesUseCase())
-            } catch (exception: Exception) {
-                _historyUiState.value = HistoryUiState(error = "Error Occurred!")
+            getQuotesUseCase().collect {
+                when (val state = it) {
+                    is Resource.Empty -> {
+                        setState { copy(historyState = HistoryContract.HistoryState.Idle) }
+                    }
+                    is Resource.Loading -> {
+                        setState { copy(historyState = HistoryContract.HistoryState.Loading) }
+                    }
+                    is Resource.Error -> {
+                        setEffect { HistoryContract.Effect.ShowError(state.exception.message.toString()) }
+                    }
+                    is Resource.Success -> {
+                        setState { copy(historyState = HistoryContract.HistoryState.Success(state.data)) }
+                    }
+                }
             }
         }
     }

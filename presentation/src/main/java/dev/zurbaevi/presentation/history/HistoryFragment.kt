@@ -2,35 +2,71 @@ package dev.zurbaevi.presentation.history
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import dev.zurbaevi.base.BaseFragment
+import dev.zurbaevi.common.util.exentsion.gone
+import dev.zurbaevi.common.util.exentsion.visible
 import dev.zurbaevi.presentation.databinding.FragmentHistoryBinding
 
 @AndroidEntryPoint
-class HistoryFragment : Fragment() {
-
-    private var _binding: FragmentHistoryBinding? = null
-    private val binding get() = _binding!!
+class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
 
     private val historyViewModel by viewModels<HistoryViewModel>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
-        _binding = FragmentHistoryBinding.inflate(inflater, container, false)
-        return binding.root
+    override val bindLayout: (LayoutInflater, ViewGroup?, Boolean) -> FragmentHistoryBinding
+        get() = FragmentHistoryBinding::inflate
+
+    private val historyAdapter by lazy {
+        HistoryAdapter()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun prepareView(savedInstanceState: Bundle?) {
+        configurationRecyclerView()
+        initObservers()
+        if (historyViewModel.currentState.historyState is HistoryContract.HistoryState.Idle) {
+            historyViewModel.setEvent(HistoryContract.Event.OnGetQuotes)
+        }
+    }
 
-        val historyAdapter = HistoryAdapter()
+    private fun initObservers() {
+        binding.apply {
+            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+                historyViewModel.uiState.collect {
+                    when (val state = it.historyState) {
+                        is HistoryContract.HistoryState.Idle -> {
+                            progressBar.gone()
+                            recyclerView.gone()
+                        }
+                        is HistoryContract.HistoryState.Loading -> {
+                            recyclerView.gone()
+                            progressBar.visible()
+                        }
+                        is HistoryContract.HistoryState.Success -> {
+                            historyAdapter.submitList(state.quotes)
+                            progressBar.gone()
+                            recyclerView.visible()
+                        }
+                    }
+                }
+            }
+            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+                historyViewModel.effect.collect {
+                    when (it) {
+                        is HistoryContract.Effect.ShowError -> {
+                            Snackbar.make(root, it.message, Snackbar.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
+        }
+    }
 
+    private fun configurationRecyclerView() {
         binding.apply {
             recyclerView.addItemDecoration(
                 DividerItemDecoration(
@@ -39,30 +75,7 @@ class HistoryFragment : Fragment() {
                 )
             )
             recyclerView.adapter = historyAdapter
-
-            historyViewModel.historyUiState.observe(viewLifecycleOwner) {
-                when {
-                    it.isFetchingQuote -> {
-                        recyclerView.visibility = View.GONE
-                        progressBar.visibility = View.VISIBLE
-                    }
-                    it.error.isNotEmpty() -> {
-                        progressBar.visibility = View.GONE
-                        recyclerView.visibility = View.GONE
-                    }
-                    else -> {
-                        historyAdapter.submitList(it.quotes)
-                        progressBar.visibility = View.GONE
-                        recyclerView.visibility = View.VISIBLE
-                    }
-                }
-            }
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 
 }

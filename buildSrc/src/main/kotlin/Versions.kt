@@ -1,5 +1,7 @@
 object Versions {
 
+    const val FRAGMENT_KTX: String = "1.4.1"
+
     const val GRADLE: String = "7.1.0"
 
     const val BEN_MANES = "0.29.0"
@@ -29,5 +31,7 @@ object Versions {
     const val CONSTRAINT_LAYOUT: String = "2.1.3"
 
     const val CORE_KTX: String = "1.7.0"
+
+    const val COROUTINES: String = "1.6.0"
 
 }

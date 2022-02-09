@@ -2,67 +2,80 @@ package dev.zurbaevi.presentation.quote
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import dev.zurbaevi.base.BaseFragment
+import dev.zurbaevi.common.util.exentsion.gone
+import dev.zurbaevi.common.util.exentsion.setOnClickListenerWithDebounce
+import dev.zurbaevi.common.util.exentsion.visible
 import dev.zurbaevi.presentation.databinding.FragmentQuoteBinding
 
 @AndroidEntryPoint
-class QuoteFragment : Fragment() {
-
-    private var _binding: FragmentQuoteBinding? = null
-    private val binding get() = _binding!!
+class QuoteFragment : BaseFragment<FragmentQuoteBinding>() {
 
     private val quoteViewModel by viewModels<QuoteViewModel>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
-        _binding = FragmentQuoteBinding.inflate(inflater, container, false)
-        return binding.root
+    override val bindLayout: (LayoutInflater, ViewGroup?, Boolean) -> FragmentQuoteBinding
+        get() = FragmentQuoteBinding::inflate
+
+    override fun prepareView(savedInstanceState: Bundle?) {
+        initObservers()
+        initListeners()
+        if (quoteViewModel.currentState.quoteState is QuoteContract.QuoteState.Idle) {
+            quoteViewModel.setEvent(QuoteContract.Event.OnFetchQuote)
+        }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    private fun initObservers() {
         binding.apply {
-            quoteViewModel.quoteUiState.observe(viewLifecycleOwner) {
-                when {
-                    it.isFetchingQuote -> {
-                        progressBar.visibility = View.VISIBLE
-                        textViewText.visibility = View.GONE
-                        textViewAuthor.visibility = View.GONE
-                    }
-                    it.error.isNotEmpty() -> {
-                        textViewText.visibility = View.GONE
-                        textViewAuthor.visibility = View.GONE
-                        progressBar.visibility = View.GONE
-                    }
-                    else -> {
-                        textViewAuthor.text = it.quote?.quoteAuthor
-                        textViewText.text = it.quote?.quoteText
-                        textViewText.visibility = View.VISIBLE
-                        textViewAuthor.visibility = View.VISIBLE
-                        progressBar.visibility = View.GONE
+            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+                quoteViewModel.uiState.collect {
+                    when (val state = it.quoteState) {
+                        is QuoteContract.QuoteState.Idle -> {
+                            progressBar.gone()
+                            textViewText.gone()
+                            textViewAuthor.gone()
+                        }
+                        is QuoteContract.QuoteState.Loading -> {
+                            progressBar.visible()
+                            textViewText.gone()
+                            textViewAuthor.gone()
+                        }
+                        is QuoteContract.QuoteState.Success -> {
+                            textViewAuthor.text = state.quote.quoteAuthor
+                            textViewText.text = state.quote.quoteText
+                            textViewText.visible()
+                            textViewAuthor.visible()
+                            progressBar.gone()
+                        }
                     }
                 }
             }
-            imageViewRefresh.setOnClickListener {
-                quoteViewModel.getQuote()
+            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+                quoteViewModel.effect.collect {
+                    when (it) {
+                        is QuoteContract.Effect.ShowError -> {
+                            Snackbar.make(root, it.message, Snackbar.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun initListeners() {
+        binding.apply {
+            imageViewRefresh.setOnClickListenerWithDebounce(debounceTime = 2000L) {
+                quoteViewModel.setEvent(QuoteContract.Event.OnFetchQuote)
             }
             imageViewHistory.setOnClickListener {
                 findNavController().navigate(QuoteFragmentDirections.actionQuoteFragmentToQuoteHistoryFragment())
             }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
 }

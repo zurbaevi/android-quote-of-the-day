@@ -8,5 +8,7 @@ dependencyResolutionManagement {
 rootProject.name = "Quote of the day"
 include(":app")
 include(":data")
-include(":domain")
 include(":presentation")
+include(":base")
+include(":common")
+include(":domain")

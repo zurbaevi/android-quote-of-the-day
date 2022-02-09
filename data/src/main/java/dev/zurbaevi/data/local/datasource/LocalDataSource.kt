@@ -6,6 +6,6 @@ interface LocalDataSource {
 
     suspend fun getQuotes(): List<QuoteEntity>
 
-    suspend fun insertQuote(quoteEntity: QuoteEntity)
+    suspend fun insertQuote(quoteEntity: QuoteEntity): Long
 
 }

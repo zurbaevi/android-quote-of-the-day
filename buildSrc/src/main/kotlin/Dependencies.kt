@@ -36,4 +36,10 @@ object Dependencies {
 
     const val ROOM_COMPILER: String = "androidx.room:room-compiler:${Versions.ROOM}"
 
+    const val COROUTINES_CORE: String = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.COROUTINES}"
+
+    const val COROUTINES_ANDROID: String = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.COROUTINES}"
+
+    const val FRAGMENT_KTX: String =  "androidx.fragment:fragment-ktx:${Versions.FRAGMENT_KTX}"
+
 }

@@ -11,6 +11,7 @@ import dev.zurbaevi.domain.repository.QuoteRepository
 import dev.zurbaevi.domain.usecase.GetQuoteUseCase
 import dev.zurbaevi.domain.usecase.GetQuotesUseCase
 import dev.zurbaevi.domain.usecase.InsertQuoteUseCase
+import kotlinx.coroutines.Dispatchers
 import javax.inject.Singleton
 
 @Module
@@ -32,19 +33,19 @@ object AppModule {
     @Provides
     @Singleton
     fun provideGetQuoteUseCase(quoteRepository: QuoteRepository): GetQuoteUseCase {
-        return GetQuoteUseCase(quoteRepository)
+        return GetQuoteUseCase(quoteRepository, Dispatchers.IO)
     }
 
     @Provides
     @Singleton
     fun provideGetQuotesUseCase(quoteRepository: QuoteRepository): GetQuotesUseCase {
-        return GetQuotesUseCase(quoteRepository)
+        return GetQuotesUseCase(quoteRepository, Dispatchers.IO)
     }
 
     @Provides
     @Singleton
     fun provideInsertQuoteUseCase(quoteRepository: QuoteRepository): InsertQuoteUseCase {
-        return InsertQuoteUseCase(quoteRepository)
+        return InsertQuoteUseCase(quoteRepository, Dispatchers.IO)
     }
 
 }

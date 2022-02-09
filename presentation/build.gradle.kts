@@ -41,6 +41,8 @@ android {
 
 dependencies {
     implementation(project(":data"))
+    implementation(project(":base"))
+    implementation(project(":common"))
     implementation(project(":domain"))
 
     // Default dependencies

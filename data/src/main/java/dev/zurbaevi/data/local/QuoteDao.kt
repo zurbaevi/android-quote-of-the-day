@@ -10,7 +10,7 @@ import dev.zurbaevi.data.local.entity.QuoteEntity
 interface QuoteDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertQuote(quote: QuoteEntity)
+    suspend fun insertQuote(quote: QuoteEntity): Long
 
     @Query("select * from table_quote")
     suspend fun getQuotes(): List<QuoteEntity>
