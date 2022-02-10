@@ -5,7 +5,7 @@ import dev.zurbaevi.domain.model.Quote
 
 object LocalMapper {
 
-     fun map(quoteEntity: QuoteEntity): Quote {
+    fun map(quoteEntity: QuoteEntity): Quote {
         return Quote(
             quoteAuthor = quoteEntity.quoteAuthor,
             quoteId = quoteEntity.quoteId,
@@ -13,7 +13,7 @@ object LocalMapper {
         )
     }
 
-     fun map(quote: Quote): QuoteEntity {
+    fun map(quote: Quote): QuoteEntity {
         return QuoteEntity(
             quoteAuthor = quote.quoteAuthor,
             quoteId = quote.quoteId,

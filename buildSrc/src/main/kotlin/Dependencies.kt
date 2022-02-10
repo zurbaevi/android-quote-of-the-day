@@ -5,7 +5,7 @@ object Dependencies {
     const val NAVIGATION_FRAGMENT: String =
         "androidx.navigation:navigation-fragment-ktx:${Versions.NAVIGATION}"
 
-    const val NAVIGATION_UI: String =
+    const val NAVIGATION_UI_KTX: String =
         "androidx.navigation:navigation-ui-ktx:${Versions.NAVIGATION}"
 
     const val APPCOMPAT: String = "androidx.appcompat:appcompat:${Versions.APPCOMPAT}"
@@ -36,10 +36,12 @@ object Dependencies {
 
     const val ROOM_COMPILER: String = "androidx.room:room-compiler:${Versions.ROOM}"
 
-    const val COROUTINES_CORE: String = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.COROUTINES}"
+    const val COROUTINES_CORE: String =
+        "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.COROUTINES}"
 
-    const val COROUTINES_ANDROID: String = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.COROUTINES}"
+    const val COROUTINES_ANDROID: String =
+        "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.COROUTINES}"
 
-    const val FRAGMENT_KTX: String =  "androidx.fragment:fragment-ktx:${Versions.FRAGMENT_KTX}"
+    const val FRAGMENT_KTX: String = "androidx.fragment:fragment-ktx:${Versions.FRAGMENT_KTX}"
 
 }

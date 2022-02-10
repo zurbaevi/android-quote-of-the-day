@@ -10,7 +10,4 @@ object BuildPlugins {
 
     const val HILT_GRADLE: String = "com.google.dagger:hilt-android-gradle-plugin:${Versions.HILT}"
 
-    const val KOTLIN_KSP_GRADLE: String =
-        "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin:1.5.31-1.0.1"
-
 }

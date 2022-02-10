@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/graph_main"
+    app:startDestination="@id/globalEntryPoint">
+
+    <fragment
+        android:id="@+id/globalEntryPoint"
+        android:name="dev.zurbaevi.navigation.GlobalEntryPointFragment"
+        android:label="GlobalEntryPoint">
+
+        <action
+            android:id="@+id/action_globalEntryPoint_to_feature_home"
+            app:destination="@id/feature_home"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/graph_main"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <include app:graph="@navigation/graph_feature_history" />
+
+    <include app:graph="@navigation/graph_feature_home" />
+
+</navigation>

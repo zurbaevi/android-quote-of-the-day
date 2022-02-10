@@ -2,7 +2,6 @@ plugins {
     id(Plugins.ANDROID_APPLICATION)
     kotlin(Plugins.KOTLIN_ANDROID)
     kotlin(Plugins.KOTLIN_KAPT)
-    id(Plugins.KOTLIN_KSP)
     id(Plugins.HILT)
     id(Plugins.NAVIGATION_SAFE_ARGS)
 }
@@ -45,9 +44,11 @@ android {
 dependencies {
     implementation(project(":domain"))
     implementation(project(":data"))
-    implementation(project(":presentation"))
+    implementation(project(":base"))
+    implementation(project(":navigation"))
+    implementation(project(":feature:home"))
+    implementation(project(":feature:history"))
 
-    // Default dependencies
     implementation(Dependencies.CORE_KTX)
     implementation(Dependencies.APPCOMPAT)
     implementation(Dependencies.MATERIAL)
@@ -56,20 +57,16 @@ dependencies {
     androidTestImplementation(Dependencies.TEST_JUNIT)
     androidTestImplementation(Dependencies.ESPRESSO)
 
-    // Retrofit
     implementation(Dependencies.RETROFIT)
     implementation(Dependencies.GSON_CONVERTER)
 
-    // Navigation component
     implementation(Dependencies.NAVIGATION_FRAGMENT)
-    implementation(Dependencies.NAVIGATION_UI)
+    implementation(Dependencies.NAVIGATION_UI_KTX)
 
-    // Hilt
     implementation(Dependencies.HILT)
     kapt(Dependencies.HILT_COMPILER)
 
-    //Room
     implementation(Dependencies.ROOM)
     implementation(Dependencies.ROOM_KTX)
-    ksp(Dependencies.ROOM_COMPILER)
+    kapt(Dependencies.ROOM_COMPILER)
 }

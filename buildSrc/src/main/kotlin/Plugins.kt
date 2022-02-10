@@ -4,9 +4,9 @@ object Plugins {
 
     const val ANDROID_LIBRARY: String = "com.android.library"
 
-    const val KOTLIN_ANDROID: String = "android"
+    const val ORG_JETBRAINS_KOTLIN_ANDROID: String = "org.jetbrains.kotlin.android"
 
-    const val KOTLIN_KSP: String = "com.google.devtools.ksp"
+    const val KOTLIN_ANDROID: String = "android"
 
     const val KOTLIN_KAPT: String = "kapt"
 

@@ -12,7 +12,6 @@ buildscript {
         classpath(BuildPlugins.KOTLIN_GRADLE)
         classpath(BuildPlugins.NAVIGATION_SAFE_ARGS)
         classpath(BuildPlugins.HILT_GRADLE)
-        classpath(BuildPlugins.KOTLIN_KSP_GRADLE)
     }
 }
 
