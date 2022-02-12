@@ -38,8 +38,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":base"))
-
     implementation(Dependencies.CORE_KTX)
     implementation(Dependencies.APPCOMPAT)
     implementation(Dependencies.MATERIAL)
