@@ -1,5 +1,7 @@
 object Versions {
 
+    const val RECYCLER_VIEW_VERSION: String = "1.2.1"
+
     const val FRAGMENT_KTX: String = "1.4.1"
 
     const val GRADLE: String = "7.1.1"

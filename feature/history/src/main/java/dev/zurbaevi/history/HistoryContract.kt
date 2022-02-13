@@ -2,7 +2,7 @@ package dev.zurbaevi.history
 
 import dev.zurbaevi.base.UiEvent
 import dev.zurbaevi.base.UiState
-import dev.zurbaevi.common.base.UiEffect
+import dev.zurbaevi.base.UiEffect
 import dev.zurbaevi.domain.model.Quote
 
 class HistoryContract {

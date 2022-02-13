@@ -2,7 +2,6 @@ package dev.zurbaevi.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dev.zurbaevi.common.base.UiEffect
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

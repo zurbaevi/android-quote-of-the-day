@@ -1,3 +1,3 @@
-package dev.zurbaevi.common.base
+package dev.zurbaevi.base
 
 interface UiEffect

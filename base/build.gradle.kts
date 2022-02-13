@@ -41,4 +41,5 @@ dependencies {
     implementation(Dependencies.COROUTINES_CORE)
     implementation(Dependencies.FRAGMENT_KTX)
     implementation(Dependencies.APPCOMPAT)
+    implementation(Dependencies.RECYCLER_VIEW)
 }
