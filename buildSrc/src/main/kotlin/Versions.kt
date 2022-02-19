@@ -8,7 +8,7 @@ object Versions {
 
     const val BEN_MANES = "0.42.0"
 
-    const val HILT: String = "2.40.5"
+    const val HILT: String = "2.41"
 
     const val ROOM: String = "2.4.1"
 
