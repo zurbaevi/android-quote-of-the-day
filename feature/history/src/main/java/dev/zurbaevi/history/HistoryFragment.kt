@@ -3,8 +3,10 @@ package dev.zurbaevi.history
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,6 +28,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
     }
 
     override fun prepareView(savedInstanceState: Bundle?) {
+        bindToolbar()
         configurationRecyclerView()
         initObservers()
         if (historyViewModel.currentState.historyState is HistoryContract.HistoryState.Idle) {
@@ -75,6 +78,14 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
                 )
             )
             recyclerView.adapter = historyAdapter
+        }
+    }
+
+    private fun bindToolbar() {
+        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
+        (activity as AppCompatActivity).supportActionBar?.title = ""
+        binding.imageViewBack.setOnClickListener {
+            findNavController().navigateUp()
         }
     }
 

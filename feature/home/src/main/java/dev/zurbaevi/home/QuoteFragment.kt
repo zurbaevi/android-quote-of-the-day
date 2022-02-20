@@ -3,7 +3,6 @@ package dev.zurbaevi.home
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -24,7 +23,6 @@ class QuoteFragment : BaseFragment<FragmentQuoteBinding>() {
         get() = FragmentQuoteBinding::inflate
 
     override fun prepareView(savedInstanceState: Bundle?) {
-        configurationActionBar()
         initObservers()
         initListeners()
         if (quoteViewModel.currentState.quoteState is QuoteContract.QuoteState.Idle) {
@@ -78,10 +76,6 @@ class QuoteFragment : BaseFragment<FragmentQuoteBinding>() {
                 findNavController().navigate(QuoteFragmentDirections.actionQuoteFragmentToFeatureHistory())
             }
         }
-    }
-
-    private fun configurationActionBar() {
-        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
     }
 
 }
