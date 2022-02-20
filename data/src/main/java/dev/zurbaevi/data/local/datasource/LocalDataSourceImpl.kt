@@ -16,4 +16,7 @@ class LocalDataSourceImpl @Inject constructor(
         return quoteDao.insertQuote(quoteEntity)
     }
 
+    override suspend fun deleteQuotes(): Int {
+        return quoteDao.deleteQuotes()
+    }
 }

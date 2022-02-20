@@ -25,7 +25,7 @@ class QuoteViewModel @Inject constructor(
 
     override fun handleEvent(event: QuoteContract.Event) {
         when (event) {
-            is QuoteContract.Event.OnFetchQuote -> {
+            is QuoteContract.Event.FetchQuote -> {
                 fetchQuote()
             }
         }

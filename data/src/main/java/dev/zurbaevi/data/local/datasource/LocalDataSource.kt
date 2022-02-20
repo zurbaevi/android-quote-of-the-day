@@ -8,4 +8,6 @@ interface LocalDataSource {
 
     suspend fun insertQuote(quoteEntity: QuoteEntity): Long
 
+    suspend fun deleteQuotes(): Int
+
 }

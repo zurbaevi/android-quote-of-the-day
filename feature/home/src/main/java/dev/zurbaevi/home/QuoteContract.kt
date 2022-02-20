@@ -18,7 +18,7 @@ class QuoteContract {
     }
 
     sealed class Event : UiEvent {
-        object OnFetchQuote : Event()
+        object FetchQuote : Event()
     }
 
     data class State(

@@ -26,7 +26,7 @@ class QuoteFragment : BaseFragment<FragmentQuoteBinding>() {
         initObservers()
         initListeners()
         if (quoteViewModel.currentState.quoteState is QuoteContract.QuoteState.Idle) {
-            quoteViewModel.setEvent(QuoteContract.Event.OnFetchQuote)
+            quoteViewModel.setEvent(QuoteContract.Event.FetchQuote)
         }
     }
 
@@ -70,7 +70,7 @@ class QuoteFragment : BaseFragment<FragmentQuoteBinding>() {
     private fun initListeners() {
         binding.apply {
             imageViewRefresh.setOnClickListenerWithDebounce(debounceTime = 2000L) {
-                quoteViewModel.setEvent(QuoteContract.Event.OnFetchQuote)
+                quoteViewModel.setEvent(QuoteContract.Event.FetchQuote)
             }
             imageViewHistory.setOnClickListener {
                 findNavController().navigate(QuoteFragmentDirections.actionQuoteFragmentToFeatureHistory())

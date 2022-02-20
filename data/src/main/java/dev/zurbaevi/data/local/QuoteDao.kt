@@ -15,4 +15,7 @@ interface QuoteDao {
     @Query("select * from table_quote")
     suspend fun getQuotes(): List<QuoteEntity>
 
+    @Query("delete from table_quote")
+    suspend fun deleteQuotes(): Int
+
 }

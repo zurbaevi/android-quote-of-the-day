@@ -48,4 +48,14 @@ class QuoteRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun deleteQuotes(): Flow<Resource<Int>> {
+        return flow {
+            try {
+                emit(Resource.Success(localDataSource.deleteQuotes()))
+            } catch (exception: Exception) {
+                emit(Resource.Error(exception))
+            }
+        }
+    }
+
 }

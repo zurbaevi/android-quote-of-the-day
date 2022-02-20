@@ -1,6 +1,7 @@
 package dev.zurbaevi.history
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
@@ -32,7 +33,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
         configurationRecyclerView()
         initObservers()
         if (historyViewModel.currentState.historyState is HistoryContract.HistoryState.Idle) {
-            historyViewModel.setEvent(HistoryContract.Event.OnGetQuotes)
+            historyViewModel.setEvent(HistoryContract.Event.GetQuotes)
         }
     }
 
@@ -48,6 +49,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
                         is HistoryContract.HistoryState.Loading -> {
                             recyclerView.gone()
                             progressBar.visible()
+                            Log.d("aAAA", "initObservers: ")
                         }
                         is HistoryContract.HistoryState.Success -> {
                             historyAdapter.submitList(state.quotes)
@@ -65,6 +67,9 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
                         }
                     }
                 }
+            }
+            imageViewDelete.setOnClickListener {
+                historyViewModel.setEvent(HistoryContract.Event.DeleteQuotes)
             }
         }
     }

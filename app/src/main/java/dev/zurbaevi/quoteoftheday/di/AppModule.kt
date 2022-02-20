@@ -8,6 +8,7 @@ import dev.zurbaevi.data.local.datasource.LocalDataSourceImpl
 import dev.zurbaevi.data.remote.datasource.RemoteDataSourceImpl
 import dev.zurbaevi.data.repository.QuoteRepositoryImpl
 import dev.zurbaevi.domain.repository.QuoteRepository
+import dev.zurbaevi.domain.usecase.DeleteQuotesUseCase
 import dev.zurbaevi.domain.usecase.GetQuoteUseCase
 import dev.zurbaevi.domain.usecase.GetQuotesUseCase
 import dev.zurbaevi.domain.usecase.InsertQuoteUseCase
@@ -46,6 +47,12 @@ object AppModule {
     @Singleton
     fun provideInsertQuoteUseCase(quoteRepository: QuoteRepository): InsertQuoteUseCase {
         return InsertQuoteUseCase(quoteRepository, Dispatchers.IO)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDeleteQuotesUseCase(quoteRepository: QuoteRepository): DeleteQuotesUseCase {
+        return DeleteQuotesUseCase(quoteRepository, Dispatchers.IO)
     }
 
 }

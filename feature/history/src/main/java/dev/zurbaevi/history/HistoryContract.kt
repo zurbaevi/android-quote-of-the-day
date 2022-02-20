@@ -18,7 +18,8 @@ class HistoryContract {
     }
 
     sealed class Event : UiEvent {
-        object OnGetQuotes : Event()
+        object GetQuotes : Event()
+        object DeleteQuotes : Event()
     }
 
     data class State(
