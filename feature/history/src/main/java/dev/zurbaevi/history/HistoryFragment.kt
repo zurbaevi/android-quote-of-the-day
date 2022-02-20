@@ -49,7 +49,6 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
                         is HistoryContract.HistoryState.Loading -> {
                             recyclerView.gone()
                             progressBar.visible()
-                            Log.d("aAAA", "initObservers: ")
                         }
                         is HistoryContract.HistoryState.Success -> {
                             historyAdapter.submitList(state.quotes)
