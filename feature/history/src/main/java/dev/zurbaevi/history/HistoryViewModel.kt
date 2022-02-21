@@ -40,21 +40,27 @@ class HistoryViewModel @Inject constructor(
             getQuotesUseCase()
                 .onStart { emit(Resource.Loading) }
                 .collect {
-                when (val state = it) {
-                    is Resource.Empty -> {
-                        setState { copy(historyState = HistoryContract.HistoryState.Idle) }
-                    }
-                    is Resource.Loading -> {
-                        setState { copy(historyState = HistoryContract.HistoryState.Loading) }
-                    }
-                    is Resource.Error -> {
-                        setEffect { HistoryContract.Effect.ShowError(state.exception.message.toString()) }
-                    }
-                    is Resource.Success -> {
-                        setState { copy(historyState = HistoryContract.HistoryState.Success(state.data)) }
+                    when (val state = it) {
+                        is Resource.Empty -> {
+                            setState { copy(historyState = HistoryContract.HistoryState.Idle) }
+                        }
+                        is Resource.Loading -> {
+                            setState { copy(historyState = HistoryContract.HistoryState.Loading) }
+                        }
+                        is Resource.Error -> {
+                            setEffect { HistoryContract.Effect.ShowError(state.exception.message.toString()) }
+                        }
+                        is Resource.Success -> {
+                            setState {
+                                copy(
+                                    historyState = HistoryContract.HistoryState.Success(
+                                        state.data
+                                    )
+                                )
+                            }
+                        }
                     }
                 }
-            }
         }
     }
 
@@ -63,21 +69,27 @@ class HistoryViewModel @Inject constructor(
             deleteQuotesUseCase()
                 .onStart { emit(Resource.Loading) }
                 .collect {
-                when (val state = it) {
-                    is Resource.Empty -> {
-                        setState { copy(historyState = HistoryContract.HistoryState.Idle) }
-                    }
-                    is Resource.Loading -> {
-                        setState { copy(historyState = HistoryContract.HistoryState.Loading) }
-                    }
-                    is Resource.Error -> {
-                        setEffect { HistoryContract.Effect.ShowError(state.exception.message.toString()) }
-                    }
-                    is Resource.Success -> {
-                        setState { copy(historyState = HistoryContract.HistoryState.Success(listOf())) }
+                    when (val state = it) {
+                        is Resource.Empty -> {
+                            setState { copy(historyState = HistoryContract.HistoryState.Idle) }
+                        }
+                        is Resource.Loading -> {
+                            setState { copy(historyState = HistoryContract.HistoryState.Loading) }
+                        }
+                        is Resource.Error -> {
+                            setEffect { HistoryContract.Effect.ShowError(state.exception.message.toString()) }
+                        }
+                        is Resource.Success -> {
+                            setState {
+                                copy(
+                                    historyState = HistoryContract.HistoryState.Success(
+                                        listOf()
+                                    )
+                                )
+                            }
+                        }
                     }
                 }
-            }
         }
     }
 
