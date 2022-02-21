@@ -10,8 +10,8 @@ interface QuoteRepository {
 
     suspend fun getQuote(): Flow<Resource<Quote>>
 
-    suspend fun insertQuote(quote: Quote): Flow<Resource<Long>>
+    suspend fun insertQuote(quote: Quote): Flow<Unit>
 
-    suspend fun deleteQuotes(): Flow<Resource<Int>>
+    suspend fun deleteQuotes(): Flow<Unit>
 
 }

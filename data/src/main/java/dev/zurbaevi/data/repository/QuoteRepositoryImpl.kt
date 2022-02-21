@@ -38,23 +38,15 @@ class QuoteRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun insertQuote(quote: Quote): Flow<Resource<Long>> {
+    override suspend fun insertQuote(quote: Quote): Flow<Unit> {
         return flow {
-            try {
-                emit((Resource.Success(localDataSource.insertQuote(LocalMapper.map(quote)))))
-            } catch (exception: Exception) {
-                emit(Resource.Error(exception))
-            }
+            emit(localDataSource.insertQuote(LocalMapper.map(quote)))
         }
     }
 
-    override suspend fun deleteQuotes(): Flow<Resource<Int>> {
+    override suspend fun deleteQuotes(): Flow<Unit> {
         return flow {
-            try {
-                emit(Resource.Success(localDataSource.deleteQuotes()))
-            } catch (exception: Exception) {
-                emit(Resource.Error(exception))
-            }
+            emit(localDataSource.deleteQuotes())
         }
     }
 

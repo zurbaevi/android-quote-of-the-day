@@ -1,6 +1,5 @@
 package dev.zurbaevi.domain.usecase
 
-import dev.zurbaevi.common.util.Resource
 import dev.zurbaevi.domain.model.Quote
 import dev.zurbaevi.domain.repository.QuoteRepository
 import kotlinx.coroutines.CoroutineDispatcher
@@ -12,7 +11,7 @@ class InsertQuoteUseCase(
     private val dispatcher: CoroutineDispatcher
 ) {
 
-    suspend operator fun invoke(quote: Quote): Flow<Resource<Long>> {
+    suspend operator fun invoke(quote: Quote): Flow<Unit> {
         return quoteRepository.insertQuote(quote).flowOn(dispatcher)
     }
 

@@ -6,8 +6,7 @@
 
     <fragment
         android:id="@+id/quoteFragment"
-        android:name="dev.zurbaevi.home.QuoteFragment"
-        android:label="Quote of the day">
+        android:name="dev.zurbaevi.home.QuoteFragment">
         <action
             android:id="@+id/action_quoteFragment_to_feature_history"
             app:destination="@id/feature_history"

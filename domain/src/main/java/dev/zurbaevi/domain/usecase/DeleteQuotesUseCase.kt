@@ -1,6 +1,5 @@
 package dev.zurbaevi.domain.usecase
 
-import dev.zurbaevi.common.util.Resource
 import dev.zurbaevi.domain.repository.QuoteRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -11,7 +10,7 @@ class DeleteQuotesUseCase(
     private val dispatcher: CoroutineDispatcher
 ) {
 
-    suspend operator fun invoke(): Flow<Resource<Int>> {
+    suspend operator fun invoke(): Flow<Unit> {
         return quoteRepository.deleteQuotes().flowOn(dispatcher)
     }
 

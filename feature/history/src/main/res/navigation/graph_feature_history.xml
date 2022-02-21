@@ -8,7 +8,6 @@
     <fragment
         android:id="@+id/historyFragment"
         android:name="dev.zurbaevi.history.HistoryFragment"
-        android:label="History"
         tools:layout="@layout/fragment_history" />
 
 </navigation>

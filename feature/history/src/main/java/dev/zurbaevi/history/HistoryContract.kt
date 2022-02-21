@@ -10,6 +10,7 @@ class HistoryContract {
     sealed class HistoryState {
         object Idle : HistoryState()
         object Loading : HistoryState()
+        object Deleted : HistoryState()
         data class Success(val quotes: List<Quote>) : HistoryState()
     }
 

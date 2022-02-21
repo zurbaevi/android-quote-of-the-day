@@ -1,5 +1,6 @@
 package dev.zurbaevi.home
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.zurbaevi.base.BaseViewModel
@@ -7,6 +8,7 @@ import dev.zurbaevi.common.util.Resource
 import dev.zurbaevi.domain.model.Quote
 import dev.zurbaevi.domain.usecase.GetQuoteUseCase
 import dev.zurbaevi.domain.usecase.InsertQuoteUseCase
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -59,10 +61,11 @@ class QuoteViewModel @Inject constructor(
     private fun insertQuote(quote: Quote) {
         viewModelScope.launch {
             insertQuoteUseCase(quote)
+                .catch {
+                    setEffect { QuoteContract.Effect.ShowError(it.message.toString()) }
+                }
                 .collect {
-                    if (it is Resource.Error) {
-                        setEffect { QuoteContract.Effect.ShowError(it.exception.message.toString()) }
-                    }
+                    Log.d("QuoteViewModel", "Insert quote")
                 }
         }
     }

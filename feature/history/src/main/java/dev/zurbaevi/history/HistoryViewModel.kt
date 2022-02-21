@@ -6,6 +6,7 @@ import dev.zurbaevi.base.BaseViewModel
 import dev.zurbaevi.common.util.Resource
 import dev.zurbaevi.domain.usecase.DeleteQuotesUseCase
 import dev.zurbaevi.domain.usecase.GetQuotesUseCase
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -52,11 +53,7 @@ class HistoryViewModel @Inject constructor(
                         }
                         is Resource.Success -> {
                             setState {
-                                copy(
-                                    historyState = HistoryContract.HistoryState.Success(
-                                        state.data
-                                    )
-                                )
+                                copy(historyState = HistoryContract.HistoryState.Success(state.data))
                             }
                         }
                     }
@@ -67,28 +64,14 @@ class HistoryViewModel @Inject constructor(
     private fun deleteQuotes() {
         viewModelScope.launch {
             deleteQuotesUseCase()
-                .onStart { emit(Resource.Loading) }
+                .onStart {
+                    setState { copy(historyState = HistoryContract.HistoryState.Loading) }
+                }
+                .catch {
+                    setEffect { HistoryContract.Effect.ShowError(it.message.toString()) }
+                }
                 .collect {
-                    when (val state = it) {
-                        is Resource.Empty -> {
-                            setState { copy(historyState = HistoryContract.HistoryState.Idle) }
-                        }
-                        is Resource.Loading -> {
-                            setState { copy(historyState = HistoryContract.HistoryState.Loading) }
-                        }
-                        is Resource.Error -> {
-                            setEffect { HistoryContract.Effect.ShowError(state.exception.message.toString()) }
-                        }
-                        is Resource.Success -> {
-                            setState {
-                                copy(
-                                    historyState = HistoryContract.HistoryState.Success(
-                                        listOf()
-                                    )
-                                )
-                            }
-                        }
-                    }
+                    setState { copy(historyState = HistoryContract.HistoryState.Deleted) }
                 }
         }
     }

@@ -54,6 +54,14 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
                             progressBar.gone()
                             recyclerView.visible()
                         }
+                        is HistoryContract.HistoryState.Deleted -> {
+                            Snackbar.make(
+                                binding.root,
+                                "Quotes have been successfully deleted!",
+                                Snackbar.LENGTH_LONG
+                            ).show()
+                            progressBar.gone()
+                        }
                     }
                 }
             }
