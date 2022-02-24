@@ -7,40 +7,32 @@
     android:layout_height="match_parent"
     tools:context="dev.zurbaevi.history.HistoryFragment">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
-        android:background="@color/blue_gray_800"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/imageViewBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:contentDescription="@string/back_button"
-            android:src="@drawable/ic_arrow_back"
-            app:layout_constraintBottom_toBottomOf="@+id/toolbar"
-            app:layout_constraintStart_toStartOf="@+id/toolbar"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="RedundantDescriptionCheck" />
+    <!--        <ImageView-->
+    <!--            android:id="@+id/imageViewBack"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginHorizontal="16dp"-->
+    <!--            android:contentDescription="@string/back_button"-->
+    <!--            android:src="@drawable/ic_arrow_back"-->
+    <!--            app:layout_constraintBottom_toBottomOf="@+id/toolbar"-->
+    <!--            app:layout_constraintStart_toStartOf="@+id/toolbar"-->
+    <!--            app:layout_constraintTop_toTopOf="parent"-->
+    <!--            tools:ignore="RedundantDescriptionCheck" />-->
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/history"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/toolbar"
-            app:layout_constraintStart_toEndOf="@+id/imageViewBack"
-            app:layout_constraintTop_toTopOf="parent" />
+    <!--        <TextView-->
+    <!--            android:id="@+id/textView"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:text="@string/history"-->
+    <!--            android:textColor="@color/white"-->
+    <!--            android:textSize="16sp"-->
+    <!--            android:textStyle="bold"-->
+    <!--            app:layout_constraintBottom_toBottomOf="@+id/toolbar"-->
+    <!--            app:layout_constraintStart_toEndOf="@+id/imageViewBack"-->
+    <!--            app:layout_constraintTop_toTopOf="parent" />-->
 
-    </androidx.appcompat.widget.Toolbar>
+    <!--    </androidx.appcompat.widget.Toolbar>-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -51,7 +43,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/quote_history_item" />
 
     <ProgressBar

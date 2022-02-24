@@ -12,7 +12,6 @@
         <action
             android:id="@+id/action_globalEntryPoint_to_feature_home"
             app:destination="@id/feature_home"
-            app:launchSingleTop="true"
             app:popUpTo="@id/graph_main"
             app:popUpToInclusive="true" />
     </fragment>

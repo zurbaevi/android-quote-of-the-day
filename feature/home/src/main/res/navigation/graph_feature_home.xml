@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@id/feature_home"
     app:startDestination="@id/quoteFragment">
 
     <fragment
         android:id="@+id/quoteFragment"
-        android:name="dev.zurbaevi.home.QuoteFragment">
+        android:name="dev.zurbaevi.home.QuoteFragment"
+        android:label="@string/quote_of_the_day"
+        tools:layout="@layout/fragment_quote">
         <action
             android:id="@+id/action_quoteFragment_to_feature_history"
             app:destination="@id/feature_history"
@@ -15,7 +18,5 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
-
-    <include app:graph="@navigation/graph_feature_history" />
 
 </navigation>
