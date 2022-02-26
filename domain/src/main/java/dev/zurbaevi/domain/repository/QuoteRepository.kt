@@ -6,12 +6,12 @@ import kotlinx.coroutines.flow.Flow
 
 interface QuoteRepository {
 
-    suspend fun getQuotes(): Flow<Resource<List<Quote>>>
+    fun getQuotes(): Flow<Resource<List<Quote>>>
 
-    suspend fun getQuote(): Flow<Resource<Quote>>
+    fun getQuote(): Flow<Resource<Quote>>
 
-    suspend fun insertQuote(quote: Quote): Flow<Unit>
+    fun insertQuote(quote: Quote): Flow<Unit>
 
-    suspend fun deleteQuotes(): Flow<Unit>
+    fun deleteQuotes(): Flow<Unit>
 
 }

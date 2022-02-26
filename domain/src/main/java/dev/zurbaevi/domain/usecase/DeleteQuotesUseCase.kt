@@ -10,7 +10,7 @@ class DeleteQuotesUseCase(
     private val dispatcher: CoroutineDispatcher
 ) {
 
-    suspend operator fun invoke(): Flow<Unit> {
+    operator fun invoke(): Flow<Unit> {
         return quoteRepository.deleteQuotes().flowOn(dispatcher)
     }
 

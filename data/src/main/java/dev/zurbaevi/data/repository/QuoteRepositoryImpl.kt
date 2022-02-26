@@ -7,7 +7,6 @@ import dev.zurbaevi.data.remote.datasource.RemoteDataSource
 import dev.zurbaevi.data.remote.mapper.NetworkMapper
 import dev.zurbaevi.domain.model.Quote
 import dev.zurbaevi.domain.repository.QuoteRepository
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
@@ -16,38 +15,30 @@ class QuoteRepositoryImpl @Inject constructor(
     private val localDataSource: LocalDataSource,
 ) : QuoteRepository {
 
-    override suspend fun getQuotes(): Flow<Resource<List<Quote>>> {
-        return flow {
-            try {
-                emit(Resource.Success(localDataSource.getQuotes().map {
-                    LocalMapper.map(it)
-                }))
-            } catch (exception: Exception) {
-                emit(Resource.Error(exception))
-            }
+    override fun getQuotes() = flow {
+        try {
+            emit(Resource.Success(localDataSource.getQuotes().map {
+                LocalMapper.map(it)
+            }))
+        } catch (exception: Exception) {
+            emit(Resource.Error(exception))
         }
     }
 
-    override suspend fun getQuote(): Flow<Resource<Quote>> {
-        return flow {
-            try {
-                emit(Resource.Success(NetworkMapper.map(remoteDataSource.getQuote())))
-            } catch (exception: Exception) {
-                emit(Resource.Error(exception))
-            }
+    override fun getQuote() = flow {
+        try {
+            emit(Resource.Success(NetworkMapper.map(remoteDataSource.getQuote())))
+        } catch (exception: Exception) {
+            emit(Resource.Error(exception))
         }
     }
 
-    override suspend fun insertQuote(quote: Quote): Flow<Unit> {
-        return flow {
-            emit(localDataSource.insertQuote(LocalMapper.map(quote)))
-        }
+    override fun insertQuote(quote: Quote) = flow {
+        emit(localDataSource.insertQuote(LocalMapper.map(quote)))
     }
 
-    override suspend fun deleteQuotes(): Flow<Unit> {
-        return flow {
-            emit(localDataSource.deleteQuotes())
-        }
+    override fun deleteQuotes() = flow {
+        emit(localDataSource.deleteQuotes())
     }
 
 }

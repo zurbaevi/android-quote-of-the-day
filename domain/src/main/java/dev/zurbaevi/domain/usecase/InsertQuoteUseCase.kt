@@ -11,7 +11,7 @@ class InsertQuoteUseCase(
     private val dispatcher: CoroutineDispatcher
 ) {
 
-    suspend operator fun invoke(quote: Quote): Flow<Unit> {
+    operator fun invoke(quote: Quote): Flow<Unit> {
         return quoteRepository.insertQuote(quote).flowOn(dispatcher)
     }
 

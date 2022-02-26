@@ -12,7 +12,7 @@ class GetQuotesUseCase(
     private val dispatcher: CoroutineDispatcher
 ) {
 
-    suspend operator fun invoke(): Flow<Resource<List<Quote>>> {
+    operator fun invoke(): Flow<Resource<List<Quote>>> {
         return quoteRepository.getQuotes().flowOn(dispatcher)
     }
 
