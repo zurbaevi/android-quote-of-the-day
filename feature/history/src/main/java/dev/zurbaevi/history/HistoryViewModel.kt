@@ -2,8 +2,7 @@ package dev.zurbaevi.history
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.zurbaevi.base.BaseViewModel
-import dev.zurbaevi.common.util.Resource
+import dev.zurbaevi.common.base.BaseViewModel
 import dev.zurbaevi.domain.usecase.DeleteQuotesUseCase
 import dev.zurbaevi.domain.usecase.GetQuotesUseCase
 import kotlinx.coroutines.flow.catch
@@ -39,23 +38,15 @@ class HistoryViewModel @Inject constructor(
     private fun getQuotes() {
         viewModelScope.launch {
             getQuotesUseCase()
-                .onStart { emit(Resource.Loading) }
-                .collect {
-                    when (val state = it) {
-                        is Resource.Empty -> {
-                            setState { copy(historyState = HistoryContract.HistoryState.Idle) }
-                        }
-                        is Resource.Loading -> {
-                            setState { copy(historyState = HistoryContract.HistoryState.Loading) }
-                        }
-                        is Resource.Error -> {
-                            setEffect { HistoryContract.Effect.ShowError(state.exception.message.toString()) }
-                        }
-                        is Resource.Success -> {
-                            setState {
-                                copy(historyState = HistoryContract.HistoryState.Success(state.data))
-                            }
-                        }
+                .onStart {
+                    setState { copy(historyState = HistoryContract.HistoryState.Loading) }
+                }
+                .catch {
+                    setEffect { HistoryContract.Effect.Error(it.message.toString()) }
+                }
+                .collect { quotes ->
+                    setState {
+                        copy(historyState = HistoryContract.HistoryState.Success(quotes))
                     }
                 }
         }
@@ -68,10 +59,12 @@ class HistoryViewModel @Inject constructor(
                     setState { copy(historyState = HistoryContract.HistoryState.Loading) }
                 }
                 .catch {
-                    setEffect { HistoryContract.Effect.ShowError(it.message.toString()) }
+                    setEffect { HistoryContract.Effect.Error(it.message.toString()) }
                 }
                 .collect {
-                    setState { copy(historyState = HistoryContract.HistoryState.Deleted) }
+                    setState { copy(historyState = HistoryContract.HistoryState.Success(listOf())) }.also {
+                        setEffect { HistoryContract.Effect.Deleted }
+                    }
                 }
         }
     }

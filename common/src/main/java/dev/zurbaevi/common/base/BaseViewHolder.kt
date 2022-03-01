@@ -1,4 +1,4 @@
-package dev.zurbaevi.base
+package dev.zurbaevi.common.base
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding

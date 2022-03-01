@@ -1,6 +1,5 @@
 package dev.zurbaevi.domain.usecase
 
-import dev.zurbaevi.common.util.Resource
 import dev.zurbaevi.domain.model.Quote
 import dev.zurbaevi.domain.repository.QuoteRepository
 import kotlinx.coroutines.CoroutineDispatcher
@@ -12,7 +11,7 @@ class GetQuotesUseCase(
     private val dispatcher: CoroutineDispatcher
 ) {
 
-    operator fun invoke(): Flow<Resource<List<Quote>>> {
+    operator fun invoke(): Flow<List<Quote>> {
         return quoteRepository.getQuotes().flowOn(dispatcher)
     }
 

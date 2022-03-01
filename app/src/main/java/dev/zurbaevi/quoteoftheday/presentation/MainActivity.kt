@@ -8,7 +8,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import dagger.hilt.android.AndroidEntryPoint
-import dev.zurbaevi.base.BaseActivity
+import dev.zurbaevi.common.base.BaseActivity
 import dev.zurbaevi.quoteoftheday.R
 import dev.zurbaevi.quoteoftheday.databinding.ActivityMainBinding
 

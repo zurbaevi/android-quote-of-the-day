@@ -1,4 +1,4 @@
-package dev.zurbaevi.base
+package dev.zurbaevi.common.base
 
 import android.os.Bundle
 import android.view.LayoutInflater

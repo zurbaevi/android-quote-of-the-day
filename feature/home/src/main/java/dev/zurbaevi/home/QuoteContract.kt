@@ -1,8 +1,8 @@
 package dev.zurbaevi.home
 
-import dev.zurbaevi.base.UiEffect
-import dev.zurbaevi.base.UiEvent
-import dev.zurbaevi.base.UiState
+import dev.zurbaevi.common.base.UiEffect
+import dev.zurbaevi.common.base.UiEvent
+import dev.zurbaevi.common.base.UiState
 import dev.zurbaevi.domain.model.Quote
 
 class QuoteContract {
@@ -14,7 +14,7 @@ class QuoteContract {
     }
 
     sealed class Effect : UiEffect {
-        data class ShowError(val message: String) : Effect()
+        data class Error(val message: String) : Effect()
     }
 
     sealed class Event : UiEvent {

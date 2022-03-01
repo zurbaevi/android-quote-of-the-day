@@ -1,4 +1,4 @@
-package dev.zurbaevi.common.util.exentsion
+package dev.zurbaevi.common.exentsion
 
 import android.os.SystemClock
 import android.view.View

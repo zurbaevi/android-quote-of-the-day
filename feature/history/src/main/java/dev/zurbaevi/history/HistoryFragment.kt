@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import dev.zurbaevi.base.BaseFragment
-import dev.zurbaevi.common.util.exentsion.gone
-import dev.zurbaevi.common.util.exentsion.visible
+import dev.zurbaevi.common.base.BaseFragment
+import dev.zurbaevi.common.exentsion.gone
+import dev.zurbaevi.common.exentsion.showShortToast
+import dev.zurbaevi.common.exentsion.visible
 import dev.zurbaevi.history.databinding.FragmentHistoryBinding
 
 @AndroidEntryPoint
@@ -26,14 +26,14 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
     }
 
     override fun prepareView(savedInstanceState: Bundle?) {
+        firstInitState()
         configurationRecyclerView()
-        initObservers()
-        if (historyViewModel.currentState.historyState is HistoryContract.HistoryState.Idle) {
-            historyViewModel.setEvent(HistoryContract.Event.GetQuotes)
-        }
+        initStateObservers()
+        initEffectObservers()
+        initListeners()
     }
 
-    private fun initObservers() {
+    private fun initStateObservers() {
         binding.apply {
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
                 historyViewModel.uiState.collect {
@@ -51,29 +51,42 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
                             progressBar.gone()
                             recyclerView.visible()
                         }
-                        is HistoryContract.HistoryState.Deleted -> {
-                            Snackbar.make(
-                                binding.root,
-                                "Quotes have been successfully deleted!",
-                                Snackbar.LENGTH_LONG
-                            ).show()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun initEffectObservers() {
+        binding.apply {
+            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+                historyViewModel.effect.collect {
+                    when (it) {
+                        is HistoryContract.Effect.Error -> {
+                            showShortToast(it.message)
+                            progressBar.gone()
+                        }
+                        is HistoryContract.Effect.Deleted -> {
+                            showShortToast(getString(R.string.quotes_deleted))
                             progressBar.gone()
                         }
                     }
                 }
             }
-            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-                historyViewModel.effect.collect {
-                    when (it) {
-                        is HistoryContract.Effect.ShowError -> {
-                            Snackbar.make(root, it.message, Snackbar.LENGTH_SHORT).show()
-                        }
-                    }
-                }
-            }
+        }
+    }
+
+    private fun initListeners() {
+        binding.apply {
             imageViewDelete.setOnClickListener {
                 historyViewModel.setEvent(HistoryContract.Event.DeleteQuotes)
             }
+        }
+    }
+
+    private fun firstInitState() {
+        if (historyViewModel.currentState.historyState is HistoryContract.HistoryState.Idle) {
+            historyViewModel.setEvent(HistoryContract.Event.GetQuotes)
         }
     }
 

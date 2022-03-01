@@ -2,4 +2,5 @@
 <resources>
     <string name="history">History</string>
     <string name="back_button">Back button</string>
+    <string name="quotes_deleted">Quotes have been successfully deleted!</string>
 </resources>

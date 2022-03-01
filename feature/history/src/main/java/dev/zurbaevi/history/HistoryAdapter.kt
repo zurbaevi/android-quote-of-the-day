@@ -3,8 +3,8 @@ package dev.zurbaevi.history
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import dev.zurbaevi.base.BaseAdapter
-import dev.zurbaevi.base.BaseViewHolder
+import dev.zurbaevi.common.base.BaseAdapter
+import dev.zurbaevi.common.base.BaseViewHolder
 import dev.zurbaevi.domain.model.Quote
 import dev.zurbaevi.history.databinding.QuoteHistoryItemBinding
 

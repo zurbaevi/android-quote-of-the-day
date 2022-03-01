@@ -14,6 +14,10 @@ android {
         consumerProguardFiles("consumer-rules.pro")
     }
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -33,6 +37,11 @@ android {
 }
 
 dependencies {
+    implementation(Dependencies.COROUTINES_ANDROID)
+    implementation(Dependencies.COROUTINES_CORE)
+    implementation(Dependencies.FRAGMENT_KTX)
+    implementation(Dependencies.APPCOMPAT)
+    implementation(Dependencies.RECYCLER_VIEW)
     implementation(Dependencies.COROUTINES_ANDROID)
     implementation(Dependencies.COROUTINES_CORE)
 }

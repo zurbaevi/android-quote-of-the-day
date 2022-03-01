@@ -1,8 +1,8 @@
 package dev.zurbaevi.history
 
-import dev.zurbaevi.base.UiEffect
-import dev.zurbaevi.base.UiEvent
-import dev.zurbaevi.base.UiState
+import dev.zurbaevi.common.base.UiEffect
+import dev.zurbaevi.common.base.UiEvent
+import dev.zurbaevi.common.base.UiState
 import dev.zurbaevi.domain.model.Quote
 
 class HistoryContract {
@@ -10,12 +10,12 @@ class HistoryContract {
     sealed class HistoryState {
         object Idle : HistoryState()
         object Loading : HistoryState()
-        object Deleted : HistoryState()
         data class Success(val quotes: List<Quote>) : HistoryState()
     }
 
     sealed class Effect : UiEffect {
-        data class ShowError(val message: String) : Effect()
+        data class Error(val message: String) : Effect()
+        object Deleted : Effect()
     }
 
     sealed class Event : UiEvent {

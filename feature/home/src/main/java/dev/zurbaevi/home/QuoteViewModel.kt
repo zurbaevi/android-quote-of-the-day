@@ -1,14 +1,13 @@
 package dev.zurbaevi.home
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.zurbaevi.base.BaseViewModel
-import dev.zurbaevi.common.util.Resource
+import dev.zurbaevi.common.base.BaseViewModel
 import dev.zurbaevi.domain.model.Quote
 import dev.zurbaevi.domain.usecase.GetQuoteUseCase
 import dev.zurbaevi.domain.usecase.InsertQuoteUseCase
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -36,37 +35,27 @@ class QuoteViewModel @Inject constructor(
     private fun fetchQuote() {
         viewModelScope.launch {
             getQuoteUseCase()
-                .onStart { emit(Resource.Loading) }
-                .collect {
-                    when (val state = it) {
-                        is Resource.Empty -> {
-                            setState { copy(quoteState = QuoteContract.QuoteState.Idle) }
-                        }
-                        is Resource.Loading -> {
-                            setState { copy(quoteState = QuoteContract.QuoteState.Loading) }
-                        }
-                        is Resource.Error -> {
-                            setEffect { QuoteContract.Effect.ShowError(state.exception.message.toString()) }
-                        }
-                        is Resource.Success -> {
-                            val quote = state.data
-                            setState { copy(quoteState = QuoteContract.QuoteState.Success(quote)) }
-                            insertQuote(quote)
-                        }
+                .onStart {
+                    setState { copy(quoteState = QuoteContract.QuoteState.Loading) }
+                }
+                .catch {
+                    setEffect { QuoteContract.Effect.Error(it.message.toString()) }
+                }
+                .collect { quote ->
+                    setState { copy(quoteState = QuoteContract.QuoteState.Success(quote)) }.also {
+                        insertQuote(quote)
                     }
                 }
         }
     }
 
+
     private fun insertQuote(quote: Quote) {
         viewModelScope.launch {
             insertQuoteUseCase(quote)
                 .catch {
-                    setEffect { QuoteContract.Effect.ShowError(it.message.toString()) }
-                }
-                .collect {
-                    Log.d("QuoteViewModel", "Insert quote")
-                }
+                    setEffect { QuoteContract.Effect.Error(it.message.toString()) }
+                }.collect()
         }
     }
 

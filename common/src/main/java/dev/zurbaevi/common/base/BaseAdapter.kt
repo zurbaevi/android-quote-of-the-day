@@ -1,4 +1,4 @@
-package dev.zurbaevi.base
+package dev.zurbaevi.common.base
 
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter

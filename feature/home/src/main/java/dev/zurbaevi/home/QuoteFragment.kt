@@ -6,12 +6,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import dev.zurbaevi.base.BaseFragment
-import dev.zurbaevi.common.util.exentsion.gone
-import dev.zurbaevi.common.util.exentsion.setOnClickListenerWithDebounce
-import dev.zurbaevi.common.util.exentsion.visible
+import dev.zurbaevi.common.base.BaseFragment
+import dev.zurbaevi.common.exentsion.gone
+import dev.zurbaevi.common.exentsion.setOnClickListenerWithDebounce
+import dev.zurbaevi.common.exentsion.showLongToast
+import dev.zurbaevi.common.exentsion.visible
 import dev.zurbaevi.home.databinding.FragmentQuoteBinding
 
 @AndroidEntryPoint
@@ -23,14 +23,13 @@ class QuoteFragment : BaseFragment<FragmentQuoteBinding>() {
         get() = FragmentQuoteBinding::inflate
 
     override fun prepareView(savedInstanceState: Bundle?) {
-        initObservers()
+        initFirstState()
         initListeners()
-        if (quoteViewModel.currentState.quoteState is QuoteContract.QuoteState.Idle) {
-            quoteViewModel.setEvent(QuoteContract.Event.FetchQuote)
-        }
+        initStateObservers()
+        initEffectObservers()
     }
 
-    private fun initObservers() {
+    private fun initStateObservers() {
         binding.apply {
             viewLifecycleOwner.lifecycleScope.launchWhenStarted {
                 quoteViewModel.uiState.collect {
@@ -55,15 +54,24 @@ class QuoteFragment : BaseFragment<FragmentQuoteBinding>() {
                     }
                 }
             }
-            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-                quoteViewModel.effect.collect {
-                    when (it) {
-                        is QuoteContract.Effect.ShowError -> {
-                            Snackbar.make(root, it.message, Snackbar.LENGTH_SHORT).show()
-                        }
+        }
+    }
+
+    private fun initEffectObservers() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            quoteViewModel.effect.collect {
+                when (it) {
+                    is QuoteContract.Effect.Error -> {
+                        showLongToast(it.message)
                     }
                 }
             }
+        }
+    }
+
+    private fun initFirstState() {
+        if (quoteViewModel.currentState.quoteState is QuoteContract.QuoteState.Idle) {
+            quoteViewModel.setEvent(QuoteContract.Event.FetchQuote)
         }
     }
 

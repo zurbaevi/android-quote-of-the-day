@@ -1,6 +1,5 @@
 package dev.zurbaevi.data.repository
 
-import dev.zurbaevi.common.util.Resource
 import dev.zurbaevi.data.local.datasource.LocalDataSource
 import dev.zurbaevi.data.local.mapper.LocalMapper
 import dev.zurbaevi.data.remote.datasource.RemoteDataSource
@@ -16,21 +15,13 @@ class QuoteRepositoryImpl @Inject constructor(
 ) : QuoteRepository {
 
     override fun getQuotes() = flow {
-        try {
-            emit(Resource.Success(localDataSource.getQuotes().map {
-                LocalMapper.map(it)
-            }))
-        } catch (exception: Exception) {
-            emit(Resource.Error(exception))
-        }
+        emit(localDataSource.getQuotes().map {
+            LocalMapper.map(it)
+        })
     }
 
     override fun getQuote() = flow {
-        try {
-            emit(Resource.Success(NetworkMapper.map(remoteDataSource.getQuote())))
-        } catch (exception: Exception) {
-            emit(Resource.Error(exception))
-        }
+        emit(NetworkMapper.map(remoteDataSource.getQuote()))
     }
 
     override fun insertQuote(quote: Quote) = flow {

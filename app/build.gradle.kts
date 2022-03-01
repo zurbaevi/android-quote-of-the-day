@@ -44,7 +44,7 @@ android {
 dependencies {
     implementation(project(":domain"))
     implementation(project(":data"))
-    implementation(project(":base"))
+    implementation(project(":common"))
     implementation(project(":navigation"))
     implementation(project(":feature:home"))
     implementation(project(":feature:history"))

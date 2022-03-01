@@ -40,7 +40,6 @@ android {
 
 dependencies {
     implementation(project(":data"))
-    implementation(project(":base"))
     implementation(project(":navigation"))
     implementation(project(":common"))
     implementation(project(":domain"))

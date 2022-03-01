@@ -1,4 +1,4 @@
-package dev.zurbaevi.base
+package dev.zurbaevi.common.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
