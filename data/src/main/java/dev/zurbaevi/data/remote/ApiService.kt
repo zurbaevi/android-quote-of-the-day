@@ -5,11 +5,11 @@ import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 
-interface QuoteApi {
+interface ApiService {
 
     @POST("1.0/")
     @FormUrlEncoded
-    suspend fun getQuote(
+    suspend fun fetchQuote(
         @Field("method") method: String = "getQuote",
         @Field("format") format: String = "json",
         @Field("lang") lang: String = "ru",

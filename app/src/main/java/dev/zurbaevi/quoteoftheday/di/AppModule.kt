@@ -4,14 +4,16 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import dev.zurbaevi.data.local.datasource.LocalDataSourceImpl
-import dev.zurbaevi.data.remote.datasource.RemoteDataSourceImpl
-import dev.zurbaevi.data.repository.QuoteRepositoryImpl
-import dev.zurbaevi.domain.repository.QuoteRepository
-import dev.zurbaevi.domain.usecase.DeleteQuotesUseCase
-import dev.zurbaevi.domain.usecase.GetQuoteUseCase
-import dev.zurbaevi.domain.usecase.GetQuotesUseCase
-import dev.zurbaevi.domain.usecase.InsertQuoteUseCase
+import dev.zurbaevi.data.local.datasource.HistoryLocalDataSourceImpl
+import dev.zurbaevi.data.remote.datasource.HomeRemoteDataSourceImpl
+import dev.zurbaevi.data.repository.HistoryRepositoryImpl
+import dev.zurbaevi.data.repository.HomeRepositoryImpl
+import dev.zurbaevi.domain.repository.HistoryRepository
+import dev.zurbaevi.domain.repository.HomeRepository
+import dev.zurbaevi.domain.usecase.DeleteHistoryQuotesUseCase
+import dev.zurbaevi.domain.usecase.FetchQuoteUseCase
+import dev.zurbaevi.domain.usecase.GetHistoryQuotesUseCase
+import dev.zurbaevi.domain.usecase.InsertHistoryQuoteUseCase
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Singleton
 
@@ -21,38 +23,46 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideQuoteRepositoryImpl(
-        localDataSourceImpl: LocalDataSourceImpl,
-        remoteDataSourceImpl: RemoteDataSourceImpl,
-    ): QuoteRepository {
-        return QuoteRepositoryImpl(
-            remoteDataSourceImpl,
-            localDataSourceImpl,
+    fun provideHomeRepositoryImpl(
+        homeRemoteDataSourceImpl: HomeRemoteDataSourceImpl,
+    ): HomeRepository {
+        return HomeRepositoryImpl(
+            homeRemoteDataSourceImpl,
         )
     }
 
     @Provides
     @Singleton
-    fun provideGetQuoteUseCase(quoteRepository: QuoteRepository): GetQuoteUseCase {
-        return GetQuoteUseCase(quoteRepository, Dispatchers.IO)
+    fun provideHistoryRepositoryImpl(
+        historyLocalDataSourceImpl: HistoryLocalDataSourceImpl,
+    ): HistoryRepository {
+        return HistoryRepositoryImpl(
+            historyLocalDataSourceImpl
+        )
     }
 
     @Provides
     @Singleton
-    fun provideGetQuotesUseCase(quoteRepository: QuoteRepository): GetQuotesUseCase {
-        return GetQuotesUseCase(quoteRepository, Dispatchers.IO)
+    fun provideGetQuoteUseCase(homeRepository: HomeRepository): FetchQuoteUseCase {
+        return FetchQuoteUseCase(homeRepository, Dispatchers.IO)
     }
 
     @Provides
     @Singleton
-    fun provideInsertQuoteUseCase(quoteRepository: QuoteRepository): InsertQuoteUseCase {
-        return InsertQuoteUseCase(quoteRepository, Dispatchers.IO)
+    fun provideGetQuotesUseCase(historyRepository: HistoryRepository): GetHistoryQuotesUseCase {
+        return GetHistoryQuotesUseCase(historyRepository, Dispatchers.IO)
     }
 
     @Provides
     @Singleton
-    fun provideDeleteQuotesUseCase(quoteRepository: QuoteRepository): DeleteQuotesUseCase {
-        return DeleteQuotesUseCase(quoteRepository, Dispatchers.IO)
+    fun provideInsertQuoteUseCase(historyRepository: HistoryRepository): InsertHistoryQuoteUseCase {
+        return InsertHistoryQuoteUseCase(historyRepository, Dispatchers.IO)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDeleteQuotesUseCase(historyRepository: HistoryRepository): DeleteHistoryQuotesUseCase {
+        return DeleteHistoryQuotesUseCase(historyRepository, Dispatchers.IO)
     }
 
 }

@@ -3,15 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@id/feature_home"
-    app:startDestination="@id/quoteFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
-        android:id="@+id/quoteFragment"
-        android:name="dev.zurbaevi.home.QuoteFragment"
+        android:id="@+id/homeFragment"
+        android:name="dev.zurbaevi.home.HomeFragment"
         android:label="@string/quote_of_the_day"
-        tools:layout="@layout/fragment_quote">
+        tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_quoteFragment_to_feature_history"
+            android:id="@+id/action_homeFragment_to_feature_history"
             app:destination="@id/feature_history"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"

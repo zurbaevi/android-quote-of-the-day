@@ -5,12 +5,12 @@ import dev.zurbaevi.common.base.UiEvent
 import dev.zurbaevi.common.base.UiState
 import dev.zurbaevi.domain.model.Quote
 
-class QuoteContract {
+class HomeContract {
 
-    sealed class QuoteState {
-        object Idle : QuoteState()
-        object Loading : QuoteState()
-        data class Success(val quote: Quote) : QuoteState()
+    sealed class HomeState {
+        object Idle : HomeState()
+        object Loading : HomeState()
+        data class Success(val quote: Quote) : HomeState()
     }
 
     sealed class Effect : UiEffect {
@@ -22,7 +22,7 @@ class QuoteContract {
     }
 
     data class State(
-        val quoteState: QuoteState
+        val homeState: HomeState,
     ) : UiState
 
 }

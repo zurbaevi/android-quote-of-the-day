@@ -7,7 +7,7 @@ import androidx.room.Query
 import dev.zurbaevi.data.local.entity.QuoteEntity
 
 @Dao
-interface QuoteDao {
+interface HistoryDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertQuote(quote: QuoteEntity)
@@ -17,5 +17,8 @@ interface QuoteDao {
 
     @Query("delete from table_quote")
     suspend fun deleteQuotes()
+
+    @Query("select count(*) from table_quote where quote_author = :quoteAuthor and quote_text = :quoteText like 0")
+    suspend fun checkQuote(quoteAuthor: String, quoteText: String): Boolean
 
 }

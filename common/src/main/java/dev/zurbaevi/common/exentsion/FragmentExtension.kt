@@ -1,13 +1,19 @@
 package dev.zurbaevi.common.exentsion
 
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
 
-fun Fragment.showShortToast(message: String) {
-    Toast.makeText(this.requireContext(), message, Toast.LENGTH_SHORT).show()
+fun Fragment.showShortSnackBar(message: String) {
+    Snackbar.make(this.requireView(), message, Snackbar.LENGTH_SHORT).apply {
+        animationMode = Snackbar.ANIMATION_MODE_SLIDE
+        show()
+    }
 }
 
-fun Fragment.showLongToast(message: String) {
-    Toast.makeText(this.requireContext(), message, Toast.LENGTH_LONG).show()
+fun Fragment.showLongSnackBar(message: String) {
+    Snackbar.make(this.requireView(), message, Snackbar.LENGTH_LONG).apply {
+        animationMode = Snackbar.ANIMATION_MODE_SLIDE
+        show()
+    }
 }
 

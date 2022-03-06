@@ -44,4 +44,5 @@ dependencies {
     implementation(Dependencies.RECYCLER_VIEW)
     implementation(Dependencies.COROUTINES_ANDROID)
     implementation(Dependencies.COROUTINES_CORE)
+    implementation(Dependencies.MATERIAL)
 }

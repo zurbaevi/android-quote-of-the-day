@@ -3,8 +3,8 @@ package dev.zurbaevi.history
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.zurbaevi.common.base.BaseViewModel
-import dev.zurbaevi.domain.usecase.DeleteQuotesUseCase
-import dev.zurbaevi.domain.usecase.GetQuotesUseCase
+import dev.zurbaevi.domain.usecase.DeleteHistoryQuotesUseCase
+import dev.zurbaevi.domain.usecase.GetHistoryQuotesUseCase
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
@@ -12,8 +12,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HistoryViewModel @Inject constructor(
-    private val getQuotesUseCase: GetQuotesUseCase,
-    private val deleteQuotesUseCase: DeleteQuotesUseCase
+    private val getHistoryQuotesUseCase: GetHistoryQuotesUseCase,
+    private val deleteHistoryQuotesUseCase: DeleteHistoryQuotesUseCase
 ) : BaseViewModel<HistoryContract.Event, HistoryContract.State, HistoryContract.Effect>() {
 
     override fun createInitialState(): HistoryContract.State {
@@ -37,7 +37,7 @@ class HistoryViewModel @Inject constructor(
 
     private fun getQuotes() {
         viewModelScope.launch {
-            getQuotesUseCase()
+            getHistoryQuotesUseCase()
                 .onStart {
                     setState { copy(historyState = HistoryContract.HistoryState.Loading) }
                 }
@@ -54,7 +54,7 @@ class HistoryViewModel @Inject constructor(
 
     private fun deleteQuotes() {
         viewModelScope.launch {
-            deleteQuotesUseCase()
+            deleteHistoryQuotesUseCase()
                 .onStart {
                     setState { copy(historyState = HistoryContract.HistoryState.Loading) }
                 }

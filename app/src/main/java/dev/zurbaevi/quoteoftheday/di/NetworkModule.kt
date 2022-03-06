@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import dev.zurbaevi.data.remote.QuoteApi
+import dev.zurbaevi.data.remote.ApiService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -17,12 +17,12 @@ object NetworkModule {
     @Singleton
     fun provideRetrofitInterface(): Retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
-        .baseUrl(QuoteApi.BASE_URL)
+        .baseUrl(ApiService.BASE_URL)
         .build()
 
     @Provides
     @Singleton
-    fun provideQuoteApi(retrofit: Retrofit): QuoteApi =
-        retrofit.create(QuoteApi::class.java)
+    fun provideQuoteApi(retrofit: Retrofit): ApiService =
+        retrofit.create(ApiService::class.java)
 
 }

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 import dev.zurbaevi.common.base.BaseFragment
 import dev.zurbaevi.common.exentsion.gone
-import dev.zurbaevi.common.exentsion.showShortToast
+import dev.zurbaevi.common.exentsion.showShortSnackBar
 import dev.zurbaevi.common.exentsion.visible
 import dev.zurbaevi.history.databinding.FragmentHistoryBinding
 
@@ -33,24 +33,22 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
         initListeners()
     }
 
-    private fun initStateObservers() {
-        binding.apply {
-            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-                historyViewModel.uiState.collect {
-                    when (val state = it.historyState) {
-                        is HistoryContract.HistoryState.Idle -> {
-                            progressBar.gone()
-                            recyclerView.gone()
-                        }
-                        is HistoryContract.HistoryState.Loading -> {
-                            recyclerView.gone()
-                            progressBar.visible()
-                        }
-                        is HistoryContract.HistoryState.Success -> {
-                            historyAdapter.submitList(state.quotes)
-                            progressBar.gone()
-                            recyclerView.visible()
-                        }
+    private fun initStateObservers(): Unit = with(binding) {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            historyViewModel.uiState.collect {
+                when (val state = it.historyState) {
+                    is HistoryContract.HistoryState.Idle -> {
+                        progressBar.gone()
+                        recyclerView.gone()
+                    }
+                    is HistoryContract.HistoryState.Loading -> {
+                        recyclerView.gone()
+                        progressBar.visible()
+                    }
+                    is HistoryContract.HistoryState.Success -> {
+                        historyAdapter.submitList(state.quotes)
+                        progressBar.gone()
+                        recyclerView.visible()
                     }
                 }
             }
@@ -63,11 +61,11 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
                 historyViewModel.effect.collect {
                     when (it) {
                         is HistoryContract.Effect.Error -> {
-                            showShortToast(it.message)
+                            showShortSnackBar(it.message)
                             progressBar.gone()
                         }
                         is HistoryContract.Effect.Deleted -> {
-                            showShortToast(getString(R.string.quotes_deleted))
+                            showShortSnackBar(getString(R.string.quotes_deleted))
                             progressBar.gone()
                         }
                     }

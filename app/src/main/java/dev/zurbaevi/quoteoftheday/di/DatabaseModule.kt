@@ -7,7 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import dev.zurbaevi.data.local.QuoteDatabase
+import dev.zurbaevi.data.local.AppDatabase
 import javax.inject.Singleton
 
 @Module
@@ -18,12 +18,13 @@ object DatabaseModule {
     @Provides
     fun provideQuoteDatabase(@ApplicationContext context: Context) = Room.databaseBuilder(
         context,
-        QuoteDatabase::class.java,
-        QuoteDatabase.DATABASE_NAME
-    ).build()
+        AppDatabase::class.java,
+        AppDatabase.DATABASE_NAME
+    ).fallbackToDestructiveMigration()
+        .build()
 
     @Singleton
     @Provides
-    fun provideQuoteDao(database: QuoteDatabase) = database.quoteDao()
+    fun provideQuoteDao(database: AppDatabase) = database.historyDao()
 
 }
