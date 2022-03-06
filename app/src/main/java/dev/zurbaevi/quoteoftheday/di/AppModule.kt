@@ -43,25 +43,25 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideGetQuoteUseCase(homeRepository: HomeRepository): FetchQuoteUseCase {
+    fun provideFetchQuoteUseCase(homeRepository: HomeRepository): FetchQuoteUseCase {
         return FetchQuoteUseCase(homeRepository, Dispatchers.IO)
     }
 
     @Provides
     @Singleton
-    fun provideGetQuotesUseCase(historyRepository: HistoryRepository): GetHistoryQuotesUseCase {
+    fun provideGetHistoryQuotesUseCase(historyRepository: HistoryRepository): GetHistoryQuotesUseCase {
         return GetHistoryQuotesUseCase(historyRepository, Dispatchers.IO)
     }
 
     @Provides
     @Singleton
-    fun provideInsertQuoteUseCase(historyRepository: HistoryRepository): InsertHistoryQuoteUseCase {
+    fun provideInsertHistoryQuoteUseCase(historyRepository: HistoryRepository): InsertHistoryQuoteUseCase {
         return InsertHistoryQuoteUseCase(historyRepository, Dispatchers.IO)
     }
 
     @Provides
     @Singleton
-    fun provideDeleteQuotesUseCase(historyRepository: HistoryRepository): DeleteHistoryQuotesUseCase {
+    fun provideDeleteHistoryQuotesUseCase(historyRepository: HistoryRepository): DeleteHistoryQuotesUseCase {
         return DeleteHistoryQuotesUseCase(historyRepository, Dispatchers.IO)
     }
 

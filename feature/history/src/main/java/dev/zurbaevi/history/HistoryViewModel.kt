@@ -25,10 +25,10 @@ class HistoryViewModel @Inject constructor(
     override fun handleEvent(event: HistoryContract.Event) {
         viewModelScope.launch {
             when (event) {
-                is HistoryContract.Event.GetQuotes -> {
+                is HistoryContract.Event.OnGetQuotes -> {
                     getQuotes()
                 }
-                is HistoryContract.Event.DeleteQuotes -> {
+                is HistoryContract.Event.OnDeleteQuotes -> {
                     deleteQuotes()
                 }
             }

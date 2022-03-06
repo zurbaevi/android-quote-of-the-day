@@ -20,8 +20,4 @@ class HistoryLocalDataSourceImpl @Inject constructor(
         historyDao.deleteQuotes()
     }
 
-    override suspend fun checkQuote(quoteAuthor: String, quoteText: String): Boolean {
-        return historyDao.checkQuote(quoteAuthor, quoteText)
-    }
-
 }

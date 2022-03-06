@@ -10,6 +10,4 @@ interface HistoryLocalDataSource {
 
     suspend fun deleteQuotes()
 
-    suspend fun checkQuote(quoteAuthor: String, quoteText: String): Boolean
-
 }

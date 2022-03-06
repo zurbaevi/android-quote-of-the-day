@@ -11,6 +11,4 @@ interface HistoryRepository {
 
     fun insertQuote(quote: Quote): Flow<Unit>
 
-    fun checkQuote(quoteAuthor: String, quoteText: String): Flow<Boolean>
-
 }

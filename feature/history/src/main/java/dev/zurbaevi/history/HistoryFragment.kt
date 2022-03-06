@@ -77,14 +77,14 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
     private fun initListeners() {
         binding.apply {
             imageViewDelete.setOnClickListener {
-                historyViewModel.setEvent(HistoryContract.Event.DeleteQuotes)
+                historyViewModel.setEvent(HistoryContract.Event.OnDeleteQuotes)
             }
         }
     }
 
     private fun firstInitState() {
         if (historyViewModel.currentState.historyState is HistoryContract.HistoryState.Idle) {
-            historyViewModel.setEvent(HistoryContract.Event.GetQuotes)
+            historyViewModel.setEvent(HistoryContract.Event.OnGetQuotes)
         }
     }
 

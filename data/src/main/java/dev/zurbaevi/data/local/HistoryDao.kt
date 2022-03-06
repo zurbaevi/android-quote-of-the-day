@@ -18,7 +18,4 @@ interface HistoryDao {
     @Query("delete from table_quote")
     suspend fun deleteQuotes()
 
-    @Query("select count(*) from table_quote where quote_author = :quoteAuthor and quote_text = :quoteText like 0")
-    suspend fun checkQuote(quoteAuthor: String, quoteText: String): Boolean
-
 }

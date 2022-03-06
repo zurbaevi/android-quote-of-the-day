@@ -25,8 +25,4 @@ class HistoryRepositoryImpl @Inject constructor(
         emit(historyLocalDataSource.insertQuote(LocalMapper.map(quote)))
     }
 
-    override fun checkQuote(quoteAuthor: String, quoteText: String) = flow {
-        emit(historyLocalDataSource.checkQuote(quoteAuthor, quoteText))
-    }
-
 }

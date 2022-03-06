@@ -18,7 +18,7 @@ class HomeContract {
     }
 
     sealed class Event : UiEvent {
-        object FetchQuote : Event()
+        object OnFetchQuote : Event()
     }
 
     data class State(

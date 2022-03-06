@@ -26,7 +26,7 @@ class HomeViewModel @Inject constructor(
 
     override fun handleEvent(event: HomeContract.Event) {
         when (event) {
-            is HomeContract.Event.FetchQuote -> {
+            is HomeContract.Event.OnFetchQuote -> {
                 fetchQuote()
             }
         }
@@ -48,7 +48,6 @@ class HomeViewModel @Inject constructor(
                 }
         }
     }
-
 
     private fun insertQuote(quote: Quote) {
         viewModelScope.launch {

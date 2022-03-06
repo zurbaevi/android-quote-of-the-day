@@ -17,7 +17,7 @@ import dev.zurbaevi.home.databinding.FragmentHomeBinding
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
-    private val quoteViewModel by viewModels<HomeViewModel>()
+    private val homeViewModel by viewModels<HomeViewModel>()
 
     override val bindLayout: (LayoutInflater, ViewGroup?, Boolean) -> FragmentHomeBinding
         get() = FragmentHomeBinding::inflate
@@ -31,7 +31,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private fun initStateObservers(): Unit = with(binding) {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            quoteViewModel.uiState.collect {
+            homeViewModel.uiState.collect {
                 when (val state = it.homeState) {
                     is HomeContract.HomeState.Idle -> {
                         progressBar.gone()
@@ -57,7 +57,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private fun initEffectObservers() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            quoteViewModel.effect.collect {
+            homeViewModel.effect.collect {
                 when (it) {
                     is HomeContract.Effect.Error -> {
                         showLongSnackBar(it.message)
@@ -68,15 +68,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun initFirstState() {
-        if (quoteViewModel.currentState.homeState is HomeContract.HomeState.Idle) {
-            quoteViewModel.setEvent(HomeContract.Event.FetchQuote)
+        if (homeViewModel.currentState.homeState is HomeContract.HomeState.Idle) {
+            homeViewModel.setEvent(HomeContract.Event.OnFetchQuote)
         }
     }
 
     private fun initListeners() {
         binding.apply {
             imageViewRefresh.setOnClickListenerWithDebounce(debounceTime = 2000L) {
-                quoteViewModel.setEvent(HomeContract.Event.FetchQuote)
+                homeViewModel.setEvent(HomeContract.Event.OnFetchQuote)
             }
             imageViewHistory.setOnClickListener {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToFeatureHistory())
