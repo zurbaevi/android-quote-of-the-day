@@ -34,7 +34,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
         initListeners()
     }
 
-    private fun initStateObservers(): Unit = with(binding) {
+    private fun initStateObservers() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             historyViewModel.uiState.collect {
                 when (val state = it.historyState) {

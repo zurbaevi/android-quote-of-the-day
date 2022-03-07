@@ -30,7 +30,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         initEffectObservers()
     }
 
-    private fun initStateObservers(): Unit = with(binding) {
+    private fun initStateObservers() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             homeViewModel.uiState.collect {
                 when (val state = it.homeState) {
