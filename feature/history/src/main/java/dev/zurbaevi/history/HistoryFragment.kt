@@ -11,6 +11,7 @@ import dev.zurbaevi.common.base.BaseFragment
 import dev.zurbaevi.common.exentsion.gone
 import dev.zurbaevi.common.exentsion.showShortSnackBar
 import dev.zurbaevi.common.exentsion.visible
+import dev.zurbaevi.domain.model.Quote
 import dev.zurbaevi.history.databinding.FragmentHistoryBinding
 
 @AndroidEntryPoint
@@ -37,19 +38,9 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             historyViewModel.uiState.collect {
                 when (val state = it.historyState) {
-                    is HistoryContract.HistoryState.Idle -> {
-                        progressBar.gone()
-                        recyclerView.gone()
-                    }
-                    is HistoryContract.HistoryState.Loading -> {
-                        recyclerView.gone()
-                        progressBar.visible()
-                    }
-                    is HistoryContract.HistoryState.Success -> {
-                        historyAdapter.submitList(state.quotes)
-                        progressBar.gone()
-                        recyclerView.visible()
-                    }
+                    is HistoryContract.HistoryState.Idle -> hideAll()
+                    is HistoryContract.HistoryState.Loading -> showLoading()
+                    is HistoryContract.HistoryState.Success -> showData(state.quotes)
                 }
             }
         }
@@ -98,6 +89,23 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
             )
             recyclerView.adapter = historyAdapter
         }
+    }
+
+    private fun hideAll() = with(binding) {
+        progressBar.gone()
+        recyclerView.gone()
+    }
+
+    private fun showLoading() = with(binding) {
+        recyclerView.gone()
+        progressBar.visible()
+    }
+
+    private fun showData(quotes: List<Quote>) = with(binding) {
+        progressBar.gone()
+        historyAdapter.submitList(quotes)
+        progressBar.gone()
+        recyclerView.visible()
     }
 
 }

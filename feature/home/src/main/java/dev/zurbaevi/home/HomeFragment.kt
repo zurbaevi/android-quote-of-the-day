@@ -12,6 +12,7 @@ import dev.zurbaevi.common.exentsion.gone
 import dev.zurbaevi.common.exentsion.setOnClickListenerWithDebounce
 import dev.zurbaevi.common.exentsion.showLongSnackBar
 import dev.zurbaevi.common.exentsion.visible
+import dev.zurbaevi.domain.model.Quote
 import dev.zurbaevi.home.databinding.FragmentHomeBinding
 
 @AndroidEntryPoint
@@ -33,23 +34,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             homeViewModel.uiState.collect {
                 when (val state = it.homeState) {
-                    is HomeContract.HomeState.Idle -> {
-                        progressBar.gone()
-                        textViewText.gone()
-                        textViewAuthor.gone()
-                    }
-                    is HomeContract.HomeState.Loading -> {
-                        progressBar.visible()
-                        textViewText.gone()
-                        textViewAuthor.gone()
-                    }
-                    is HomeContract.HomeState.Success -> {
-                        textViewAuthor.text = state.quote.quoteAuthor
-                        textViewText.text = state.quote.quoteText
-                        textViewText.visible()
-                        textViewAuthor.visible()
-                        progressBar.gone()
-                    }
+                    is HomeContract.HomeState.Idle -> hideAll()
+                    is HomeContract.HomeState.Loading -> showLoading()
+                    is HomeContract.HomeState.Success -> showData(state.quote)
                 }
             }
         }
@@ -82,6 +69,26 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToFeatureHistory())
             }
         }
+    }
+
+    private fun hideAll() = with(binding) {
+        progressBar.gone()
+        textViewText.gone()
+        textViewAuthor.gone()
+    }
+
+    private fun showLoading() = with(binding) {
+        progressBar.visible()
+        textViewText.gone()
+        textViewAuthor.gone()
+    }
+
+    private fun showData(quote: Quote) = with(binding) {
+        textViewAuthor.text = quote.quoteAuthor
+        textViewText.text = quote.quoteText
+        textViewText.visible()
+        textViewAuthor.visible()
+        progressBar.gone()
     }
 
 }
