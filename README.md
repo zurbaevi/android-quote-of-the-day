@@ -20,6 +20,7 @@ ____
 - Navigation Component
 - Retrofit
 - Coroutines
+- Flow
 - Room
 - Hilt
 
