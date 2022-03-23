@@ -20,4 +20,6 @@
 
     <include app:graph="@navigation/graph_feature_home" />
 
+    <include app:graph="@navigation/graph_feature_favorite" />
+
 </navigation>

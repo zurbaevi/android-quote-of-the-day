@@ -5,6 +5,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface HomeRepository {
 
-    fun getQuote(): Flow<Quote>
+    fun fetchHomeQuote(): Flow<Quote>
 
 }

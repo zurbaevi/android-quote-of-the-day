@@ -6,7 +6,7 @@
     app:startDestination="@id/homeFragment">
 
     <fragment
-        android:id="@+id/homeFragment"
+        android:id="@id/homeFragment"
         android:name="dev.zurbaevi.home.HomeFragment"
         android:label="@string/quote_of_the_day"
         tools:layout="@layout/fragment_home">
@@ -17,6 +17,18 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+
+        <action
+            android:id="@+id/action_homeFragment_to_feature_favorite"
+            app:destination="@id/feature_favorite"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+
+    <include app:graph="@navigation/graph_feature_history" />
+
+    <include app:graph="@navigation/graph_feature_favorite" />
 
 </navigation>

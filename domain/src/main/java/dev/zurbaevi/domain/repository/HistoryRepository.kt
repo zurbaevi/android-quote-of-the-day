@@ -5,10 +5,10 @@ import kotlinx.coroutines.flow.Flow
 
 interface HistoryRepository {
 
-    fun getQuotes(): Flow<List<Quote>>
+    fun getHistoryQuotes(): Flow<List<Quote>>
 
-    fun deleteQuotes(): Flow<Unit>
+    fun deleteHistoryQuotes(): Flow<Unit>
 
-    fun insertQuote(quote: Quote): Flow<Unit>
+    fun insertHistoryQuote(quote: Quote): Flow<Unit>
 
 }

@@ -47,6 +47,7 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":navigation"))
     implementation(project(":feature:home"))
+    implementation(project(":feature:favorite"))
     implementation(project(":feature:history"))
 
     implementation(Dependencies.CORE_KTX)
@@ -69,4 +70,6 @@ dependencies {
     implementation(Dependencies.ROOM)
     implementation(Dependencies.ROOM_KTX)
     kapt(Dependencies.ROOM_COMPILER)
+
+    debugImplementation(Dependencies.LEAK_CANARY)
 }

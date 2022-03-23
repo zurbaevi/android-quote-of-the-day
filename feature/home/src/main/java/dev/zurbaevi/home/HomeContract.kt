@@ -10,7 +10,8 @@ class HomeContract {
     sealed class HomeState {
         object Idle : HomeState()
         object Loading : HomeState()
-        data class Success(val quote: Quote) : HomeState()
+        object Error : HomeState()
+        object Success : HomeState()
     }
 
     sealed class Effect : UiEffect {
@@ -18,11 +19,15 @@ class HomeContract {
     }
 
     sealed class Event : UiEvent {
+        object OnInsertFavoriteQuote : Event()
+        object OnDeleteFavoriteQuote : Event()
         object OnFetchQuote : Event()
     }
 
     data class State(
         val homeState: HomeState,
+        val quoteIsFavorite: Boolean,
+        val quote: Quote
     ) : UiState
 
 }

@@ -47,4 +47,6 @@ object Dependencies {
 
     const val FRAGMENT_KTX: String = "androidx.fragment:fragment-ktx:${Versions.FRAGMENT_KTX}"
 
+    const val LEAK_CANARY: String = "com.squareup.leakcanary:leakcanary-android:${Versions.LEAK_CANARY}"
+
 }

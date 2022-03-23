@@ -9,13 +9,14 @@ class HistoryContract {
 
     sealed class HistoryState {
         object Idle : HistoryState()
+        object Empty : HistoryState()
         object Loading : HistoryState()
-        data class Success(val quotes: List<Quote>) : HistoryState()
+        object Success : HistoryState()
     }
 
     sealed class Effect : UiEffect {
-        data class Error(val message: String) : Effect()
-        object Deleted : Effect()
+        data class ShowError(val message: String) : Effect()
+        object ShowInfoDeleteQuotes : Effect()
     }
 
     sealed class Event : UiEvent {
@@ -24,7 +25,8 @@ class HistoryContract {
     }
 
     data class State(
-        val historyState: HistoryState
+        val historyState: HistoryState,
+        val quotes: List<Quote>
     ) : UiState
 
 }

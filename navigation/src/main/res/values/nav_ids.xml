@@ -2,4 +2,5 @@
 <resources>
     <item name="feature_home" type="id" />
     <item name="feature_history" type="id" />
+    <item name="feature_favorite" type="id" />
 </resources>

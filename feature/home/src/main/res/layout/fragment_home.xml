@@ -2,41 +2,35 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragmentQuote"
     android:layout_width="match_parent"
+    android:id="@+id/homeFragment"
     android:layout_height="match_parent"
     tools:context="dev.zurbaevi.home.HomeFragment">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/textViewQuoteText"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:orientation="vertical"
+        android:maxLines="6"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Подавляй желание идти легким путем, забудь о любви и страсти, и твое сердце никогда небудет разбито, но, это ли настоящая жизнь?" />
 
-        <TextView
-            android:id="@+id/textViewText"
-            android:layout_width="320dp"
-            android:layout_height="wrap_content"
-            android:maxLines="6"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            tools:text="Подавляй желание идти легким путем, забудь о любви и страсти, и твое сердце никогда небудет разбито, но, это ли настоящая жизнь?" />
-
-        <TextView
-            android:id="@+id/textViewAuthor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="12dp"
-            android:maxLines="1"
-            android:textSize="18sp"
-            android:textStyle="italic"
-            tools:text="к/ф «Запретное царство»" />
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/textViewQuoteAuthor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="12dp"
+        android:maxLines="1"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="@+id/textViewQuoteText"
+        app:layout_constraintTop_toBottomOf="@+id/textViewQuoteText"
+        tools:text="к/ф «Запретное царство»" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -69,6 +63,15 @@
             android:src="@drawable/ic_history"
             tools:ignore="ContentDescription,SpeakableTextPresentCheck,ImageContrastCheck" />
 
+        <ImageView
+            android:id="@+id/imageViewFavorite"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_favorite_border"
+            tools:ignore="ContentDescription,SpeakableTextPresentCheck,ImageContrastCheck" />
+
     </LinearLayout>
 
     <ProgressBar
@@ -82,5 +85,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/imageViewError"
+        android:layout_width="84dp"
+        android:layout_height="84dp"
+        android:src="@drawable/ic_error"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription,SpeakableTextPresentCheck,ImageContrastCheck" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

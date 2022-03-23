@@ -4,20 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 import dev.zurbaevi.common.base.BaseFragment
-import dev.zurbaevi.common.exentsion.gone
+import dev.zurbaevi.common.exentsion.inVisible
 import dev.zurbaevi.common.exentsion.showShortSnackBar
 import dev.zurbaevi.common.exentsion.visible
-import dev.zurbaevi.domain.model.Quote
 import dev.zurbaevi.history.databinding.FragmentHistoryBinding
 
 @AndroidEntryPoint
-class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
+class HistoryFragment :
+    BaseFragment<HistoryContract.Event, HistoryContract.State, HistoryContract.Effect, FragmentHistoryBinding, HistoryViewModel>() {
 
-    private val historyViewModel by viewModels<HistoryViewModel>()
+    override val viewModel by viewModels<HistoryViewModel>()
 
     override val bindLayout: (LayoutInflater, ViewGroup?, Boolean) -> FragmentHistoryBinding
         get() = FragmentHistoryBinding::inflate
@@ -29,38 +28,27 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
     override fun prepareView(savedInstanceState: Bundle?) {
         firstInitState()
         configurationRecyclerView()
-        initStateObservers()
-        initEffectObservers()
         initListeners()
     }
 
-    private fun initStateObservers() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            historyViewModel.uiState.collect {
-                when (val state = it.historyState) {
-                    is HistoryContract.HistoryState.Idle -> hideAll()
-                    is HistoryContract.HistoryState.Loading -> showLoading()
-                    is HistoryContract.HistoryState.Success -> showData(state.quotes)
-                }
-            }
+    override fun renderState(state: HistoryContract.State) {
+        when (state.historyState) {
+            is HistoryContract.HistoryState.Idle -> hideAll()
+            is HistoryContract.HistoryState.Empty -> hideAll()
+            is HistoryContract.HistoryState.Loading -> showLoading()
+            is HistoryContract.HistoryState.Success -> showData()
         }
     }
 
-    private fun initEffectObservers() {
-        binding.apply {
-            viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-                historyViewModel.effect.collect {
-                    when (it) {
-                        is HistoryContract.Effect.Error -> {
-                            showShortSnackBar(it.message)
-                            progressBar.gone()
-                        }
-                        is HistoryContract.Effect.Deleted -> {
-                            showShortSnackBar(getString(R.string.quotes_deleted))
-                            progressBar.gone()
-                        }
-                    }
-                }
+    override fun renderEffect(effect: HistoryContract.Effect) {
+        when (effect) {
+            is HistoryContract.Effect.ShowError -> {
+                showShortSnackBar(effect.message)
+                hideAll()
+            }
+            is HistoryContract.Effect.ShowInfoDeleteQuotes -> {
+                showShortSnackBar(getString(R.string.quotes_deleted))
+                hideAll()
             }
         }
     }
@@ -68,14 +56,14 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
     private fun initListeners() {
         binding.apply {
             imageViewDelete.setOnClickListener {
-                historyViewModel.setEvent(HistoryContract.Event.OnDeleteQuotes)
+                viewModel.setEvent(HistoryContract.Event.OnDeleteQuotes)
             }
         }
     }
 
     private fun firstInitState() {
-        if (historyViewModel.currentState.historyState is HistoryContract.HistoryState.Idle) {
-            historyViewModel.setEvent(HistoryContract.Event.OnGetQuotes)
+        if (viewModel.currentState.historyState is HistoryContract.HistoryState.Idle) {
+            viewModel.setEvent(HistoryContract.Event.OnGetQuotes)
         }
     }
 
@@ -92,19 +80,21 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
     }
 
     private fun hideAll() = with(binding) {
-        progressBar.gone()
-        recyclerView.gone()
+        imageViewEmpty.visible()
+        progressBar.inVisible()
+        recyclerView.inVisible()
     }
 
     private fun showLoading() = with(binding) {
-        recyclerView.gone()
+        recyclerView.inVisible()
+        imageViewEmpty.inVisible()
         progressBar.visible()
     }
 
-    private fun showData(quotes: List<Quote>) = with(binding) {
-        progressBar.gone()
-        historyAdapter.submitList(quotes)
-        progressBar.gone()
+    private fun showData() = with(binding) {
+        imageViewEmpty.inVisible()
+        progressBar.inVisible()
+        historyAdapter.submitList(viewModel.currentState.quotes)
         recyclerView.visible()
     }
 

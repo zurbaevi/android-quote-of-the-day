@@ -2,6 +2,7 @@ package dev.zurbaevi.common.exentsion
 
 import android.os.SystemClock
 import android.view.View
+import android.widget.ImageView
 
 fun View.visible() {
     visibility = View.VISIBLE
@@ -9,10 +10,6 @@ fun View.visible() {
 
 fun View.inVisible() {
     visibility = View.INVISIBLE
-}
-
-fun View.gone() {
-    visibility = View.GONE
 }
 
 fun View.setOnClickListenerWithDebounce(debounceTime: Long, action: () -> Unit) {
@@ -25,4 +22,15 @@ fun View.setOnClickListenerWithDebounce(debounceTime: Long, action: () -> Unit) 
             lastClickTime = SystemClock.elapsedRealtime()
         }
     })
+}
+
+fun ImageView.setImageIfResource(
+    isFavorite: Boolean,
+    firstImageResource: Int,
+    secondImageResource: Int
+) {
+    return when (isFavorite) {
+        true -> this.setImageResource(firstImageResource)
+        false -> this.setImageResource(secondImageResource)
+    }
 }
