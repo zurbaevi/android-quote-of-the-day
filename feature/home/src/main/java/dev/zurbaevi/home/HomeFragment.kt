@@ -8,6 +8,7 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.zurbaevi.common.base.BaseFragment
 import dev.zurbaevi.common.exentsion.*
+import dev.zurbaevi.domain.model.Quote
 import dev.zurbaevi.home.databinding.FragmentHomeBinding
 
 @AndroidEntryPoint
@@ -29,7 +30,7 @@ class HomeFragment :
             is HomeContract.HomeState.Idle -> hideAll()
             is HomeContract.HomeState.Loading -> showLoading()
             is HomeContract.HomeState.Error -> showError()
-            is HomeContract.HomeState.Success -> showData()
+            is HomeContract.HomeState.Success -> showData(state.quote)
         }
     }
 
@@ -95,9 +96,9 @@ class HomeFragment :
         textViewQuoteAuthor.inVisible()
     }
 
-    private fun showData() = with(binding) {
-        textViewQuoteAuthor.text = viewModel.currentState.quote.quoteAuthor
-        textViewQuoteText.text = viewModel.currentState.quote.quoteText
+    private fun showData(quote: Quote) = with(binding) {
+        textViewQuoteAuthor.text = quote.quoteAuthor
+        textViewQuoteText.text = quote.quoteText
         imageViewFavorite.isEnabled = true
         imageViewFavorite.setImageIfResource(
             viewModel.currentState.quoteIsFavorite,
