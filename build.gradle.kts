@@ -21,7 +21,7 @@ buildscript {
 tasks {
     withType<DependencyUpdatesTask> {
         rejectVersionIf {
-            candidate.version.isNonStable()
+            isNonStable(candidate.version)
         }
     }
     register(name = "type", type = Delete::class) {
