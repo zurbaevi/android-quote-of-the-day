@@ -14,4 +14,6 @@ object Plugins {
 
     const val HILT: String = "dagger.hilt.android.plugin"
 
+    const val BEN_MANES = "com.github.ben-manes.versions"
+
 }

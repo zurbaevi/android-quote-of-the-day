@@ -1,8 +1,8 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 
 plugins {
-    id("com.github.ben-manes.versions") version Versions.BEN_MANES
-    id("org.jetbrains.kotlin.android") version "1.6.10" apply false
+    id(Plugins.BEN_MANES) version Versions.BEN_MANES
+    id(Plugins.ORG_JETBRAINS_KOTLIN_ANDROID) version Versions.KOTLIN_GRADLE apply false
 }
 
 buildscript {
