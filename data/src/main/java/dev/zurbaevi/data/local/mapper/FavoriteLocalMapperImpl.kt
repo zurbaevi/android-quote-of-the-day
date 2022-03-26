@@ -2,7 +2,6 @@ package dev.zurbaevi.data.local.mapper
 
 import dev.zurbaevi.common.mapper.LocalMapper
 import dev.zurbaevi.data.local.model.FavoriteQuoteEntity
-import dev.zurbaevi.data.local.model.HistoryQuoteEntity
 import dev.zurbaevi.domain.model.Quote
 import javax.inject.Inject
 
