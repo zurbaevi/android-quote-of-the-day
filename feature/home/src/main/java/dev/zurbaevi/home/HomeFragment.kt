@@ -36,9 +36,7 @@ class HomeFragment :
 
     override fun renderEffect(effect: HomeContract.Effect) {
         when (effect) {
-            is HomeContract.Effect.Error -> {
-                showLongSnackBar(effect.message)
-            }
+            is HomeContract.Effect.Error -> showLongSnackBar(effect.message)
         }
     }
 

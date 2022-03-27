@@ -34,28 +34,19 @@ class HomeViewModel @Inject constructor(
 
     override fun handleEvent(event: HomeContract.Event) {
         when (event) {
-            is HomeContract.Event.OnFetchQuote -> {
-                fetchQuote()
-            }
-            is HomeContract.Event.OnInsertFavoriteQuote -> {
-                insertFavoriteQuote()
-            }
-            is HomeContract.Event.OnDeleteFavoriteQuote -> {
-                deleteFavoriteQuote()
-            }
+            is HomeContract.Event.OnFetchQuote -> fetchQuote()
+            is HomeContract.Event.OnInsertFavoriteQuote -> insertFavoriteQuote(uiState.value.quote)
+            is HomeContract.Event.OnDeleteFavoriteQuote -> deleteFavoriteQuote(uiState.value.quote)
         }
     }
 
     private fun fetchQuote() {
         viewModelScope.launch {
             fetchHomeQuoteUseCase()
-                .onStart {
-                    setState { copy(homeState = HomeContract.HomeState.Loading) }
-                }
-                .catch {
-                    setStateError(it.message.toString())
-                }
+                .onStart { setState { copy(homeState = HomeContract.HomeState.Loading) } }
+                .catch { setStateError(it.message.toString()) }
                 .collect { quote ->
+                    setState { copy(homeState = HomeContract.HomeState.Success, quote = quote) }
                     checkFavoriteQuote(quote)
                     insertHistoryQuote(quote)
                 }
@@ -65,48 +56,32 @@ class HomeViewModel @Inject constructor(
     private fun insertHistoryQuote(quote: Quote) {
         viewModelScope.launch {
             insertHistoryQuoteUseCase(quote)
-                .catch {
-                    setStateError(it.message.toString())
-                }.collect()
+                .catch { setStateError(it.message.toString()) }
+                .collect()
         }
     }
 
     private fun checkFavoriteQuote(quote: Quote) {
         viewModelScope.launch {
             checkFavoriteQuoteUseCase(quote)
-                .catch {
-                    setStateError(it.message.toString())
-                }.collect {
-                    setState {
-                        copy(
-                            homeState = HomeContract.HomeState.Success,
-                            quote = quote,
-                            quoteIsFavorite = it
-                        )
-                    }
-                }
+                .catch { setStateError(it.message.toString()) }
+                .collect { setState { copy(quoteIsFavorite = true) } }
         }
     }
 
-    private fun insertFavoriteQuote() {
+    private fun insertFavoriteQuote(quote: Quote) {
         viewModelScope.launch {
-            insertFavoriteQuoteUseCase(uiState.value.quote)
-                .catch {
-                    setStateError(it.message.toString())
-                }.collect {
-                    setState { copy(quoteIsFavorite = true) }
-                }
+            insertFavoriteQuoteUseCase(quote)
+                .catch { setStateError(it.message.toString()) }
+                .collect { setState { copy(quoteIsFavorite = true) } }
         }
     }
 
-    private fun deleteFavoriteQuote() {
+    private fun deleteFavoriteQuote(quote: Quote) {
         viewModelScope.launch {
-            deleteFavoriteQuoteUseCase(uiState.value.quote)
-                .catch {
-                    setStateError(it.message.toString())
-                }.collect {
-                    setState { copy(quoteIsFavorite = false) }
-                }
+            deleteFavoriteQuoteUseCase(quote)
+                .catch { setStateError(it.message.toString()) }
+                .collect { setState { copy(quoteIsFavorite = false) } }
         }
     }
 
