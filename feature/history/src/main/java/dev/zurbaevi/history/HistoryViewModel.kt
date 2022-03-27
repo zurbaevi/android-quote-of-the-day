@@ -26,12 +26,8 @@ class HistoryViewModel @Inject constructor(
     override fun handleEvent(event: HistoryContract.Event) {
         viewModelScope.launch {
             when (event) {
-                is HistoryContract.Event.OnGetQuotes -> {
-                    getQuotes()
-                }
-                is HistoryContract.Event.OnDeleteQuotes -> {
-                    deleteQuotes()
-                }
+                is HistoryContract.Event.OnGetQuotes -> getQuotes()
+                is HistoryContract.Event.OnDeleteQuotes -> deleteQuotes()
             }
         }
     }
@@ -39,12 +35,8 @@ class HistoryViewModel @Inject constructor(
     private fun getQuotes() {
         viewModelScope.launch {
             getHistoryQuotesUseCase()
-                .onStart {
-                    setState { copy(historyState = HistoryContract.HistoryState.Loading) }
-                }
-                .catch {
-                    setEffect { HistoryContract.Effect.ShowError(it.message.toString()) }
-                }
+                .onStart { setState { copy(historyState = HistoryContract.HistoryState.Loading) } }
+                .catch { setEffect { HistoryContract.Effect.ShowSnackBar(it.message.toString()) } }
                 .collect { quotes ->
                     if (quotes.isNullOrEmpty()) {
                         setState { copy(historyState = HistoryContract.HistoryState.Empty) }
@@ -63,15 +55,11 @@ class HistoryViewModel @Inject constructor(
     private fun deleteQuotes() {
         viewModelScope.launch {
             deleteHistoryQuotesUseCase()
-                .onStart {
-                    setState { copy(historyState = HistoryContract.HistoryState.Loading) }
-                }
-                .catch {
-                    setEffect { HistoryContract.Effect.ShowError(it.message.toString()) }
-                }
+                .onStart { setState { copy(historyState = HistoryContract.HistoryState.Loading) } }
+                .catch { setEffect { HistoryContract.Effect.ShowSnackBar(it.message.toString()) } }
                 .collect {
                     setState { copy(historyState = HistoryContract.HistoryState.Empty) }
-                    setEffect { HistoryContract.Effect.ShowInfoDeleteQuotes }
+                    setEffect { HistoryContract.Effect.ShowSnackBarDeleteQuotes }
                 }
         }
     }

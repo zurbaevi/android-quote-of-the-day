@@ -15,8 +15,8 @@ class HistoryContract {
     }
 
     sealed class Effect : UiEffect {
-        data class ShowError(val message: String) : Effect()
-        object ShowInfoDeleteQuotes : Effect()
+        data class ShowSnackBar(val message: String) : Effect()
+        object ShowSnackBarDeleteQuotes : Effect()
     }
 
     sealed class Event : UiEvent {

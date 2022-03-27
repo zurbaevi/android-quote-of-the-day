@@ -10,6 +10,7 @@ import dev.zurbaevi.common.base.BaseFragment
 import dev.zurbaevi.common.exentsion.inVisible
 import dev.zurbaevi.common.exentsion.showShortSnackBar
 import dev.zurbaevi.common.exentsion.visible
+import dev.zurbaevi.domain.model.Quote
 import dev.zurbaevi.history.databinding.FragmentHistoryBinding
 
 @AndroidEntryPoint
@@ -36,17 +37,17 @@ class HistoryFragment :
             is HistoryContract.HistoryState.Idle -> hideAll()
             is HistoryContract.HistoryState.Empty -> hideAll()
             is HistoryContract.HistoryState.Loading -> showLoading()
-            is HistoryContract.HistoryState.Success -> showData()
+            is HistoryContract.HistoryState.Success -> showData(state.quotes)
         }
     }
 
     override fun renderEffect(effect: HistoryContract.Effect) {
         when (effect) {
-            is HistoryContract.Effect.ShowError -> {
+            is HistoryContract.Effect.ShowSnackBar -> {
                 showShortSnackBar(effect.message)
                 hideAll()
             }
-            is HistoryContract.Effect.ShowInfoDeleteQuotes -> {
+            is HistoryContract.Effect.ShowSnackBarDeleteQuotes -> {
                 showShortSnackBar(getString(R.string.quotes_deleted))
                 hideAll()
             }
@@ -91,10 +92,10 @@ class HistoryFragment :
         progressBar.visible()
     }
 
-    private fun showData() = with(binding) {
+    private fun showData(quotes: List<Quote>) = with(binding) {
         imageViewEmpty.inVisible()
         progressBar.inVisible()
-        historyAdapter.submitList(viewModel.currentState.quotes)
+        historyAdapter.submitList(quotes)
         recyclerView.visible()
     }
 

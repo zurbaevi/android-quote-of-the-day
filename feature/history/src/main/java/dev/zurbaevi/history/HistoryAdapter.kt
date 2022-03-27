@@ -4,15 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import dev.zurbaevi.common.base.BaseAdapter
-import dev.zurbaevi.common.base.BaseViewHolder
 import dev.zurbaevi.domain.model.Quote
 import dev.zurbaevi.history.databinding.QuoteHistoryItemBinding
 
 class HistoryAdapter :
-    BaseAdapter<Quote, QuoteHistoryItemBinding, HistoryAdapter.ViewHolder>(QuoteDiffCallback) {
+    BaseAdapter<Quote, QuoteHistoryItemBinding, HistoryViewHolder>(HistoryDiffCallback) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
+        return HistoryViewHolder(
             QuoteHistoryItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
@@ -21,24 +20,11 @@ class HistoryAdapter :
         )
     }
 
-    object QuoteDiffCallback : DiffUtil.ItemCallback<Quote>() {
+    object HistoryDiffCallback : DiffUtil.ItemCallback<Quote>() {
         override fun areItemsTheSame(oldItem: Quote, newItem: Quote) =
             oldItem.quoteId == newItem.quoteId
 
         override fun areContentsTheSame(oldItem: Quote, newItem: Quote) = oldItem == newItem
-    }
-
-    class ViewHolder(private val binding: QuoteHistoryItemBinding) :
-        BaseViewHolder<Quote, QuoteHistoryItemBinding>(binding) {
-
-        override fun bind() {
-            getRowItem()?.let { quote ->
-                binding.apply {
-                    textViewQuoteAuthor.text = quote.quoteAuthor
-                    textViewQuoteText.text = quote.quoteText
-                }
-            }
-        }
     }
 
 }
