@@ -65,7 +65,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             checkFavoriteQuoteUseCase(quote)
                 .catch { setStateError(it.message.toString()) }
-                .collect { setState { copy(quoteIsFavorite = true) } }
+                .collect { setState { copy(quoteIsFavorite = it) } }
         }
     }
 
