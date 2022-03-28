@@ -31,14 +31,4 @@ abstract class ListAdapterSwipe<T, VH : RecyclerView.ViewHolder>(
         return item
     }
 
-    fun removeItem(item: T): T? {
-        val position = currentList.indexOf(item)
-        if (position == -1) return null
-        return removeItem(position)
-    }
-
-    open fun isItemSwipe(viewHolder: RecyclerView.ViewHolder): Boolean {
-        return true
-    }
-
 }
