@@ -1,3 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="favorite">Favorite</string>
+    <string name="quote_deleted">Quote have been successfully deleted</string>
+    <string name="swipe_left_or_right_to_delete_quote">Swipe left or right to delete a quote from favorites</string>
 </resources>

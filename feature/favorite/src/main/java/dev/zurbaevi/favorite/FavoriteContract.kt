@@ -1,0 +1,32 @@
+package dev.zurbaevi.favorite
+
+import dev.zurbaevi.common.base.UiEffect
+import dev.zurbaevi.common.base.UiEvent
+import dev.zurbaevi.common.base.UiState
+import dev.zurbaevi.domain.model.Quote
+
+class FavoriteContract {
+
+    sealed class FavoriteState {
+        object Idle : FavoriteState()
+        object Empty : FavoriteState()
+        object Loading : FavoriteState()
+        object Success : FavoriteState()
+    }
+
+    sealed class Effect : UiEffect {
+        data class ShowSnackBar(val message: String) : Effect()
+        object ShowSnackBarDeleteQuote : Effect()
+    }
+
+    sealed class Event : UiEvent {
+        object OnGetQuotes : Event()
+        data class OnDeleteQuote(val quote: Quote) : Event()
+    }
+
+    data class State(
+        val favoriteState: FavoriteState,
+        val quotes: List<Quote>
+    ) : UiState
+
+}
