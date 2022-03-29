@@ -3,6 +3,7 @@ package dev.zurbaevi.history
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.zurbaevi.common.base.BaseViewModel
+import dev.zurbaevi.domain.model.Quote
 import dev.zurbaevi.domain.usecase.history.DeleteHistoryQuotesUseCase
 import dev.zurbaevi.domain.usecase.history.GetHistoryQuotesUseCase
 import kotlinx.coroutines.flow.catch
@@ -38,15 +39,8 @@ class HistoryViewModel @Inject constructor(
                 .onStart { setState { copy(historyState = HistoryContract.HistoryState.Loading) } }
                 .catch { setEffect { HistoryContract.Effect.ShowSnackBar(it.message.toString()) } }
                 .collect { quotes ->
-                    if (quotes.isNullOrEmpty()) {
-                        setState { copy(historyState = HistoryContract.HistoryState.Empty) }
-                    } else {
-                        setState {
-                            copy(
-                                historyState = HistoryContract.HistoryState.Success,
-                                quotes = quotes
-                            )
-                        }
+                    if (checkFavoriteIsEmpty(quotes)) {
+                        setState { copy(historyState = HistoryContract.HistoryState.Success, quotes = quotes) }
                     }
                 }
         }
@@ -61,6 +55,15 @@ class HistoryViewModel @Inject constructor(
                     setState { copy(historyState = HistoryContract.HistoryState.Empty) }
                     setEffect { HistoryContract.Effect.ShowSnackBarDeleteQuotes }
                 }
+        }
+    }
+
+    private fun checkFavoriteIsEmpty(quotes: List<Quote>): Boolean {
+        return if (!quotes.isNullOrEmpty()) {
+            true
+        } else {
+            setState { copy(historyState = HistoryContract.HistoryState.Empty) }
+            false
         }
     }
 

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.example.favorite.R
@@ -37,10 +38,10 @@ class FavoriteFragment :
 
     override fun renderState(state: FavoriteContract.State) {
         when (state.favoriteState) {
-            FavoriteContract.FavoriteState.Empty -> hideAll()
-            FavoriteContract.FavoriteState.Idle -> hideAll()
-            FavoriteContract.FavoriteState.Loading -> showLoading()
-            FavoriteContract.FavoriteState.Success -> showData(state.quotes)
+            is FavoriteContract.FavoriteState.Empty -> hideAll()
+            is FavoriteContract.FavoriteState.Idle -> hideAll()
+            is FavoriteContract.FavoriteState.Loading -> showLoading()
+            is FavoriteContract.FavoriteState.Success -> showData(state.quotes)
         }
     }
 
@@ -78,9 +79,15 @@ class FavoriteFragment :
     }
 
     private fun implementItemTouchHelper() {
-        ItemTouchHelper(ItemSwipeHandler(favoriteAdapter) { quote ->
+        ItemTouchHelper(ItemSwipeHandler(favoriteAdapter) { quote, quotes ->
             viewModel.setEvent(FavoriteContract.Event.OnDeleteQuote(quote))
+            viewModel.setEvent(FavoriteContract.Event.OnUpdateQuote(quotes))
+            setInfoAboutSwipedDeleteQuote()
         }).attachToRecyclerView(binding.recyclerView)
+    }
+
+    private fun setInfoAboutSwipedDeleteQuote() {
+        findNavController().previousBackStackEntry?.savedStateHandle?.set("swiped", true)
     }
 
     private fun hideAll() = with(binding) {

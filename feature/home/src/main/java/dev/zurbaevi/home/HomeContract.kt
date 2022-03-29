@@ -21,6 +21,7 @@ class HomeContract {
     sealed class Event : UiEvent {
         object OnInsertFavoriteQuote : Event()
         object OnDeleteFavoriteQuote : Event()
+        object OnCheckFavoriteQuote : Event()
         object OnFetchQuote : Event()
     }
 

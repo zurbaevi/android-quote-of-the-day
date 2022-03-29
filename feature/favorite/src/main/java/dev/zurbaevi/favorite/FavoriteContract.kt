@@ -22,6 +22,7 @@ class FavoriteContract {
     sealed class Event : UiEvent {
         object OnGetQuotes : Event()
         data class OnDeleteQuote(val quote: Quote) : Event()
+        data class OnUpdateQuote(val quotes: List<Quote>) : Event()
     }
 
     data class State(

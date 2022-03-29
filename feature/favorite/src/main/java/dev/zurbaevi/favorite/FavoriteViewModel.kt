@@ -15,8 +15,7 @@ import javax.inject.Inject
 class FavoriteViewModel @Inject constructor(
     private val getFavoriteQuotesUseCase: GetFavoriteQuotesUseCase,
     private val deleteFavoriteQuoteUseCase: DeleteFavoriteQuoteUseCase
-) :
-    BaseViewModel<FavoriteContract.Event, FavoriteContract.State, FavoriteContract.Effect>() {
+) : BaseViewModel<FavoriteContract.Event, FavoriteContract.State, FavoriteContract.Effect>() {
 
     override fun createInitialState(): FavoriteContract.State {
         return FavoriteContract.State(
@@ -27,11 +26,12 @@ class FavoriteViewModel @Inject constructor(
 
     override fun handleEvent(event: FavoriteContract.Event) {
         when (event) {
-            is FavoriteContract.Event.OnDeleteQuote -> {
-                deleteFavoriteQuote(event.quote)
-            }
-            is FavoriteContract.Event.OnGetQuotes -> {
-                getFavoriteQuotes()
+            is FavoriteContract.Event.OnDeleteQuote -> deleteFavoriteQuote(event.quote)
+            is FavoriteContract.Event.OnGetQuotes -> getFavoriteQuotes()
+            is FavoriteContract.Event.OnUpdateQuote -> {
+                if (checkFavoriteIsEmpty(event.quotes)) {
+                    updateQuotes(event.quotes)
+                }
             }
         }
     }
@@ -42,11 +42,13 @@ class FavoriteViewModel @Inject constructor(
                 .onStart { setState { copy(favoriteState = FavoriteContract.FavoriteState.Loading) } }
                 .catch { setEffect { FavoriteContract.Effect.ShowSnackBar(it.message.toString()) } }
                 .collect { quotes ->
-                    setState {
-                        copy(
-                            favoriteState = FavoriteContract.FavoriteState.Success,
-                            quotes = quotes
-                        )
+                    if (checkFavoriteIsEmpty(quotes)) {
+                        setState {
+                            copy(
+                                favoriteState = FavoriteContract.FavoriteState.Success,
+                                quotes = quotes
+                            )
+                        }
                     }
                 }
         }
@@ -55,12 +57,23 @@ class FavoriteViewModel @Inject constructor(
     private fun deleteFavoriteQuote(quote: Quote) {
         viewModelScope.launch {
             deleteFavoriteQuoteUseCase(quote)
-                .catch {
-                    setEffect { FavoriteContract.Effect.ShowSnackBar(it.message.toString()) }
-                }
-                .collect {
-                    setEffect { FavoriteContract.Effect.ShowSnackBarDeleteQuote }
-                }
+                .catch { setEffect { FavoriteContract.Effect.ShowSnackBar(it.message.toString()) } }
+                .collect { setEffect { FavoriteContract.Effect.ShowSnackBarDeleteQuote } }
+        }
+    }
+
+    private fun updateQuotes(quotes: List<Quote>) {
+        viewModelScope.launch {
+            setState { copy(quotes = quotes) }
+        }
+    }
+
+    private fun checkFavoriteIsEmpty(quotes: List<Quote>): Boolean {
+        return if (!quotes.isNullOrEmpty()) {
+            true
+        } else {
+            setState { copy(favoriteState = FavoriteContract.FavoriteState.Empty) }
+            false
         }
     }
 

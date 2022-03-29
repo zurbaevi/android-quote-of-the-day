@@ -23,6 +23,7 @@ class HomeFragment :
     override fun prepareView(savedInstanceState: Bundle?) {
         initFirstState()
         initListeners()
+        getInfoAboutSwipedDeleteQuote()
     }
 
     override fun renderState(state: HomeContract.State) {
@@ -30,7 +31,7 @@ class HomeFragment :
             is HomeContract.HomeState.Idle -> hideAll()
             is HomeContract.HomeState.Loading -> showLoading()
             is HomeContract.HomeState.Error -> showError()
-            is HomeContract.HomeState.Success -> showData(state.quote)
+            is HomeContract.HomeState.Success -> showData(state.quote, state.quoteIsFavorite)
         }
     }
 
@@ -71,6 +72,17 @@ class HomeFragment :
         }
     }
 
+    private fun getInfoAboutSwipedDeleteQuote() {
+        if (viewModel.currentState.homeState is HomeContract.HomeState.Success) {
+            findNavController().currentBackStackEntry?.savedStateHandle?.get<Boolean>("swiped")
+                ?.let { isSwiped ->
+                    if (isSwiped) {
+                        viewModel.setEvent(HomeContract.Event.OnCheckFavoriteQuote)
+                    }
+                }
+        }
+    }
+
     private fun hideAll() = with(binding) {
         progressBar.inVisible()
         imageViewError.inVisible()
@@ -81,7 +93,6 @@ class HomeFragment :
     private fun showLoading() = with(binding) {
         progressBar.visible()
         imageViewError.inVisible()
-        imageViewFavorite.isEnabled = false
         textViewQuoteText.inVisible()
         textViewQuoteAuthor.inVisible()
     }
@@ -89,17 +100,15 @@ class HomeFragment :
     private fun showError() = with(binding) {
         progressBar.inVisible()
         imageViewError.visible()
-        imageViewFavorite.isEnabled = false
         textViewQuoteText.inVisible()
         textViewQuoteAuthor.inVisible()
     }
 
-    private fun showData(quote: Quote) = with(binding) {
+    private fun showData(quote: Quote, quoteIsFavorite: Boolean) = with(binding) {
         textViewQuoteAuthor.text = quote.quoteAuthor
         textViewQuoteText.text = quote.quoteText
-        imageViewFavorite.isEnabled = true
         imageViewFavorite.setImageIfResource(
-            viewModel.currentState.quoteIsFavorite,
+            quoteIsFavorite,
             R.drawable.ic_favorite,
             R.drawable.ic_favorite_border
         )

@@ -19,7 +19,6 @@ class FavoriteLocalDataSourceImpl @Inject constructor(
     override suspend fun checkFavoriteQuote(favoriteQuoteEntity: FavoriteQuoteEntity): Boolean {
         return favoriteDao.checkFavoriteQuote(
             favoriteQuoteEntity.quoteText,
-            favoriteQuoteEntity.quoteAuthor
         )
     }
 

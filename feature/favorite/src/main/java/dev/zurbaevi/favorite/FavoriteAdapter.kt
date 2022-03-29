@@ -5,10 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import com.example.favorite.databinding.QuoteFavoriteItemBinding
 import dev.zurbaevi.common.base.BaseAdapter
+import dev.zurbaevi.common.util.ListAdapterSwipe
 import dev.zurbaevi.domain.model.Quote
 
 class FavoriteAdapter(private var clickListener: OnItemClickListener) :
-    BaseAdapter<Quote, QuoteFavoriteItemBinding, FavoriteViewHolder>(HistoryDiffCallback) {
+    ListAdapterSwipe<Quote, QuoteFavoriteItemBinding, FavoriteViewHolder>(HistoryDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteViewHolder {
         return FavoriteViewHolder(

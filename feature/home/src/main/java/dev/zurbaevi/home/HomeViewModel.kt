@@ -37,6 +37,7 @@ class HomeViewModel @Inject constructor(
             is HomeContract.Event.OnFetchQuote -> fetchQuote()
             is HomeContract.Event.OnInsertFavoriteQuote -> insertFavoriteQuote(uiState.value.quote)
             is HomeContract.Event.OnDeleteFavoriteQuote -> deleteFavoriteQuote(uiState.value.quote)
+            is HomeContract.Event.OnCheckFavoriteQuote -> checkFavoriteQuote(uiState.value.quote)
         }
     }
 
@@ -65,7 +66,9 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             checkFavoriteQuoteUseCase(quote)
                 .catch { setStateError(it.message.toString()) }
-                .collect { setState { copy(quoteIsFavorite = it) } }
+                .collect { isFavorite ->
+                    setState { copy(quoteIsFavorite = isFavorite) }
+                }
         }
     }
 
