@@ -50,4 +50,6 @@ object Dependencies {
     const val LEAK_CANARY: String =
         "com.squareup.leakcanary:leakcanary-android:${Versions.LEAK_CANARY}"
 
+    const val DATA_STORE = "androidx.datastore:datastore-preferences:${Versions.DATA_STORE}"
+
 }
