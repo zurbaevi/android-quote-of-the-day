@@ -40,7 +40,12 @@ class HistoryViewModel @Inject constructor(
                 .catch { setEffect { HistoryContract.Effect.ShowSnackBar(it.message.toString()) } }
                 .collect { quotes ->
                     if (checkFavoriteIsEmpty(quotes)) {
-                        setState { copy(historyState = HistoryContract.HistoryState.Success, quotes = quotes) }
+                        setState {
+                            copy(
+                                historyState = HistoryContract.HistoryState.Success,
+                                quotes = quotes
+                            )
+                        }
                     }
                 }
         }

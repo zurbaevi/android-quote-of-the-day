@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import com.example.favorite.databinding.QuoteFavoriteItemBinding
-import dev.zurbaevi.common.base.BaseAdapter
 import dev.zurbaevi.common.util.ListAdapterSwipe
 import dev.zurbaevi.domain.model.Quote
 
