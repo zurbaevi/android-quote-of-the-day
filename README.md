@@ -22,6 +22,7 @@ ____
 - Coroutines
 - Flow
 - Room
+- DataStore
 - Hilt
 
 ____
