@@ -10,6 +10,7 @@ import dev.zurbaevi.common.base.BaseFragment
 import dev.zurbaevi.common.exentsion.*
 import dev.zurbaevi.domain.model.Quote
 import dev.zurbaevi.home.databinding.FragmentHomeBinding
+import java.util.*
 
 @AndroidEntryPoint
 class HomeFragment :
@@ -37,7 +38,14 @@ class HomeFragment :
 
     override fun renderEffect(effect: HomeContract.Effect) {
         when (effect) {
-            is HomeContract.Effect.Error -> showLongSnackBar(effect.message)
+            is HomeContract.Effect.ShowSnackBar -> showLongSnackBar(effect.message)
+            is HomeContract.Effect.ShowSnackBarChangeLanguage -> showLongSnackBar(
+                "${getString(R.string.successfully_changed_the_language)} ${
+                    effect.language.uppercase(
+                        Locale.getDefault()
+                    )
+                }"
+            )
         }
     }
 
@@ -49,8 +57,10 @@ class HomeFragment :
 
     private fun initListeners() {
         binding.apply {
-            imageViewRefresh.setOnClickListenerWithDebounce(debounceTime = 2000L) {
-                viewModel.setEvent(HomeContract.Event.OnFetchQuote)
+            imageViewRefresh.apply {
+                setOnClickListenerWithDebounce(debounceTime = 2000L) {
+                    viewModel.setEvent(HomeContract.Event.OnFetchQuote)
+                }
             }
             imageViewHistory.setOnClickListener {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToFeatureHistory())
@@ -68,6 +78,9 @@ class HomeFragment :
                         true
                     }
                 }
+            }
+            imageViewLanguage.setOnClickListener {
+                viewModel.setEvent(HomeContract.Event.OnChangeLanguageQuote)
             }
         }
     }

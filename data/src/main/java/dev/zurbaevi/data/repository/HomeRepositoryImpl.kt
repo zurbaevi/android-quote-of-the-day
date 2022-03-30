@@ -13,8 +13,8 @@ class HomeRepositoryImpl @Inject constructor(
     private val mapper: NetworkMapper<Quote, QuoteDto>
 ) : HomeRepository {
 
-    override fun fetchHomeQuote() = flow {
-        emit(mapper.to(homeRemoteDataSource.fetchHomeQuote()))
+    override fun fetchHomeQuote(language: String) = flow {
+        emit(mapper.to(homeRemoteDataSource.fetchHomeQuote(language)))
     }
 
 }

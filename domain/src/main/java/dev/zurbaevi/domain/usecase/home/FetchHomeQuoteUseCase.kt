@@ -11,8 +11,8 @@ class FetchHomeQuoteUseCase(
     private val dispatcher: CoroutineDispatcher
 ) {
 
-    operator fun invoke(): Flow<Quote> {
-        return homeRepository.fetchHomeQuote().flowOn(dispatcher)
+    operator fun invoke(language: String): Flow<Quote> {
+        return homeRepository.fetchHomeQuote(language).flowOn(dispatcher)
     }
 
 }

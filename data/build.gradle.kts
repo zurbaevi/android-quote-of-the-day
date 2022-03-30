@@ -46,4 +46,7 @@ dependencies {
 
     implementation(Dependencies.HILT)
     kapt(Dependencies.HILT_COMPILER)
+
+
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
 }

@@ -12,7 +12,7 @@ interface ApiService {
     suspend fun fetchQuote(
         @Field("method") method: String = "getQuote",
         @Field("format") format: String = "json",
-        @Field("lang") lang: String = "ru",
+        @Field("lang") lang: String,
     ): QuoteDto
 
     companion object {

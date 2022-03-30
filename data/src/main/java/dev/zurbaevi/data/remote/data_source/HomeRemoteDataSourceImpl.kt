@@ -8,8 +8,8 @@ class HomeRemoteDataSourceImpl @Inject constructor(
     private val apiService: ApiService
 ) : HomeRemoteDataSource {
 
-    override suspend fun fetchHomeQuote(): QuoteDto {
-        return apiService.fetchQuote()
+    override suspend fun fetchHomeQuote(language: String): QuoteDto {
+        return apiService.fetchQuote(lang = language)
     }
 
 }

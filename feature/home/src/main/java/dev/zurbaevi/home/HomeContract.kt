@@ -15,7 +15,8 @@ class HomeContract {
     }
 
     sealed class Effect : UiEffect {
-        data class Error(val message: String) : Effect()
+        data class ShowSnackBar(val message: String) : Effect()
+        data class ShowSnackBarChangeLanguage(val language: String) : Effect()
     }
 
     sealed class Event : UiEvent {
@@ -23,6 +24,7 @@ class HomeContract {
         object OnDeleteFavoriteQuote : Event()
         object OnCheckFavoriteQuote : Event()
         object OnFetchQuote : Event()
+        object OnChangeLanguageQuote : Event()
     }
 
     data class State(

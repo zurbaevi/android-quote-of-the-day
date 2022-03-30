@@ -3,6 +3,8 @@ package dev.zurbaevi.home
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.zurbaevi.common.base.BaseViewModel
+import dev.zurbaevi.common.util.Language
+import dev.zurbaevi.data.local.data_store.SettingsDataStore
 import dev.zurbaevi.domain.model.Quote
 import dev.zurbaevi.domain.usecase.favorite.CheckFavoriteQuoteUseCase
 import dev.zurbaevi.domain.usecase.favorite.DeleteFavoriteQuoteUseCase
@@ -11,6 +13,7 @@ import dev.zurbaevi.domain.usecase.history.InsertHistoryQuoteUseCase
 import dev.zurbaevi.domain.usecase.home.FetchHomeQuoteUseCase
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,7 +24,8 @@ class HomeViewModel @Inject constructor(
     private val insertHistoryQuoteUseCase: InsertHistoryQuoteUseCase,
     private val insertFavoriteQuoteUseCase: InsertFavoriteQuoteUseCase,
     private val deleteFavoriteQuoteUseCase: DeleteFavoriteQuoteUseCase,
-    private val checkFavoriteQuoteUseCase: CheckFavoriteQuoteUseCase
+    private val checkFavoriteQuoteUseCase: CheckFavoriteQuoteUseCase,
+    private val settingsDataStore: SettingsDataStore
 ) : BaseViewModel<HomeContract.Event, HomeContract.State, HomeContract.Effect>() {
 
     override fun createInitialState(): HomeContract.State {
@@ -38,12 +42,13 @@ class HomeViewModel @Inject constructor(
             is HomeContract.Event.OnInsertFavoriteQuote -> insertFavoriteQuote(uiState.value.quote)
             is HomeContract.Event.OnDeleteFavoriteQuote -> deleteFavoriteQuote(uiState.value.quote)
             is HomeContract.Event.OnCheckFavoriteQuote -> checkFavoriteQuote(uiState.value.quote)
+            is HomeContract.Event.OnChangeLanguageQuote -> changeLanguageQuote()
         }
     }
 
     private fun fetchQuote() {
         viewModelScope.launch {
-            fetchHomeQuoteUseCase()
+            fetchHomeQuoteUseCase(settingsDataStore.getFromDataStore().first() ?: "ru")
                 .onStart { setState { copy(homeState = HomeContract.HomeState.Loading) } }
                 .catch { setStateError(it.message.toString()) }
                 .collect { quote ->
@@ -88,9 +93,22 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    private fun changeLanguageQuote() {
+        viewModelScope.launch {
+            val get = settingsDataStore.getFromDataStore().first() ?: "ru"
+            val currentLanguage =
+                when (Language.create(get)) {
+                    Language.ENGLISH -> "ru"
+                    Language.RUSSIAN -> "en"
+                }
+            settingsDataStore.saveToDataStore(currentLanguage)
+            setEffect { HomeContract.Effect.ShowSnackBarChangeLanguage(currentLanguage) }
+        }
+    }
+
     private fun setStateError(message: String) {
         setState { copy(homeState = HomeContract.HomeState.Error) }
-        setEffect { HomeContract.Effect.Error(message) }
+        setEffect { HomeContract.Effect.ShowSnackBar(message) }
     }
 
 }

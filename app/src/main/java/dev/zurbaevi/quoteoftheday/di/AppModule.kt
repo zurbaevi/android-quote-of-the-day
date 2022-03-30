@@ -1,8 +1,10 @@
 package dev.zurbaevi.quoteoftheday.di
 
+import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.zurbaevi.domain.repository.FavoriteRepository
 import dev.zurbaevi.domain.repository.HistoryRepository
@@ -20,6 +22,11 @@ import kotlinx.coroutines.Dispatchers
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
+    @Provides
+    fun provideSettingsDataStore(@ApplicationContext context: Context): Context {
+        return context.applicationContext
+    }
 
     @Provides
     fun provideFetchHomeQuoteUseCase(homeRepository: HomeRepository): FetchHomeQuoteUseCase {

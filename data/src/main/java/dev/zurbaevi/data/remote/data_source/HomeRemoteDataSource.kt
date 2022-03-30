@@ -4,6 +4,6 @@ import dev.zurbaevi.data.remote.model.QuoteDto
 
 interface HomeRemoteDataSource {
 
-    suspend fun fetchHomeQuote(): QuoteDto
+    suspend fun fetchHomeQuote(language: String): QuoteDto
 
 }
