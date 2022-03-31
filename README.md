@@ -15,13 +15,12 @@ ____
 
 ### Техническое составляющее проекта:
 
-- Kotlin
-- MVVM
 - Navigation Component
 - Retrofit
 - Coroutines
 - Flow
 - Room
+- DataStore
 - Hilt
 
 ____
