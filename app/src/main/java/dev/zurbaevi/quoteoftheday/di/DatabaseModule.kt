@@ -7,6 +7,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import dev.zurbaevi.data.local.data_store.SettingsDataStore
+import dev.zurbaevi.data.local.data_store.SettingsDataStoreImpl
 import dev.zurbaevi.data.local.database.AppDatabase
 import javax.inject.Singleton
 
@@ -30,5 +32,10 @@ object DatabaseModule {
     @Singleton
     @Provides
     fun provideFavoriteDao(database: AppDatabase) = database.favoriteDao()
+
+    @Provides
+    fun provideSettingsDataStore(@ApplicationContext context: Context): SettingsDataStore {
+        return SettingsDataStoreImpl(context)
+    }
 
 }

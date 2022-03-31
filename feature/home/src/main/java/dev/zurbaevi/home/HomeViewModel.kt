@@ -5,6 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.zurbaevi.common.base.BaseViewModel
 import dev.zurbaevi.common.util.Language
 import dev.zurbaevi.data.local.data_store.SettingsDataStore
+import dev.zurbaevi.data.local.data_store.SettingsDataStoreImpl
 import dev.zurbaevi.domain.model.Quote
 import dev.zurbaevi.domain.usecase.favorite.CheckFavoriteQuoteUseCase
 import dev.zurbaevi.domain.usecase.favorite.DeleteFavoriteQuoteUseCase
@@ -48,7 +49,7 @@ class HomeViewModel @Inject constructor(
 
     private fun fetchQuote() {
         viewModelScope.launch {
-            fetchHomeQuoteUseCase(settingsDataStore.getFromDataStore().first() ?: "ru")
+            fetchHomeQuoteUseCase(settingsDataStore.getFromSettingsDataStore().first() ?: "ru")
                 .onStart { setState { copy(homeState = HomeContract.HomeState.Loading) } }
                 .catch { setStateError(it.message.toString()) }
                 .collect { quote ->
@@ -95,13 +96,13 @@ class HomeViewModel @Inject constructor(
 
     private fun changeLanguageQuote() {
         viewModelScope.launch {
-            val get = settingsDataStore.getFromDataStore().first() ?: "ru"
+            val get = settingsDataStore.getFromSettingsDataStore().first() ?: "ru"
             val currentLanguage =
                 when (Language.create(get)) {
                     Language.ENGLISH -> "ru"
                     Language.RUSSIAN -> "en"
                 }
-            settingsDataStore.saveToDataStore(currentLanguage)
+            settingsDataStore.saveToSettingsDataStore(currentLanguage)
             setEffect { HomeContract.Effect.ShowSnackBarChangeLanguage(currentLanguage) }
         }
     }
