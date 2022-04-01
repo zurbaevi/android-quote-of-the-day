@@ -7,7 +7,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class SettingsDataStoreImpl @Inject constructor(private val context: Context): SettingsDataStore {
+class SettingsDataStoreImpl @Inject constructor(private val context: Context) : SettingsDataStore {
 
     private val Context.dataStore by preferencesDataStore(name = SETTINGS_DATASTORE_NAME)
 
