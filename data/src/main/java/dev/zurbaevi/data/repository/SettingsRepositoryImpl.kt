@@ -1,7 +1,6 @@
 package dev.zurbaevi.data.repository
 
 import dev.zurbaevi.common.util.Language
-import dev.zurbaevi.common.util.Resource
 import dev.zurbaevi.data.local.data_store.SettingsDataStore
 import dev.zurbaevi.domain.repository.SettingsRepository
 import kotlinx.coroutines.flow.first
@@ -13,20 +12,11 @@ class SettingsRepositoryImpl @Inject constructor(
 ) : SettingsRepository {
 
     override fun saveLanguageToDataStore(language: String) = flow {
-        try {
-            emit(Resource.Success(settingsDataStore.saveLanguageToDataStore(language)))
-        } catch (exception: Exception) {
-            emit(Resource.Error(exception))
-        }
+        emit(settingsDataStore.saveLanguageToDataStore(language))
     }
 
     override fun getLanguageFromDataStore() = flow {
-        settingsDataStore.getLanguageFromDataStore()
-        try {
-            emit(Resource.Success(settingsDataStore.getLanguageFromDataStore().first() ?: Language.RUSSIAN))
-        } catch (exception: Exception) {
-            emit(Resource.Error(exception))
-        }
+        emit(settingsDataStore.getLanguageFromDataStore().first() ?: Language.RUSSIAN)
     }
 
 }

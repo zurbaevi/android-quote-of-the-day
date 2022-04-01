@@ -4,7 +4,6 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.zurbaevi.common.base.BaseViewModel
 import dev.zurbaevi.common.util.Language
-import dev.zurbaevi.common.util.Resource
 import dev.zurbaevi.domain.model.Quote
 import dev.zurbaevi.domain.usecase.favorite.CheckFavoriteQuoteUseCase
 import dev.zurbaevi.domain.usecase.favorite.DeleteFavoriteQuoteUseCase
@@ -55,12 +54,7 @@ class HomeViewModel @Inject constructor(
                     .onStart { setState { copy(homeState = HomeContract.HomeState.Loading) } }
                     .catch { setStateError(it.message.toString()) }
                     .collect { quote ->
-                        setState {
-                            copy(
-                                homeState = HomeContract.HomeState.Success,
-                                quote = quote
-                            )
-                        }
+                        setState { copy(homeState = HomeContract.HomeState.Success, quote = quote) }
                         checkFavoriteQuote(quote)
                         insertHistoryQuote(quote)
                     }
@@ -114,12 +108,7 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             getLanguageFromDataStoreUseCase()
                 .catch { setStateError(it.message.toString()) }
-                .collect {
-                    when (it) {
-                        is Resource.Error -> setEffect { HomeContract.Effect.ShowSnackBar(it.exception.message.toString()) }
-                        is Resource.Success -> action(it.data)
-                    }
-                }
+                .collect { action(it) }
         }
     }
 
@@ -128,7 +117,11 @@ class HomeViewModel @Inject constructor(
             saveLanguageToDataStoreUseCase(currentLanguage)
                 .catch { setEffect { HomeContract.Effect.ShowSnackBar(it.message.toString()) } }
                 .collect {
-                    setEffect { HomeContract.Effect.ShowSnackBarChangeLanguage(currentLanguage) }
+                    setEffect {
+                        HomeContract.Effect.ShowSnackBarChangeLanguage(
+                            currentLanguage
+                        )
+                    }
                 }
         }
     }

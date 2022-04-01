@@ -1,6 +1,5 @@
 package dev.zurbaevi.domain.usecase.settings
 
-import dev.zurbaevi.common.util.Resource
 import dev.zurbaevi.domain.repository.SettingsRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -11,7 +10,7 @@ class SaveLanguageToDataStoreUseCase(
     private val dispatcher: CoroutineDispatcher
 ) {
 
-    operator fun invoke(language: String): Flow<Resource<Unit>> {
+    operator fun invoke(language: String): Flow<Unit> {
         return settingsRepository.saveLanguageToDataStore(language).flowOn(dispatcher)
     }
 
