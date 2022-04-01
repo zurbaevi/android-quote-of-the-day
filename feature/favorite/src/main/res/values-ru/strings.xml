@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="favorite">Favorite</string>
+    <string name="quote_deleted">Цитата была успешно удалена</string>
+    <string name="swipe_left_or_right_to_delete_quote">Проведите пальцем влево или вправо, чтобы удалить цитату из избранного</string>
+</resources>
