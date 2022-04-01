@@ -11,13 +11,13 @@ class SettingsDataStoreImpl @Inject constructor(private val context: Context): S
 
     private val Context.dataStore by preferencesDataStore(name = SETTINGS_DATASTORE_NAME)
 
-    override suspend fun saveToSettingsDataStore(language: String) {
+    override suspend fun saveLanguageToDataStore(language: String) {
         context.dataStore.edit {
             it[LANGUAGE] = language
         }
     }
 
-    override fun getFromSettingsDataStore() = context.dataStore.data.map {
+    override fun getLanguageFromDataStore() = context.dataStore.data.map {
         it[LANGUAGE]
     }
 

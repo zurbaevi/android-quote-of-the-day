@@ -4,17 +4,17 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.zurbaevi.common.base.BaseViewModel
 import dev.zurbaevi.common.util.Language
-import dev.zurbaevi.data.local.data_store.SettingsDataStore
-import dev.zurbaevi.data.local.data_store.SettingsDataStoreImpl
+import dev.zurbaevi.common.util.Resource
 import dev.zurbaevi.domain.model.Quote
 import dev.zurbaevi.domain.usecase.favorite.CheckFavoriteQuoteUseCase
 import dev.zurbaevi.domain.usecase.favorite.DeleteFavoriteQuoteUseCase
 import dev.zurbaevi.domain.usecase.favorite.InsertFavoriteQuoteUseCase
 import dev.zurbaevi.domain.usecase.history.InsertHistoryQuoteUseCase
 import dev.zurbaevi.domain.usecase.home.FetchHomeQuoteUseCase
+import dev.zurbaevi.domain.usecase.settings.GetLanguageFromDataStoreUseCase
+import dev.zurbaevi.domain.usecase.settings.SaveLanguageToDataStoreUseCase
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,7 +26,8 @@ class HomeViewModel @Inject constructor(
     private val insertFavoriteQuoteUseCase: InsertFavoriteQuoteUseCase,
     private val deleteFavoriteQuoteUseCase: DeleteFavoriteQuoteUseCase,
     private val checkFavoriteQuoteUseCase: CheckFavoriteQuoteUseCase,
-    private val settingsDataStore: SettingsDataStore
+    private val saveLanguageToDataStoreUseCase: SaveLanguageToDataStoreUseCase,
+    private val getLanguageFromDataStoreUseCase: GetLanguageFromDataStoreUseCase,
 ) : BaseViewModel<HomeContract.Event, HomeContract.State, HomeContract.Effect>() {
 
     override fun createInitialState(): HomeContract.State {
@@ -49,14 +50,21 @@ class HomeViewModel @Inject constructor(
 
     private fun fetchQuote() {
         viewModelScope.launch {
-            fetchHomeQuoteUseCase(settingsDataStore.getFromSettingsDataStore().first() ?: "ru")
-                .onStart { setState { copy(homeState = HomeContract.HomeState.Loading) } }
-                .catch { setStateError(it.message.toString()) }
-                .collect { quote ->
-                    setState { copy(homeState = HomeContract.HomeState.Success, quote = quote) }
-                    checkFavoriteQuote(quote)
-                    insertHistoryQuote(quote)
-                }
+            getLanguageFromDataStore { currentLanguage ->
+                fetchHomeQuoteUseCase(currentLanguage)
+                    .onStart { setState { copy(homeState = HomeContract.HomeState.Loading) } }
+                    .catch { setStateError(it.message.toString()) }
+                    .collect { quote ->
+                        setState {
+                            copy(
+                                homeState = HomeContract.HomeState.Success,
+                                quote = quote
+                            )
+                        }
+                        checkFavoriteQuote(quote)
+                        insertHistoryQuote(quote)
+                    }
+            }
         }
     }
 
@@ -96,14 +104,32 @@ class HomeViewModel @Inject constructor(
 
     private fun changeLanguageQuote() {
         viewModelScope.launch {
-            val get = settingsDataStore.getFromSettingsDataStore().first() ?: "ru"
-            val currentLanguage =
-                when (Language.create(get)) {
-                    Language.ENGLISH -> "ru"
-                    Language.RUSSIAN -> "en"
+            getLanguageFromDataStore { currentLanguage ->
+                saveLanguageToDataStore(Language.create(currentLanguage))
+            }
+        }
+    }
+
+    private fun getLanguageFromDataStore(action: suspend (String) -> Unit) {
+        viewModelScope.launch {
+            getLanguageFromDataStoreUseCase()
+                .catch { setStateError(it.message.toString()) }
+                .collect {
+                    when (it) {
+                        is Resource.Error -> setEffect { HomeContract.Effect.ShowSnackBar(it.exception.message.toString()) }
+                        is Resource.Success -> action(it.data)
+                    }
                 }
-            settingsDataStore.saveToSettingsDataStore(currentLanguage)
-            setEffect { HomeContract.Effect.ShowSnackBarChangeLanguage(currentLanguage) }
+        }
+    }
+
+    private fun saveLanguageToDataStore(currentLanguage: String) {
+        viewModelScope.launch {
+            saveLanguageToDataStoreUseCase(currentLanguage)
+                .catch { setEffect { HomeContract.Effect.ShowSnackBar(it.message.toString()) } }
+                .collect {
+                    setEffect { HomeContract.Effect.ShowSnackBarChangeLanguage(currentLanguage) }
+                }
         }
     }
 

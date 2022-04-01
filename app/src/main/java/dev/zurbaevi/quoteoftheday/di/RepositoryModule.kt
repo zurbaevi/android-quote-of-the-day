@@ -13,14 +13,20 @@ import dev.zurbaevi.data.remote.data_source.HomeRemoteDataSourceImpl
 import dev.zurbaevi.data.repository.FavoriteRepositoryImpl
 import dev.zurbaevi.data.repository.HistoryRepositoryImpl
 import dev.zurbaevi.data.repository.HomeRepositoryImpl
+import dev.zurbaevi.data.repository.SettingsRepositoryImpl
 import dev.zurbaevi.domain.repository.FavoriteRepository
 import dev.zurbaevi.domain.repository.HistoryRepository
 import dev.zurbaevi.domain.repository.HomeRepository
+import dev.zurbaevi.domain.repository.SettingsRepository
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
+
+    @Binds
+    @Singleton
+    abstract fun provideSettingsRepository(settingsRepositoryImpl: SettingsRepositoryImpl): SettingsRepository
 
     @Binds
     @Singleton

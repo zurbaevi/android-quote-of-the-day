@@ -7,6 +7,7 @@ import dagger.hilt.components.SingletonComponent
 import dev.zurbaevi.domain.repository.FavoriteRepository
 import dev.zurbaevi.domain.repository.HistoryRepository
 import dev.zurbaevi.domain.repository.HomeRepository
+import dev.zurbaevi.domain.repository.SettingsRepository
 import dev.zurbaevi.domain.usecase.favorite.CheckFavoriteQuoteUseCase
 import dev.zurbaevi.domain.usecase.favorite.DeleteFavoriteQuoteUseCase
 import dev.zurbaevi.domain.usecase.favorite.GetFavoriteQuotesUseCase
@@ -15,11 +16,23 @@ import dev.zurbaevi.domain.usecase.history.DeleteHistoryQuotesUseCase
 import dev.zurbaevi.domain.usecase.history.GetHistoryQuotesUseCase
 import dev.zurbaevi.domain.usecase.history.InsertHistoryQuoteUseCase
 import dev.zurbaevi.domain.usecase.home.FetchHomeQuoteUseCase
+import dev.zurbaevi.domain.usecase.settings.GetLanguageFromDataStoreUseCase
+import dev.zurbaevi.domain.usecase.settings.SaveLanguageToDataStoreUseCase
 import kotlinx.coroutines.Dispatchers
 
 @Module
 @InstallIn(SingletonComponent::class)
 object UseCaseModule {
+
+    @Provides
+    fun provideSaveLanguageToDataStoreUseCase(settingsRepository: SettingsRepository): SaveLanguageToDataStoreUseCase {
+        return SaveLanguageToDataStoreUseCase(settingsRepository, Dispatchers.IO)
+    }
+
+    @Provides
+    fun provideGetLanguageFromDataStoreUseCase(settingsRepository: SettingsRepository): GetLanguageFromDataStoreUseCase {
+        return GetLanguageFromDataStoreUseCase(settingsRepository, Dispatchers.IO)
+    }
 
     @Provides
     fun provideFetchHomeQuoteUseCase(homeRepository: HomeRepository): FetchHomeQuoteUseCase {

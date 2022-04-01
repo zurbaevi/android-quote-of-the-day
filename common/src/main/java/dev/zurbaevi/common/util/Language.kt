@@ -1,15 +1,30 @@
 package dev.zurbaevi.common.util
 
 
-enum class Language(val language: String) {
-    ENGLISH("en"),
-    RUSSIAN("ru");
+//enum class Language(val language: String) {
+//    ENGLISH("en"),
+//    RUSSIAN("ru");
+//
+//    companion object {
+//        fun create(x: String): Language {
+//            return when (x) {
+//                "en" -> ENGLISH
+//                "ru" -> RUSSIAN
+//                else -> throw IllegalStateException()
+//            }
+//        }
+//    }
+//}
 
+class Language {
     companion object {
-        fun create(x: String): Language {
+        const val ENGLISH = "en"
+        const val RUSSIAN = "ru"
+
+        fun create(x: String): String {
             return when (x) {
-                "en" -> ENGLISH
-                "ru" -> RUSSIAN
+                "en" -> RUSSIAN
+                "ru" -> ENGLISH
                 else -> throw IllegalStateException()
             }
         }
