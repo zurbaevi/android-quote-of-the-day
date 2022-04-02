@@ -47,5 +47,4 @@ dependencies {
     implementation(Dependencies.MATERIAL)
 
     implementation(Dependencies.NAVIGATION_FRAGMENT)
-    implementation(Dependencies.NAVIGATION_UI_KTX)
 }
