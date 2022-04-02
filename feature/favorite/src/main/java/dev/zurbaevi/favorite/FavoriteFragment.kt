@@ -16,6 +16,7 @@ import dev.zurbaevi.common.exentsion.showLongSnackBar
 import dev.zurbaevi.common.exentsion.showShortSnackBar
 import dev.zurbaevi.common.exentsion.visible
 import dev.zurbaevi.common.util.ItemSwipeHandler
+import dev.zurbaevi.common.util.NavControllerStateHandle
 import dev.zurbaevi.domain.model.Quote
 
 @AndroidEntryPoint
@@ -87,7 +88,7 @@ class FavoriteFragment :
     }
 
     private fun setInfoAboutSwipedDeleteQuote() {
-        findNavController().previousBackStackEntry?.savedStateHandle?.set("swiped", true)
+        NavControllerStateHandle<Boolean>(findNavController()).savedPreviousBackStackEntry("swiped", true)
     }
 
     private fun hideAll() = with(binding) {

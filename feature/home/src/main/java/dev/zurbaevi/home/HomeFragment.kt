@@ -8,6 +8,7 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.zurbaevi.common.base.BaseFragment
 import dev.zurbaevi.common.exentsion.*
+import dev.zurbaevi.common.util.NavControllerStateHandle
 import dev.zurbaevi.domain.model.Quote
 import dev.zurbaevi.home.databinding.FragmentHomeBinding
 import java.util.*
@@ -87,9 +88,9 @@ class HomeFragment :
 
     private fun getInfoAboutSwipedDeleteQuote() {
         if (viewModel.currentState.homeState is HomeContract.HomeState.Success) {
-            findNavController().currentBackStackEntry?.savedStateHandle?.get<Boolean>("swiped")
-                ?.let { isSwiped ->
-                    if (isSwiped) {
+            NavControllerStateHandle<Boolean>(findNavController())
+                .getCurrentBackStackEntry("swiped")?.let { swiped ->
+                    if (swiped) {
                         viewModel.setEvent(HomeContract.Event.OnCheckFavoriteQuote)
                     }
                 }

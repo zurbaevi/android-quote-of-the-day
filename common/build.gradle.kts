@@ -45,4 +45,7 @@ dependencies {
     implementation(Dependencies.COROUTINES_ANDROID)
     implementation(Dependencies.COROUTINES_CORE)
     implementation(Dependencies.MATERIAL)
+
+    implementation(Dependencies.NAVIGATION_FRAGMENT)
+    implementation(Dependencies.NAVIGATION_UI_KTX)
 }
