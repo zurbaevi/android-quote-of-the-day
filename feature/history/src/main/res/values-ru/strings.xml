@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="history">History</string>
-    <string name="back_button">Кнопка назад</string>
-    <string name="quotes_deleted">Цытаты были успешно удалены</string>
-    <string name="history_is_empty">История пуста</string>
-</resources>

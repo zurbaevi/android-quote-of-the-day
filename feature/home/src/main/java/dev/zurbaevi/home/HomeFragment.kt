@@ -3,6 +3,7 @@ package dev.zurbaevi.home
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -61,6 +62,12 @@ class HomeFragment :
             imageViewRefresh.apply {
                 setOnClickListenerWithDebounce(debounceTime = 2000L) {
                     viewModel.setEvent(HomeContract.Event.OnFetchQuote)
+                    startAnimation(
+                        AnimationUtils.loadAnimation(
+                            requireContext(),
+                            R.anim.rotate_anim
+                        )
+                    )
                 }
             }
             imageViewHistory.setOnClickListener {

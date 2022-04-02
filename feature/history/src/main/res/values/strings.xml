@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="history">History</string>
-    <string name="back_button">Back button</string>
-    <string name="quotes_deleted">Quotes have been successfully deleted</string>
-    <string name="history_is_empty">History is empty</string>
-</resources>

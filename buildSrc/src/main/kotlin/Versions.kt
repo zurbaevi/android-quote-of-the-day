@@ -38,6 +38,4 @@ object Versions {
 
     const val COROUTINES: String = "1.6.0"
 
-    const val LEAK_CANARY: String = "2.8.1"
-
 }

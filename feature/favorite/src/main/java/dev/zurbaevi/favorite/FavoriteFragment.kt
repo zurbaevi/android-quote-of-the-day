@@ -88,7 +88,10 @@ class FavoriteFragment :
     }
 
     private fun setInfoAboutSwipedDeleteQuote() {
-        NavControllerStateHandle<Boolean>(findNavController()).savedPreviousBackStackEntry("swiped", true)
+        NavControllerStateHandle<Boolean>(findNavController()).savedPreviousBackStackEntry(
+            "swiped",
+            true
+        )
     }
 
     private fun hideAll() = with(binding) {

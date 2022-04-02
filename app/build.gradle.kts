@@ -70,6 +70,4 @@ dependencies {
     implementation(Dependencies.ROOM)
     implementation(Dependencies.ROOM_KTX)
     kapt(Dependencies.ROOM_COMPILER)
-
-    debugImplementation(Dependencies.LEAK_CANARY)
 }

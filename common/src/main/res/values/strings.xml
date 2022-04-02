@@ -5,6 +5,13 @@
     <string name="ru">Russian</string>
     <string name="choose_language" translatable="false">Choose language</string>
     <string name="successfully_changed_the_language">Successfully changed the language to </string>
+    <string name="history">History</string>
+    <string name="back_button">Back button</string>
+    <string name="quotes_deleted">Quotes have been successfully deleted</string>
+    <string name="history_is_empty">History is empty</string>
+    <string name="favorite">Favorite</string>
+    <string name="quote_deleted">Quote have been successfully deleted</string>
+    <string name="swipe_left_or_right_to_delete_quote">Swipe left or right to delete a quote from favorites</string>
 
     <string-array name="language">
         <item>English</item>

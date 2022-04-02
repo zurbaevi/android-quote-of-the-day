@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="quote_of_the_day">Quote of the day</string>
+    <string name="en">Английский</string>
+    <string name="ru">Русский</string>
+    <string name="choose_language">Выберите язык</string>
+    <string name="successfully_changed_the_language">Успешно сменил язык на </string>
+    <string name="history">History</string>
+    <string name="back_button">Кнопка назад</string>
+    <string name="quotes_deleted">Цытаты были успешно удалены</string>
+    <string name="history_is_empty">История пуста</string>
+    <string name="favorite">Favorite</string>
+    <string name="quote_deleted">Цитата была успешно удалена</string>
+    <string name="swipe_left_or_right_to_delete_quote">Проведите пальцем влево или вправо, чтобы удалить цитату из избранного</string>
+</resources>
