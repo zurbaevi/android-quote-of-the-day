@@ -14,8 +14,12 @@ class GlobalEntryPointFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        findNavController().navigate(GlobalEntryPointFragmentDirections.actionGlobalEntryPointToFeatureHome())
+        navigateTo()
         return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+    private fun navigateTo() {
+        findNavController().navigate(GlobalEntryPointFragmentDirections.actionGlobalEntryPointToFeatureHome())
     }
 
 }
