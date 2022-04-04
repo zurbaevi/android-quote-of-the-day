@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 import dev.zurbaevi.common.base.BaseFragment
@@ -58,6 +59,9 @@ class HistoryFragment :
         binding.apply {
             imageViewDelete.setOnClickListener {
                 viewModel.setEvent(HistoryContract.Event.OnDeleteQuotes)
+            }
+            imageViewBack.setOnClickListener {
+                findNavController().popBackStack()
             }
         }
     }

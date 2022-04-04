@@ -5,6 +5,7 @@
     android:id="@+id/historyFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black_and_olive"
     tools:context="dev.zurbaevi.history.HistoryFragment">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -42,6 +43,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/imageViewBack"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/ic_arrow_back"
+            tools:ignore="ContentDescription,SpeakableTextPresentCheck,ImageContrastCheck" />
 
         <ImageView
             android:id="@+id/imageViewDelete"

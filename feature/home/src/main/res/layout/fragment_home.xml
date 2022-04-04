@@ -5,13 +5,25 @@
     android:id="@+id/homeFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#383c3b"
     tools:context="dev.zurbaevi.home.HomeFragment">
+
+    <ImageView
+        android:id="@+id/imageViewQuote"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/ic_quote"
+        app:layout_constraintStart_toStartOf="@+id/textViewQuoteText"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription,SpeakableTextPresentCheck,ImageContrastCheck" />
 
     <TextView
         android:id="@+id/textViewQuoteText"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:maxLines="6"
+        android:textColor="@color/abdel_kerim_beards"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
@@ -26,6 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="12dp"
         android:maxLines="1"
+        android:textColor="@color/abdel_kerim_beards"
         android:textSize="18sp"
         android:textStyle="italic"
         app:layout_constraintStart_toStartOf="@+id/textViewQuoteText"

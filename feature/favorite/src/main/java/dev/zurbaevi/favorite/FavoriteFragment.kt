@@ -33,6 +33,7 @@ class FavoriteFragment :
     override fun prepareView(savedInstanceState: Bundle?) {
         initAdapter()
         initFirstState()
+        initListeners()
         configurationRecyclerView()
         implementItemTouchHelper()
     }
@@ -76,6 +77,14 @@ class FavoriteFragment :
                 )
             )
             recyclerView.adapter = favoriteAdapter
+        }
+    }
+
+    private fun initListeners() {
+        binding.apply {
+            imageViewBack.setOnClickListener {
+                findNavController().popBackStack()
+            }
         }
     }
 
