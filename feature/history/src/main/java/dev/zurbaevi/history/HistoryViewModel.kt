@@ -37,7 +37,7 @@ class HistoryViewModel @Inject constructor(
         viewModelScope.launch {
             getHistoryQuotesUseCase()
                 .onStart { setState { copy(historyState = HistoryContract.HistoryState.Loading) } }
-                .catch { setEffect { HistoryContract.Effect.ShowSnackBar(it.message.toString()) } }
+                .catch { setEffect { HistoryContract.Effect.ShowSnackBarError(it.message.toString()) } }
                 .collect { quotes ->
                     if (checkFavoriteIsEmpty(quotes)) {
                         setState {
@@ -53,13 +53,17 @@ class HistoryViewModel @Inject constructor(
 
     private fun deleteQuotes() {
         viewModelScope.launch {
-            deleteHistoryQuotesUseCase()
-                .onStart { setState { copy(historyState = HistoryContract.HistoryState.Loading) } }
-                .catch { setEffect { HistoryContract.Effect.ShowSnackBar(it.message.toString()) } }
-                .collect {
-                    setState { copy(historyState = HistoryContract.HistoryState.Empty) }
-                    setEffect { HistoryContract.Effect.ShowSnackBarDeleteQuotes }
-                }
+            if (uiState.value.quotes.isNotEmpty()) {
+                deleteHistoryQuotesUseCase()
+                    .onStart { setState { copy(historyState = HistoryContract.HistoryState.Loading) } }
+                    .catch { setEffect { HistoryContract.Effect.ShowSnackBarError(it.message.toString()) } }
+                    .collect {
+                        setState { copy(historyState = HistoryContract.HistoryState.Empty, quotes = listOf()) }
+                        setEffect { HistoryContract.Effect.ShowSnackBarDeleteQuotes }
+                    }
+            } else {
+                setEffect { HistoryContract.Effect.ShowSnackBarQuotesEmpty }
+            }
         }
     }
 

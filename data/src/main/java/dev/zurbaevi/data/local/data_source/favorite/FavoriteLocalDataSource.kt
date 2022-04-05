@@ -12,4 +12,6 @@ interface FavoriteLocalDataSource {
 
     suspend fun deleteFavoriteQuote(favoriteQuoteEntity: FavoriteQuoteEntity)
 
+    suspend fun deleteFavoriteQuotes()
+
 }

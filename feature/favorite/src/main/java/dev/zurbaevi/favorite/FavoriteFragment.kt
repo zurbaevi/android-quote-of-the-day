@@ -49,8 +49,13 @@ class FavoriteFragment :
 
     override fun renderEffect(effect: FavoriteContract.Effect) {
         when (effect) {
-            is FavoriteContract.Effect.ShowSnackBar -> showShortSnackBar(effect.message)
+            is FavoriteContract.Effect.ShowSnackBarError -> showShortSnackBar(effect.message)
             is FavoriteContract.Effect.ShowSnackBarDeleteQuote -> showShortSnackBar(getString(R.string.quote_deleted))
+            is FavoriteContract.Effect.ShowSnackBarDeleteQuotes -> {
+                showShortSnackBar(getString(R.string.quotes_deleted))
+                setInfoAboutSwipedDeleteQuotes()
+            }
+            FavoriteContract.Effect.ShowSnackBarQuotesEmpty -> showShortSnackBar(getString(R.string.quotes_already_empty))
         }
     }
 
@@ -85,6 +90,9 @@ class FavoriteFragment :
             imageViewBack.setOnClickListener {
                 findNavController().popBackStack()
             }
+            imageViewDelete.setOnClickListener {
+                viewModel.setEvent(FavoriteContract.Event.OnDeleteQuotes)
+            }
         }
     }
 
@@ -99,6 +107,13 @@ class FavoriteFragment :
     private fun setInfoAboutSwipedDeleteQuote() {
         NavControllerStateHandle<Boolean>(findNavController()).savedPreviousBackStackEntry(
             "swiped",
+            true
+        )
+    }
+
+    private fun setInfoAboutSwipedDeleteQuotes() {
+        NavControllerStateHandle<Boolean>(findNavController()).savedPreviousBackStackEntry(
+            "deleted",
             true
         )
     }

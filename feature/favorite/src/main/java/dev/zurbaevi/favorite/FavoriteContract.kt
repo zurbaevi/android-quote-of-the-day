@@ -15,12 +15,15 @@ class FavoriteContract {
     }
 
     sealed class Effect : UiEffect {
-        data class ShowSnackBar(val message: String) : Effect()
+        data class ShowSnackBarError(val message: String) : Effect()
         object ShowSnackBarDeleteQuote : Effect()
+        object ShowSnackBarQuotesEmpty : Effect()
+        object ShowSnackBarDeleteQuotes : Effect()
     }
 
     sealed class Event : UiEvent {
         object OnGetQuotes : Event()
+        object OnDeleteQuotes : Event()
         data class OnDeleteQuote(val quote: Quote) : Event()
         data class OnUpdateQuote(val quotes: List<Quote>) : Event()
     }

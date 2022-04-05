@@ -8,10 +8,7 @@ import dev.zurbaevi.domain.repository.FavoriteRepository
 import dev.zurbaevi.domain.repository.HistoryRepository
 import dev.zurbaevi.domain.repository.HomeRepository
 import dev.zurbaevi.domain.repository.SettingsRepository
-import dev.zurbaevi.domain.usecase.favorite.CheckFavoriteQuoteUseCase
-import dev.zurbaevi.domain.usecase.favorite.DeleteFavoriteQuoteUseCase
-import dev.zurbaevi.domain.usecase.favorite.GetFavoriteQuotesUseCase
-import dev.zurbaevi.domain.usecase.favorite.InsertFavoriteQuoteUseCase
+import dev.zurbaevi.domain.usecase.favorite.*
 import dev.zurbaevi.domain.usecase.history.DeleteHistoryQuotesUseCase
 import dev.zurbaevi.domain.usecase.history.GetHistoryQuotesUseCase
 import dev.zurbaevi.domain.usecase.history.InsertHistoryQuoteUseCase
@@ -68,6 +65,11 @@ object UseCaseModule {
     @Provides
     fun provideDeleteFavoriteQuoteUseCase(favoriteRepository: FavoriteRepository): DeleteFavoriteQuoteUseCase {
         return DeleteFavoriteQuoteUseCase(favoriteRepository, Dispatchers.IO)
+    }
+
+    @Provides
+    fun provideDeleteFavoriteQuotesUseCase(favoriteRepository: FavoriteRepository): DeleteFavoriteQuotesUseCase {
+        return DeleteFavoriteQuotesUseCase(favoriteRepository, Dispatchers.IO)
     }
 
     @Provides

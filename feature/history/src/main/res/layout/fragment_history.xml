@@ -8,6 +8,40 @@
     android:background="@color/black_and_olive"
     tools:context="dev.zurbaevi.history.HistoryFragment">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageViewBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:contentDescription="@string/back_button"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+            app:layout_constraintStart_toStartOf="@+id/toolbar"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RedundantDescriptionCheck" />
+
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/history"
+            android:textColor="@color/abdel_kerim_beards"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+            app:layout_constraintStart_toEndOf="@+id/imageViewBack"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.appcompat.widget.Toolbar>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
@@ -17,7 +51,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
         tools:listitem="@layout/quote_history_item" />
 
     <ProgressBar
@@ -25,8 +59,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:visibility="visible"
         android:indeterminateTint="@color/abdel_kerim_beards"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,13 +78,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
-
-        <ImageView
-            android:id="@+id/imageViewBack"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/ic_arrow_back"
-            tools:ignore="ContentDescription,SpeakableTextPresentCheck,ImageContrastCheck" />
 
         <ImageView
             android:id="@+id/imageViewDelete"

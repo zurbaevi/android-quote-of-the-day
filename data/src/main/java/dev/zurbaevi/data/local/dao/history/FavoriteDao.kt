@@ -21,4 +21,7 @@ interface FavoriteDao {
     @Query("delete from quote_favorite_table where quote_text = :quoteText and quote_author = :quoteAuthor")
     suspend fun deleteFavoriteQuote(quoteText: String, quoteAuthor: String)
 
+    @Query("delete from quote_favorite_table")
+    suspend fun deleteFavoriteQuotes()
+
 }

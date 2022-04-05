@@ -13,4 +13,6 @@ interface FavoriteRepository {
 
     fun deleteFavoriteQuote(quote: Quote): Flow<Unit>
 
+    fun deleteFavoriteQuotes(): Flow<Unit>
+
 }

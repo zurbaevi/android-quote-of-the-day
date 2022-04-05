@@ -27,6 +27,7 @@ class HomeFragment :
         initFirstState()
         initListeners()
         getInfoAboutSwipedDeleteQuote()
+        getInfoAboutSwipedDeleteQuotes()
     }
 
     override fun renderState(state: HomeContract.State) {
@@ -40,7 +41,7 @@ class HomeFragment :
 
     override fun renderEffect(effect: HomeContract.Effect) {
         when (effect) {
-            is HomeContract.Effect.ShowSnackBar -> showLongSnackBar(effect.message)
+            is HomeContract.Effect.ShowSnackBarError -> showLongSnackBar(effect.message)
             is HomeContract.Effect.ShowSnackBarChangeLanguage -> showLongSnackBar(
                 "${getString(R.string.successfully_changed_the_language)} ${
                     effect.language.uppercase(
@@ -97,6 +98,17 @@ class HomeFragment :
         if (viewModel.currentState.homeState is HomeContract.HomeState.Success) {
             NavControllerStateHandle<Boolean>(findNavController())
                 .getCurrentBackStackEntry("swiped")?.let { swiped ->
+                    if (swiped) {
+                        viewModel.setEvent(HomeContract.Event.OnCheckFavoriteQuote)
+                    }
+                }
+        }
+    }
+
+    private fun getInfoAboutSwipedDeleteQuotes() {
+        if (viewModel.currentState.homeState is HomeContract.HomeState.Success) {
+            NavControllerStateHandle<Boolean>(findNavController())
+                .getCurrentBackStackEntry("deleted")?.let { swiped ->
                     if (swiped) {
                         viewModel.setEvent(HomeContract.Event.OnCheckFavoriteQuote)
                     }

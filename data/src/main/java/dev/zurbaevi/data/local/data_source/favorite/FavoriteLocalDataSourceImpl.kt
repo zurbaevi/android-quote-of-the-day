@@ -28,4 +28,9 @@ class FavoriteLocalDataSourceImpl @Inject constructor(
             favoriteQuoteEntity.quoteAuthor
         )
     }
+
+    override suspend fun deleteFavoriteQuotes() {
+        favoriteDao.deleteFavoriteQuotes()
+    }
+
 }

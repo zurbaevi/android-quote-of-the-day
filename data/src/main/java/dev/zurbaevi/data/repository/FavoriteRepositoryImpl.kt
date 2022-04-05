@@ -29,4 +29,8 @@ class FavoriteRepositoryImpl @Inject constructor(
         emit(favoriteLocalDataSource.deleteFavoriteQuote(mapper.from(quote)))
     }
 
+    override fun deleteFavoriteQuotes() = flow {
+        emit(favoriteLocalDataSource.deleteFavoriteQuotes())
+    }
+
 }

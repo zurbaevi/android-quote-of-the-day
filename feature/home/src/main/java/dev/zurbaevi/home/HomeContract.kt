@@ -15,7 +15,7 @@ class HomeContract {
     }
 
     sealed class Effect : UiEffect {
-        data class ShowSnackBar(val message: String) : Effect()
+        data class ShowSnackBarError(val message: String) : Effect()
         data class ShowSnackBarChangeLanguage(val language: String) : Effect()
     }
 
