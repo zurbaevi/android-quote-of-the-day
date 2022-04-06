@@ -7,18 +7,21 @@ import com.example.favorite.databinding.QuoteFavoriteItemBinding
 import dev.zurbaevi.common.util.ListAdapterSwipe
 import dev.zurbaevi.domain.model.Quote
 
-class FavoriteAdapter(private var clickListener: OnItemClickListener) :
+class FavoriteAdapter(private var onItemClicked: () -> Unit) :
     ListAdapterSwipe<Quote, QuoteFavoriteItemBinding, FavoriteViewHolder>(HistoryDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteViewHolder {
-        return FavoriteViewHolder(
+        val viewHolder = FavoriteViewHolder(
             QuoteFavoriteItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            ),
-            clickListener
+            )
         )
+        viewHolder.itemView.setOnClickListener {
+            onItemClicked()
+        }
+        return viewHolder
     }
 
     object HistoryDiffCallback : DiffUtil.ItemCallback<Quote>() {

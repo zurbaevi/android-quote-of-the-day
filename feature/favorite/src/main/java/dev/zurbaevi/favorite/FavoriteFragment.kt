@@ -66,11 +66,9 @@ class FavoriteFragment :
     }
 
     private fun initAdapter() {
-        favoriteAdapter = FavoriteAdapter(object : OnItemClickListener {
-            override fun onItemClick() {
-                showLongSnackBar(getString(R.string.swipe_left_or_right_to_delete_quote))
-            }
-        })
+        favoriteAdapter = FavoriteAdapter {
+            showLongSnackBar(getString(R.string.swipe_left_or_right_to_delete_quote))
+        }
     }
 
     private fun configurationRecyclerView() {
