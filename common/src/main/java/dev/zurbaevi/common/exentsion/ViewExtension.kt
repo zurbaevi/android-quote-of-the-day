@@ -25,11 +25,11 @@ fun View.setOnClickListenerWithDebounce(debounceTime: Long, action: () -> Unit) 
 }
 
 fun ImageView.setImageIfResource(
-    isFavorite: Boolean,
+    checked: Boolean,
     firstImageResource: Int,
     secondImageResource: Int
 ) {
-    return when (isFavorite) {
+    return when (checked) {
         true -> this.setImageResource(firstImageResource)
         false -> this.setImageResource(secondImageResource)
     }
