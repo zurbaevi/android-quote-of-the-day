@@ -15,6 +15,7 @@ import dev.zurbaevi.common.exentsion.inVisible
 import dev.zurbaevi.common.exentsion.showLongSnackBar
 import dev.zurbaevi.common.exentsion.showShortSnackBar
 import dev.zurbaevi.common.exentsion.visible
+import dev.zurbaevi.common.util.Constants
 import dev.zurbaevi.common.util.ItemSwipeHandler
 import dev.zurbaevi.common.util.NavControllerStateHandle
 import dev.zurbaevi.domain.model.Quote
@@ -103,17 +104,13 @@ class FavoriteFragment :
     }
 
     private fun setInfoAboutSwipedDeleteQuote() {
-        NavControllerStateHandle<Boolean>(findNavController()).savedPreviousBackStackEntry(
-            "swiped",
-            true
-        )
+        NavControllerStateHandle<Boolean>(findNavController())
+            .savedPreviousBackStackEntry(Constants.STATE_HANDLE_KEY_SWIPED, true)
     }
 
     private fun setInfoAboutSwipedDeleteQuotes() {
-        NavControllerStateHandle<Boolean>(findNavController()).savedPreviousBackStackEntry(
-            "deleted",
-            true
-        )
+        NavControllerStateHandle<Boolean>(findNavController())
+            .savedPreviousBackStackEntry(Constants.STATE_HANDLE_KEY_DELETED, true)
     }
 
     private fun hideAll() = with(binding) {
