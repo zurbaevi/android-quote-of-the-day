@@ -46,7 +46,7 @@ class FavoriteViewModel @Inject constructor(
                 .onStart { setState { copy(favoriteState = FavoriteContract.FavoriteState.Loading) } }
                 .catch { setEffect { FavoriteContract.Effect.ShowSnackBarError(it.message.toString()) } }
                 .collect { quotes ->
-                    if (quotes.isNullOrEmpty()) {
+                    if (!quotes.isNullOrEmpty()) {
                         setState { copy(favoriteState = FavoriteContract.FavoriteState.Success, quotes = quotes) }
                     } else {
                         setState { copy(favoriteState = FavoriteContract.FavoriteState.Empty) }
