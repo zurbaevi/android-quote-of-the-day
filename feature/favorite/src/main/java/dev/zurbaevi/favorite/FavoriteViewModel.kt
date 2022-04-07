@@ -31,8 +31,9 @@ class FavoriteViewModel @Inject constructor(
             is FavoriteContract.Event.OnDeleteQuote -> deleteFavoriteQuote(event.quote)
             is FavoriteContract.Event.OnGetQuotes -> getFavoriteQuotes()
             is FavoriteContract.Event.OnUpdateQuote -> {
-                if (checkFavoriteIsEmpty(event.quotes)) {
-                    updateQuotes(event.quotes)
+                updateQuotes(event.quotes)
+                if (event.quotes.isEmpty()) {
+                    setState { copy(favoriteState = FavoriteContract.FavoriteState.Empty) }
                 }
             }
             is FavoriteContract.Event.OnDeleteQuotes -> deleteFavoriteQuotes()
@@ -45,13 +46,10 @@ class FavoriteViewModel @Inject constructor(
                 .onStart { setState { copy(favoriteState = FavoriteContract.FavoriteState.Loading) } }
                 .catch { setEffect { FavoriteContract.Effect.ShowSnackBarError(it.message.toString()) } }
                 .collect { quotes ->
-                    if (checkFavoriteIsEmpty(quotes)) {
-                        setState {
-                            copy(
-                                favoriteState = FavoriteContract.FavoriteState.Success,
-                                quotes = quotes
-                            )
-                        }
+                    if (quotes.isNullOrEmpty()) {
+                        setState { copy(favoriteState = FavoriteContract.FavoriteState.Success, quotes = quotes) }
+                    } else {
+                        setState { copy(favoriteState = FavoriteContract.FavoriteState.Empty) }
                     }
                 }
         }
@@ -80,19 +78,9 @@ class FavoriteViewModel @Inject constructor(
         }
     }
 
-
     private fun updateQuotes(quotes: List<Quote>) {
         viewModelScope.launch {
             setState { copy(quotes = quotes) }
-        }
-    }
-
-    private fun checkFavoriteIsEmpty(quotes: List<Quote>): Boolean {
-        return if (!quotes.isNullOrEmpty()) {
-            true
-        } else {
-            setState { copy(favoriteState = FavoriteContract.FavoriteState.Empty) }
-            false
         }
     }
 
