@@ -3,7 +3,7 @@
     <string name="quote_of_the_day" translatable="false">Quote of the day</string>
     <string name="en">English</string>
     <string name="ru">Russian</string>
-    <string name="choose_language" translatable="false">Choose language</string>
+    <string name="choose_language">Choose language</string>
     <string name="successfully_changed_the_language">Successfully changed the language to </string>
     <string name="history">History</string>
     <string name="back_button">Back button</string>
