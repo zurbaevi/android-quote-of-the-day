@@ -38,7 +38,7 @@
         android:layout_marginBottom="16dp"
         android:drawablePadding="8dp"
         android:gravity="center_vertical"
-        android:text="@string/change_the_time_for_automatic_quote_updates"
+        android:text="@string/change_the_quote_update_time"
         android:textColor="@color/abdel_kerim_beards"
         android:textSize="16sp"
         app:drawableStartCompat="@drawable/ic_update" />
