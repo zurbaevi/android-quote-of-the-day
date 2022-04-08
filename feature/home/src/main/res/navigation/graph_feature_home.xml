@@ -25,10 +25,19 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_homeFragment_to_settingsBottomDialogFragment"
+            app:destination="@id/settingsBottomDialogFragment" />
     </fragment>
 
     <include app:graph="@navigation/graph_feature_history" />
 
     <include app:graph="@navigation/graph_feature_favorite" />
+
+    <dialog
+        android:id="@+id/settingsBottomDialogFragment"
+        android:name="dev.zurbaevi.home.SettingsBottomDialogFragment"
+        android:label="SettingsBottomDialogFragment"
+        tools:layout="@layout/fragment_settings_bottom_dialog" />
 
 </navigation>

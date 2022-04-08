@@ -89,8 +89,8 @@ class HomeFragment :
                     }
                 }
             }
-            imageViewLanguage.setOnClickListener {
-                viewModel.setEvent(HomeContract.Event.OnChangeLanguageQuote)
+            imageViewSettings.setOnClickListener {
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSettingsBottomDialogFragment())
             }
         }
     }
