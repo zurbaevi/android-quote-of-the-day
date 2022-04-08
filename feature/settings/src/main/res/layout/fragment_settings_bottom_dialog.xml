@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/settingsBottomDialogFragment"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/settingsBottomDialogFragment"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/black_and_olive"
     android:orientation="vertical">
 
@@ -16,7 +15,8 @@
         android:layout_marginTop="16dp"
         android:text="@string/settings"
         android:textColor="@color/abdel_kerim_beards"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textViewChooseLanguage"
