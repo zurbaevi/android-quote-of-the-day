@@ -1,4 +1,4 @@
-package dev.zurbaevi.home
+package dev.zurbaevi.settings
 
 import android.os.Bundle
 import android.view.LayoutInflater

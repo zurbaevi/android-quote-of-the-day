@@ -90,7 +90,7 @@ class HomeFragment :
                 }
             }
             imageViewSettings.setOnClickListener {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSettingsBottomDialogFragment())
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToFeatureSettings())
             }
         }
     }

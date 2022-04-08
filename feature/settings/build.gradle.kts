@@ -1,30 +1,24 @@
 plugins {
-    id(Plugins.ANDROID_APPLICATION)
-    kotlin(Plugins.KOTLIN_ANDROID)
+    id(Plugins.ANDROID_LIBRARY)
+    id(Plugins.ORG_JETBRAINS_KOTLIN_ANDROID)
+    id(Plugins.NAVIGATION_SAFE_ARGS)
     kotlin(Plugins.KOTLIN_KAPT)
     id(Plugins.HILT)
-    id(Plugins.NAVIGATION_SAFE_ARGS)
 }
 
 android {
-    compileSdk = DefaultConfig.COMPILE_SDK
+    compileSdk = 32
 
     defaultConfig {
-        applicationId = DefaultConfig.APPLICATION_ID
-        minSdk = DefaultConfig.MIN_SDK
-        targetSdk = DefaultConfig.TARGET_SDK
-        versionCode = DefaultConfig.VERSION_CODE
-        versionName = DefaultConfig.VERSION_NAME
+        minSdk = 21
+        targetSdk = 32
 
-        testInstrumentationRunner = DefaultConfig.TEST_INSTRUMENTAL_RUNNER
-    }
-
-    buildFeatures {
-        viewBinding = true
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
-        getByName("release") {
+        release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -42,14 +36,10 @@ android {
 }
 
 dependencies {
-    implementation(project(":domain"))
     implementation(project(":data"))
     implementation(project(":common"))
     implementation(project(":navigation"))
-    implementation(project(":feature:home"))
-    implementation(project(":feature:settings"))
-    implementation(project(":feature:favorite"))
-    implementation(project(":feature:history"))
+    implementation(project(":domain"))
 
     implementation(Dependencies.CORE_KTX)
     implementation(Dependencies.APPCOMPAT)
@@ -59,16 +49,9 @@ dependencies {
     androidTestImplementation(Dependencies.TEST_JUNIT)
     androidTestImplementation(Dependencies.ESPRESSO)
 
-    implementation(Dependencies.RETROFIT)
-    implementation(Dependencies.GSON_CONVERTER)
-
     implementation(Dependencies.NAVIGATION_FRAGMENT)
     implementation(Dependencies.NAVIGATION_UI_KTX)
 
     implementation(Dependencies.HILT)
     kapt(Dependencies.HILT_COMPILER)
-
-    implementation(Dependencies.ROOM)
-    implementation(Dependencies.ROOM_KTX)
-    kapt(Dependencies.ROOM_COMPILER)
 }
