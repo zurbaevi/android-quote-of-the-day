@@ -6,7 +6,7 @@ object Versions {
 
     const val FRAGMENT_KTX: String = "1.4.1"
 
-    const val GRADLE: String = "7.1.2"
+    const val GRADLE: String = "7.1.3"
 
     const val BEN_MANES = "0.42.0"
 
@@ -14,13 +14,13 @@ object Versions {
 
     const val ROOM: String = "2.4.2"
 
-    const val NAVIGATION: String = "2.4.1"
+    const val NAVIGATION: String = "2.4.2"
 
     const val RETROFIT: String = "2.9.0"
 
     const val GSON_CONVERTER = "2.9.0"
 
-    const val KOTLIN_GRADLE: String = "1.6.10"
+    const val KOTLIN_GRADLE: String = "1.6.20"
 
     const val JUNIT: String = "4.13.2"
 
@@ -36,6 +36,6 @@ object Versions {
 
     const val CORE_KTX: String = "1.7.0"
 
-    const val COROUTINES: String = "1.6.0"
+    const val COROUTINES: String = "1.6.1"
 
 }
