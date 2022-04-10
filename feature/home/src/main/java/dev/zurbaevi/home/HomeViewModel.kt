@@ -25,7 +25,6 @@ class HomeViewModel @Inject constructor(
     private val insertFavoriteQuoteUseCase: InsertFavoriteQuoteUseCase,
     private val deleteFavoriteQuoteUseCase: DeleteFavoriteQuoteUseCase,
     private val checkFavoriteQuoteUseCase: CheckFavoriteQuoteUseCase,
-    private val saveLanguageToDataStoreUseCase: SaveLanguageToDataStoreUseCase,
     private val getLanguageFromDataStoreUseCase: GetLanguageFromDataStoreUseCase,
 ) : BaseViewModel<HomeContract.Event, HomeContract.State, HomeContract.Effect>() {
 
@@ -43,7 +42,6 @@ class HomeViewModel @Inject constructor(
             is HomeContract.Event.OnInsertFavoriteQuote -> insertFavoriteQuote(uiState.value.quote)
             is HomeContract.Event.OnDeleteFavoriteQuote -> deleteFavoriteQuote(uiState.value.quote)
             is HomeContract.Event.OnCheckFavoriteQuote -> checkFavoriteQuote(uiState.value.quote)
-            is HomeContract.Event.OnChangeLanguageQuote -> changeLanguageQuote()
         }
     }
 
@@ -96,33 +94,11 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun changeLanguageQuote() {
-        viewModelScope.launch {
-            getLanguageFromDataStore { currentLanguage ->
-                saveLanguageToDataStore(Language.create(currentLanguage))
-            }
-        }
-    }
-
     private fun getLanguageFromDataStore(action: suspend (String) -> Unit) {
         viewModelScope.launch {
             getLanguageFromDataStoreUseCase()
                 .catch { setStateError(it.message.toString()) }
                 .collect { action(it) }
-        }
-    }
-
-    private fun saveLanguageToDataStore(currentLanguage: String) {
-        viewModelScope.launch {
-            saveLanguageToDataStoreUseCase(currentLanguage)
-                .catch { setEffect { HomeContract.Effect.ShowSnackBarError(it.message.toString()) } }
-                .collect {
-                    setEffect {
-                        HomeContract.Effect.ShowSnackBarChangeLanguage(
-                            currentLanguage
-                        )
-                    }
-                }
         }
     }
 
