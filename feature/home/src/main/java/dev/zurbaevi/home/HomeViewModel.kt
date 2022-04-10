@@ -102,6 +102,15 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+
+    private fun saveLanguageToDataStore(currentLanguage: String) {
+        viewModelScope.launch {
+            saveLanguageToDataStoreUseCase(currentLanguage)
+                .catch { setEffect { HomeContract.Effect.ShowSnackBarError(it.message.toString()) } }
+                .collect { setEffect { HomeContract.Effect.ShowSnackBarChangeLanguage(currentLanguage) } }
+        }
+    }
+
     private fun setStateError(message: String) {
         setState { copy(homeState = HomeContract.HomeState.Error) }
         setEffect { HomeContract.Effect.ShowSnackBarError(message) }
