@@ -4,7 +4,7 @@
     android:id="@+id/settingsBottomDialogFragment"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/black_and_olive"
+    android:background="@drawable/background_dialog"
     android:orientation="vertical">
 
     <LinearLayout
@@ -20,7 +20,7 @@
             android:layout_marginTop="16dp"
             android:text="@string/settings"
             android:textColor="@color/abdel_kerim_beards"
-            android:textSize="18sp"
+            android:textSize="22sp"
             android:textStyle="bold" />
 
         <TextView
@@ -34,7 +34,7 @@
             android:gravity="center_vertical"
             android:text="@string/choose_language"
             android:textColor="@color/abdel_kerim_beards"
-            android:textSize="16sp"
+            android:textSize="18sp"
             app:drawableStartCompat="@drawable/ic_language" />
 
     </LinearLayout>
