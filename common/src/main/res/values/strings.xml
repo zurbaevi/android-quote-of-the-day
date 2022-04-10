@@ -4,7 +4,8 @@
     <string name="en">English</string>
     <string name="ru">Russian</string>
     <string name="choose_language">Choose language</string>
-    <string name="successfully_changed_the_language">Successfully changed the language to </string>
+    <string name="successfully_changed_the_language">Successfully changed the language</string>
+    <string name="successfully_changed_the_time">Successfully changed the time</string>
     <string name="history">History</string>
     <string name="back_button">Back button</string>
     <string name="quotes_deleted">Quotes have been successfully deleted</string>
@@ -14,9 +15,18 @@
     <string name="swipe_left_or_right_to_delete_quote">Swipe left or right to delete a quote from favorites</string>
     <string name="quotes_already_empty">The quotes are already empty</string>
 
+    <string name="settings">Settings</string>
+    <string name="change_the_quote_update_time">Change the quote update time</string>
+
     <string-array name="language">
         <item>English</item>
         <item>Russian</item>
+    </string-array>
+
+    <string-array name="times">
+        <item>5</item>
+        <item>10</item>
+        <item>20</item>
     </string-array>
 
 </resources>

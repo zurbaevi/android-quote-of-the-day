@@ -86,12 +86,12 @@
             tools:ignore="ContentDescription,SpeakableTextPresentCheck,ImageContrastCheck" />
 
         <ImageView
-            android:id="@+id/imageViewLanguage"
+            android:id="@+id/imageViewSettings"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:clickable="true"
             android:focusable="true"
-            android:src="@drawable/ic_language"
+            android:src="@drawable/ic_settings"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

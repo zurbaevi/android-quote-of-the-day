@@ -24,7 +24,6 @@ class HomeContract {
         object OnDeleteFavoriteQuote : Event()
         object OnCheckFavoriteQuote : Event()
         object OnFetchQuote : Event()
-        object OnChangeLanguageQuote : Event()
     }
 
     data class State(

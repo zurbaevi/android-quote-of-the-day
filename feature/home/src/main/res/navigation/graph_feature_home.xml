@@ -25,10 +25,16 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_homeFragment_to_feature_settings"
+            app:destination="@id/feature_settings" />
     </fragment>
 
     <include app:graph="@navigation/graph_feature_history" />
 
     <include app:graph="@navigation/graph_feature_favorite" />
+
+    <include app:graph="@navigation/graph_feature_settings" />
+
 
 </navigation>

@@ -11,4 +11,13 @@ object Language {
             else -> throw IllegalStateException()
         }
     }
+
+    fun create(x: Int): String {
+        return when (x) {
+            0 -> ENGLISH
+            1 -> RUSSIAN
+            else -> throw IllegalStateException()
+        }
+    }
+
 }
