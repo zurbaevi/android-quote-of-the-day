@@ -15,7 +15,6 @@
     <string name="alert_dialog_title_select_language">Select the language in which you would like to receive quotes</string>
     <string name="swipe_left_or_right_to_delete_quote">Swipe left or right to delete a quote from favorites</string>
     <string name="quotes_already_empty">The quotes are already empty</string>
-
     <string name="settings">Settings</string>
     <string name="change_the_quote_update_time">Change the quote update time</string>
 
