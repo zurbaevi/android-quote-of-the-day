@@ -40,10 +40,9 @@ class SettingsBottomDialogFragment : BottomSheetDialogFragment() {
         lifecycleScope.launchWhenStarted {
             viewModel.effect.collect { effect ->
                 when (effect) {
-                    is SettingsContract.Effect.ShowSnackBarChangeLanguage -> showShortSnackBar(
-                        "${getString(R.string.successfully_changed_the_language)}: ${effect.language.uppercase()}"
-                    )
-                    is SettingsContract.Effect.ShowSnackBarError -> showShortSnackBar(effect.message)
+                    is SettingsContract.Effect.ShowSnackBar -> {
+                        showShortSnackBar(effect.message.asString((requireContext())))
+                    }
                 }
             }
         }
@@ -53,6 +52,7 @@ class SettingsBottomDialogFragment : BottomSheetDialogFragment() {
         binding.apply {
             textViewChooseLanguage.setOnClickListener {
                 AlertDialog.Builder(requireContext())
+                    .setTitle(getString(R.string.alert_dialog_title_select_language))
                     .setItems(R.array.language) { _, language ->
                         viewModel.setEvent(
                             SettingsContract.Event.OnChooseLanguage(Language.create(language))

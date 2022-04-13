@@ -3,6 +3,7 @@ package dev.zurbaevi.history
 import dev.zurbaevi.common.base.UiEffect
 import dev.zurbaevi.common.base.UiEvent
 import dev.zurbaevi.common.base.UiState
+import dev.zurbaevi.common.base.UiText
 import dev.zurbaevi.domain.model.Quote
 
 class HistoryContract {
@@ -15,9 +16,7 @@ class HistoryContract {
     }
 
     sealed class Effect : UiEffect {
-        data class ShowSnackBarError(val message: String) : Effect()
-        object ShowSnackBarDeleteQuotes : Effect()
-        object ShowSnackBarQuotesEmpty : Effect()
+        data class ShowSnackBar(val message: UiText) : Effect()
     }
 
     sealed class Event : UiEvent {

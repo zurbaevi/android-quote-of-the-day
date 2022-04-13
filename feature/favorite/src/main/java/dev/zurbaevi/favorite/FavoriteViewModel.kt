@@ -1,8 +1,10 @@
 package dev.zurbaevi.favorite
 
 import androidx.lifecycle.viewModelScope
+import com.example.favorite.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.zurbaevi.common.base.BaseViewModel
+import dev.zurbaevi.common.base.UiText
 import dev.zurbaevi.domain.model.Quote
 import dev.zurbaevi.domain.usecase.favorite.DeleteFavoriteQuoteUseCase
 import dev.zurbaevi.domain.usecase.favorite.DeleteFavoriteQuotesUseCase
@@ -44,7 +46,7 @@ class FavoriteViewModel @Inject constructor(
         viewModelScope.launch {
             getFavoriteQuotesUseCase()
                 .onStart { setState { copy(favoriteState = FavoriteContract.FavoriteState.Loading) } }
-                .catch { setEffect { FavoriteContract.Effect.ShowSnackBarError(it.message.toString()) } }
+                .catch { setEffect { FavoriteContract.Effect.ShowSnackBar(UiText.DynamicString(it.message.toString())) } }
                 .collect { quotes ->
                     if (!quotes.isNullOrEmpty()) {
                         setState { copy(favoriteState = FavoriteContract.FavoriteState.Success, quotes = quotes) }
@@ -58,8 +60,8 @@ class FavoriteViewModel @Inject constructor(
     private fun deleteFavoriteQuote(quote: Quote) {
         viewModelScope.launch {
             deleteFavoriteQuoteUseCase(quote)
-                .catch { setEffect { FavoriteContract.Effect.ShowSnackBarError(it.message.toString()) } }
-                .collect { setEffect { FavoriteContract.Effect.ShowSnackBarDeleteQuote } }
+                .catch { setEffect { FavoriteContract.Effect.ShowSnackBar(UiText.DynamicString(it.message.toString())) } }
+                .collect { setEffect { FavoriteContract.Effect.ShowSnackBar(UiText.StringResource(R.string.quote_deleted)) } }
         }
     }
 
@@ -67,13 +69,13 @@ class FavoriteViewModel @Inject constructor(
         viewModelScope.launch {
             if (uiState.value.quotes.isNotEmpty()) {
                 deleteFavoriteQuotesUseCase()
-                    .catch { setEffect { FavoriteContract.Effect.ShowSnackBarError(it.message.toString()) } }
+                    .catch { setEffect { FavoriteContract.Effect.ShowSnackBar(UiText.DynamicString(it.message.toString())) } }
                     .collect {
                         setState { copy(favoriteState = FavoriteContract.FavoriteState.Empty, quotes = listOf()) }
-                        setEffect { FavoriteContract.Effect.ShowSnackBarDeleteQuotes }
+                        setEffect { FavoriteContract.Effect.ShowSnackBar(UiText.StringResource(R.string.quotes_deleted)) }
                     }
             } else {
-                setEffect { FavoriteContract.Effect.ShowSnackBarQuotesEmpty }
+                setEffect { FavoriteContract.Effect.ShowSnackBar(UiText.StringResource(R.string.quotes_already_empty)) }
             }
         }
     }

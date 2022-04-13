@@ -3,6 +3,7 @@ package dev.zurbaevi.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.zurbaevi.common.base.UiText
 import dev.zurbaevi.domain.usecase.settings.SaveLanguageToDataStoreUseCase
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -46,12 +47,10 @@ class SettingsViewModel @Inject constructor(
     private fun saveLanguageToDataStore(currentLanguage: String) {
         viewModelScope.launch {
             saveLanguageToDataStoreUseCase(currentLanguage)
-                .catch { setEffect { SettingsContract.Effect.ShowSnackBarError(it.message.toString()) } }
+                .catch { setEffect { SettingsContract.Effect.ShowSnackBar(UiText.DynamicString(it.message.toString())) } }
                 .collect {
                     setEffect {
-                        SettingsContract.Effect.ShowSnackBarChangeLanguage(
-                            currentLanguage
-                        )
+                        SettingsContract.Effect.ShowSnackBar(UiText.StringResource(R.string.successfully_changed_the_language))
                     }
                 }
         }

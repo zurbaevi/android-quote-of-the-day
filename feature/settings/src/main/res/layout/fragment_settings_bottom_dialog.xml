@@ -26,7 +26,7 @@
         <TextView
             android:id="@+id/textViewChooseLanguage"
             android:layout_width="match_parent"
-            android:layout_height="42dp"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
@@ -34,7 +34,7 @@
             android:gravity="center_vertical"
             android:text="@string/choose_language"
             android:textColor="@color/abdel_kerim_beards"
-            android:textSize="18sp"
+            android:textSize="16sp"
             app:drawableStartCompat="@drawable/ic_language" />
 
     </LinearLayout>

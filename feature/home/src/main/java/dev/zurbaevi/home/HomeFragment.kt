@@ -13,7 +13,6 @@ import dev.zurbaevi.common.util.Constants
 import dev.zurbaevi.common.util.NavControllerStateHandle
 import dev.zurbaevi.domain.model.Quote
 import dev.zurbaevi.home.databinding.FragmentHomeBinding
-import java.util.*
 
 @AndroidEntryPoint
 class HomeFragment :
@@ -42,14 +41,9 @@ class HomeFragment :
 
     override fun renderEffect(effect: HomeContract.Effect) {
         when (effect) {
-            is HomeContract.Effect.ShowSnackBarError -> showLongSnackBar(effect.message)
-            is HomeContract.Effect.ShowSnackBarChangeLanguage -> showLongSnackBar(
-                "${getString(R.string.successfully_changed_the_language)} ${
-                    effect.language.uppercase(
-                        Locale.getDefault()
-                    )
-                }"
-            )
+            is HomeContract.Effect.ShowSnackBar -> {
+                showLongSnackBar(effect.message.asString(requireContext()))
+            }
         }
     }
 

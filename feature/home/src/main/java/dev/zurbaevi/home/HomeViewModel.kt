@@ -3,7 +3,7 @@ package dev.zurbaevi.home
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.zurbaevi.common.base.BaseViewModel
-import dev.zurbaevi.common.util.Language
+import dev.zurbaevi.common.base.UiText
 import dev.zurbaevi.domain.model.Quote
 import dev.zurbaevi.domain.usecase.favorite.CheckFavoriteQuoteUseCase
 import dev.zurbaevi.domain.usecase.favorite.DeleteFavoriteQuoteUseCase
@@ -11,7 +11,6 @@ import dev.zurbaevi.domain.usecase.favorite.InsertFavoriteQuoteUseCase
 import dev.zurbaevi.domain.usecase.history.InsertHistoryQuoteUseCase
 import dev.zurbaevi.domain.usecase.home.FetchHomeQuoteUseCase
 import dev.zurbaevi.domain.usecase.settings.GetLanguageFromDataStoreUseCase
-import dev.zurbaevi.domain.usecase.settings.SaveLanguageToDataStoreUseCase
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onStart
@@ -104,7 +103,7 @@ class HomeViewModel @Inject constructor(
 
     private fun setStateError(message: String) {
         setState { copy(homeState = HomeContract.HomeState.Error) }
-        setEffect { HomeContract.Effect.ShowSnackBarError(message) }
+        setEffect { HomeContract.Effect.ShowSnackBar(UiText.DynamicString(message)) }
     }
 
 }

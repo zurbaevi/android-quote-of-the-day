@@ -16,4 +16,5 @@
     <string name="successfully_changed_the_time">Успешно изменил время</string>
     <string name="settings">Настройки</string>
     <string name="change_the_quote_update_time">Измените время обновления цытат</string>
+    <string name="alert_dialog_title_select_language">Выберите язык, на котором вы хотите получать цытаты</string>
 </resources>

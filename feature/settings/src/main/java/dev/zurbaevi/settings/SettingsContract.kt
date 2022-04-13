@@ -3,23 +3,16 @@ package dev.zurbaevi.settings
 import dev.zurbaevi.common.base.UiEffect
 import dev.zurbaevi.common.base.UiEvent
 import dev.zurbaevi.common.base.UiState
+import dev.zurbaevi.common.base.UiText
 
 class SettingsContract {
 
-    sealed class SettingsState {
-    }
-
     sealed class Effect : UiEffect {
-        data class ShowSnackBarError(val message: String) : Effect()
-        data class ShowSnackBarChangeLanguage(val language: String) : Effect()
+        data class ShowSnackBar(val message: UiText) : Effect()
     }
 
     sealed class Event : UiEvent {
         data class OnChooseLanguage(val language: String) : Event()
     }
-
-    data class State(
-        val settingsState: SettingsState,
-    ) : UiState
 
 }

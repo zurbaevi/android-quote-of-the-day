@@ -3,6 +3,7 @@ package dev.zurbaevi.favorite
 import dev.zurbaevi.common.base.UiEffect
 import dev.zurbaevi.common.base.UiEvent
 import dev.zurbaevi.common.base.UiState
+import dev.zurbaevi.common.base.UiText
 import dev.zurbaevi.domain.model.Quote
 
 class FavoriteContract {
@@ -15,10 +16,7 @@ class FavoriteContract {
     }
 
     sealed class Effect : UiEffect {
-        data class ShowSnackBarError(val message: String) : Effect()
-        object ShowSnackBarDeleteQuote : Effect()
-        object ShowSnackBarQuotesEmpty : Effect()
-        object ShowSnackBarDeleteQuotes : Effect()
+        data class ShowSnackBar(val message: UiText) : Effect()
     }
 
     sealed class Event : UiEvent {

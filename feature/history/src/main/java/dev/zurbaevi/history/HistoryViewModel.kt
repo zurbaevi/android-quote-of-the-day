@@ -3,6 +3,7 @@ package dev.zurbaevi.history
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.zurbaevi.common.base.BaseViewModel
+import dev.zurbaevi.common.base.UiText
 import dev.zurbaevi.domain.model.Quote
 import dev.zurbaevi.domain.usecase.history.DeleteHistoryQuotesUseCase
 import dev.zurbaevi.domain.usecase.history.GetHistoryQuotesUseCase
@@ -37,7 +38,7 @@ class HistoryViewModel @Inject constructor(
         viewModelScope.launch {
             getHistoryQuotesUseCase()
                 .onStart { setState { copy(historyState = HistoryContract.HistoryState.Loading) } }
-                .catch { setEffect { HistoryContract.Effect.ShowSnackBarError(it.message.toString()) } }
+                .catch { setEffect { HistoryContract.Effect.ShowSnackBar(UiText.DynamicString(it.message.toString())) } }
                 .collect { quotes ->
                     if (checkFavoriteIsEmpty(quotes)) {
                         setState { copy(historyState = HistoryContract.HistoryState.Success, quotes = quotes) }
@@ -51,13 +52,13 @@ class HistoryViewModel @Inject constructor(
             if (uiState.value.quotes.isNotEmpty()) {
                 deleteHistoryQuotesUseCase()
                     .onStart { setState { copy(historyState = HistoryContract.HistoryState.Loading) } }
-                    .catch { setEffect { HistoryContract.Effect.ShowSnackBarError(it.message.toString()) } }
+                    .catch { setEffect { HistoryContract.Effect.ShowSnackBar(UiText.DynamicString(it.message.toString())) } }
                     .collect {
                         setState { copy(historyState = HistoryContract.HistoryState.Empty, quotes = listOf()) }
-                        setEffect { HistoryContract.Effect.ShowSnackBarDeleteQuotes }
+                        setEffect { HistoryContract.Effect.ShowSnackBar(UiText.StringResource(R.string.quotes_deleted)) }
                     }
             } else {
-                setEffect { HistoryContract.Effect.ShowSnackBarQuotesEmpty }
+                setEffect { HistoryContract.Effect.ShowSnackBar(UiText.StringResource(R.string.quotes_already_empty)) }
             }
         }
     }

@@ -44,16 +44,9 @@ class HistoryFragment :
 
     override fun renderEffect(effect: HistoryContract.Effect) {
         when (effect) {
-            is HistoryContract.Effect.ShowSnackBarError -> {
-                showShortSnackBar(effect.message)
+            is HistoryContract.Effect.ShowSnackBar -> {
+                showShortSnackBar(effect.message.asString(requireContext()))
                 hideAll()
-            }
-            is HistoryContract.Effect.ShowSnackBarDeleteQuotes -> {
-                showShortSnackBar(getString(R.string.quotes_deleted))
-                hideAll()
-            }
-            is HistoryContract.Effect.ShowSnackBarQuotesEmpty -> {
-                showShortSnackBar(getString(R.string.quotes_already_empty))
             }
         }
     }

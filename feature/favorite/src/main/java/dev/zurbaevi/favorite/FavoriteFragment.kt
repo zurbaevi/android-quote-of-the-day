@@ -50,13 +50,9 @@ class FavoriteFragment :
 
     override fun renderEffect(effect: FavoriteContract.Effect) {
         when (effect) {
-            is FavoriteContract.Effect.ShowSnackBarError -> showShortSnackBar(effect.message)
-            is FavoriteContract.Effect.ShowSnackBarDeleteQuote -> showShortSnackBar(getString(R.string.quote_deleted))
-            is FavoriteContract.Effect.ShowSnackBarDeleteQuotes -> {
-                showShortSnackBar(getString(R.string.quotes_deleted))
-                setInfoAboutSwipedDeleteQuotes()
+            is FavoriteContract.Effect.ShowSnackBar -> {
+                showShortSnackBar(effect.message.asString(requireContext()))
             }
-            FavoriteContract.Effect.ShowSnackBarQuotesEmpty -> showShortSnackBar(getString(R.string.quotes_already_empty))
         }
     }
 
@@ -91,6 +87,7 @@ class FavoriteFragment :
             }
             imageViewDelete.setOnClickListener {
                 viewModel.setEvent(FavoriteContract.Event.OnDeleteQuotes)
+                setInfoAboutSwipedDeleteQuotes()
             }
         }
     }

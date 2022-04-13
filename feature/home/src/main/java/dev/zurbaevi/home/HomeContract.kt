@@ -3,6 +3,7 @@ package dev.zurbaevi.home
 import dev.zurbaevi.common.base.UiEffect
 import dev.zurbaevi.common.base.UiEvent
 import dev.zurbaevi.common.base.UiState
+import dev.zurbaevi.common.base.UiText
 import dev.zurbaevi.domain.model.Quote
 
 class HomeContract {
@@ -15,8 +16,7 @@ class HomeContract {
     }
 
     sealed class Effect : UiEffect {
-        data class ShowSnackBarError(val message: String) : Effect()
-        data class ShowSnackBarChangeLanguage(val language: String) : Effect()
+        data class ShowSnackBar(val message: UiText) : Effect()
     }
 
     sealed class Event : UiEvent {
