@@ -34,6 +34,7 @@ object DatabaseModule {
     fun provideFavoriteDao(database: AppDatabase) = database.favoriteDao()
 
     @Provides
+    @Singleton
     fun provideSettingsDataStore(@ApplicationContext context: Context): SettingsDataStore {
         return SettingsDataStoreImpl(context)
     }
