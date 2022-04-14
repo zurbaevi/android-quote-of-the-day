@@ -9,8 +9,8 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.zurbaevi.common.base.BaseFragment
 import dev.zurbaevi.common.exentsion.*
-import dev.zurbaevi.common.util.Constants
 import dev.zurbaevi.common.util.NavControllerStateHandle
+import dev.zurbaevi.common.util.StateHandleConstant
 import dev.zurbaevi.domain.model.Quote
 import dev.zurbaevi.home.databinding.FragmentHomeBinding
 
@@ -91,24 +91,23 @@ class HomeFragment :
 
     private fun getInfoAboutSwipedDeleteQuote() {
         if (viewModel.currentState.homeState is HomeContract.HomeState.Success) {
-            NavControllerStateHandle<Boolean>(findNavController())
-                .getCurrentBackStackEntry(Constants.STATE_HANDLE_KEY_SWIPED)?.let { swiped ->
-                    if (swiped) {
-                        viewModel.setEvent(HomeContract.Event.OnCheckFavoriteQuote)
-                    }
-                }
+            getCurrentBackStackEntry(StateHandleConstant.STATE_HANDLE_KEY_SWIPED)
         }
     }
 
     private fun getInfoAboutSwipedDeleteQuotes() {
         if (viewModel.currentState.homeState is HomeContract.HomeState.Success) {
-            NavControllerStateHandle<Boolean>(findNavController())
-                .getCurrentBackStackEntry(Constants.STATE_HANDLE_KEY_DELETED)?.let { swiped ->
-                    if (swiped) {
-                        viewModel.setEvent(HomeContract.Event.OnCheckFavoriteQuote)
-                    }
-                }
+            getCurrentBackStackEntry(StateHandleConstant.STATE_HANDLE_KEY_DELETED)
         }
+    }
+
+    private fun getCurrentBackStackEntry(key: String) {
+        NavControllerStateHandle<Boolean>(findNavController())
+            .getCurrentBackStackEntry(key)?.let { swiped ->
+                if (swiped) {
+                    viewModel.setEvent(HomeContract.Event.OnCheckFavoriteQuote)
+                }
+            }
     }
 
     private fun hideAll() = with(binding) {
