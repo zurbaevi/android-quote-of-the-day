@@ -13,9 +13,7 @@
     <string name="quote_deleted">Цитата была успешно удалена</string>
     <string name="swipe_left_or_right_to_delete_quote">Проведите пальцем влево или вправо, чтобы удалить цитату из избранного</string>
     <string name="quotes_already_empty">Цытаты уже пусты</string>
-    <string name="successfully_changed_the_time">Успешно изменил время</string>
     <string name="settings">Настройки</string>
-    <string name="change_the_quote_update_time">Измените время обновления цытат</string>
     <string name="alert_dialog_title_select_language">Выберите язык, на котором вы хотите получать цытаты</string>
 
     <string-array name="language">
