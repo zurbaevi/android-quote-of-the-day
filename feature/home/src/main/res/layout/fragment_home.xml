@@ -5,13 +5,13 @@
     android:id="@+id/homeFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#383c3b"
+    android:background="@color/black_and_olive"
     tools:context="dev.zurbaevi.home.HomeFragment">
 
     <ImageView
         android:id="@+id/imageViewQuote"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="82dp"
+        android:layout_height="82dp"
         android:layout_marginTop="40dp"
         android:src="@drawable/ic_quote"
         app:layout_constraintStart_toStartOf="@+id/textViewQuoteText"
@@ -124,6 +124,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription,SpeakableTextPresentCheck,ImageContrastCheck" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
