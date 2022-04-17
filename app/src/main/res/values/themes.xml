@@ -11,4 +11,11 @@
         <item name="colorAccent">@color/black_and_olive</item>
         <item name="bottomSheetDialogTheme">@style/BottomSheetDialog</item>
     </style>
+
+    <style name="Theme.AppCompat.SplashScreen" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/black_and_olive</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_quote</item>
+        <item name="postSplashScreenTheme">@style/Theme.QuoteOfTheDay</item>
+    </style>
+
 </resources>

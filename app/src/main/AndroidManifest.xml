@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/Theme.QuoteOfTheDay"
+        android:theme="@style/Theme.AppCompat.SplashScreen"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
