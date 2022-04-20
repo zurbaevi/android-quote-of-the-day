@@ -1,5 +1,7 @@
 object Versions {
 
+    const val SPLASH_SCREEN = "1.0.0-beta02"
+
     const val DATA_STORE = "1.0.0"
 
     const val RECYCLER_VIEW_VERSION: String = "1.2.1"

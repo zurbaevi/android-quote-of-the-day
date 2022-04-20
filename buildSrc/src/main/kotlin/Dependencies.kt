@@ -3,6 +3,8 @@ object Dependencies {
     const val RECYCLER_VIEW: String =
         "androidx.recyclerview:recyclerview:${Versions.RECYCLER_VIEW_VERSION}"
 
+    const val SPLASH_SCREEN = "androidx.core:core-splashscreen:${Versions.SPLASH_SCREEN}"
+
     const val CORE_KTX: String = "androidx.core:core-ktx:${Versions.CORE_KTX}"
 
     const val NAVIGATION_FRAGMENT: String =

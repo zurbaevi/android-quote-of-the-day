@@ -72,5 +72,5 @@ dependencies {
     implementation(Dependencies.ROOM_KTX)
     kapt(Dependencies.ROOM_COMPILER)
 
-    implementation ("androidx.core:core-splashscreen:1.0.0-beta02")
+    implementation(Dependencies.SPLASH_SCREEN)
 }
