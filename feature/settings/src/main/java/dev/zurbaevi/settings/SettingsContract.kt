@@ -2,7 +2,6 @@ package dev.zurbaevi.settings
 
 import dev.zurbaevi.common.base.UiEffect
 import dev.zurbaevi.common.base.UiEvent
-import dev.zurbaevi.common.base.UiState
 import dev.zurbaevi.common.base.UiText
 
 class SettingsContract {

@@ -41,7 +41,12 @@ class HistoryViewModel @Inject constructor(
                 .catch { setEffect { HistoryContract.Effect.ShowSnackBar(UiText.DynamicString(it.message.toString())) } }
                 .collect { quotes ->
                     if (checkFavoriteIsEmpty(quotes)) {
-                        setState { copy(historyState = HistoryContract.HistoryState.Success, quotes = quotes) }
+                        setState {
+                            copy(
+                                historyState = HistoryContract.HistoryState.Success,
+                                quotes = quotes
+                            )
+                        }
                     }
                 }
         }
@@ -54,7 +59,12 @@ class HistoryViewModel @Inject constructor(
                     .onStart { setState { copy(historyState = HistoryContract.HistoryState.Loading) } }
                     .catch { setEffect { HistoryContract.Effect.ShowSnackBar(UiText.DynamicString(it.message.toString())) } }
                     .collect {
-                        setState { copy(historyState = HistoryContract.HistoryState.Empty, quotes = listOf()) }
+                        setState {
+                            copy(
+                                historyState = HistoryContract.HistoryState.Empty,
+                                quotes = listOf()
+                            )
+                        }
                         setEffect { HistoryContract.Effect.ShowSnackBar(UiText.StringResource(R.string.quotes_deleted)) }
                     }
             } else {
@@ -64,7 +74,7 @@ class HistoryViewModel @Inject constructor(
     }
 
     private fun checkFavoriteIsEmpty(quotes: List<Quote>): Boolean {
-        return if (!quotes.isNullOrEmpty()) {
+        return if (quotes.isNotEmpty()) {
             true
         } else {
             setState { copy(historyState = HistoryContract.HistoryState.Empty) }

@@ -48,8 +48,13 @@ class FavoriteViewModel @Inject constructor(
                 .onStart { setState { copy(favoriteState = FavoriteContract.FavoriteState.Loading) } }
                 .catch { setEffect { FavoriteContract.Effect.ShowSnackBar(UiText.DynamicString(it.message.toString())) } }
                 .collect { quotes ->
-                    if (!quotes.isNullOrEmpty()) {
-                        setState { copy(favoriteState = FavoriteContract.FavoriteState.Success, quotes = quotes) }
+                    if (quotes.isNotEmpty()) {
+                        setState {
+                            copy(
+                                favoriteState = FavoriteContract.FavoriteState.Success,
+                                quotes = quotes
+                            )
+                        }
                     } else {
                         setState { copy(favoriteState = FavoriteContract.FavoriteState.Empty) }
                     }
@@ -69,9 +74,22 @@ class FavoriteViewModel @Inject constructor(
         viewModelScope.launch {
             if (uiState.value.quotes.isNotEmpty()) {
                 deleteFavoriteQuotesUseCase()
-                    .catch { setEffect { FavoriteContract.Effect.ShowSnackBar(UiText.DynamicString(it.message.toString())) } }
+                    .catch {
+                        setEffect {
+                            FavoriteContract.Effect.ShowSnackBar(
+                                UiText.DynamicString(
+                                    it.message.toString()
+                                )
+                            )
+                        }
+                    }
                     .collect {
-                        setState { copy(favoriteState = FavoriteContract.FavoriteState.Empty, quotes = listOf()) }
+                        setState {
+                            copy(
+                                favoriteState = FavoriteContract.FavoriteState.Empty,
+                                quotes = listOf()
+                            )
+                        }
                         setEffect { FavoriteContract.Effect.ShowSnackBar(UiText.StringResource(R.string.quotes_deleted)) }
                     }
             } else {

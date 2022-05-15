@@ -15,9 +15,9 @@ import dev.zurbaevi.common.exentsion.inVisible
 import dev.zurbaevi.common.exentsion.showLongSnackBar
 import dev.zurbaevi.common.exentsion.showShortSnackBar
 import dev.zurbaevi.common.exentsion.visible
-import dev.zurbaevi.common.util.StateHandleConstant
 import dev.zurbaevi.common.util.ItemSwipeHandler
 import dev.zurbaevi.common.util.NavControllerStateHandle
+import dev.zurbaevi.common.util.StateHandleConstant
 import dev.zurbaevi.domain.model.Quote
 
 @AndroidEntryPoint
