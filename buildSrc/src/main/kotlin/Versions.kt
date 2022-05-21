@@ -8,7 +8,7 @@ object Versions {
 
     const val FRAGMENT_KTX: String = "1.4.1"
 
-    const val GRADLE: String = "7.1.3"
+    const val GRADLE: String = "7.2.0"
 
     const val BEN_MANES = "0.42.0"
 
