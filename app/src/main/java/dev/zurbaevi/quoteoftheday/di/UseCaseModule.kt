@@ -13,7 +13,7 @@ import dev.zurbaevi.domain.usecase.favorite.*
 import dev.zurbaevi.domain.usecase.history.DeleteHistoryQuotesUseCase
 import dev.zurbaevi.domain.usecase.history.GetHistoryQuotesUseCase
 import dev.zurbaevi.domain.usecase.history.InsertHistoryQuoteUseCase
-import dev.zurbaevi.domain.usecase.home.FetchHomeQuoteUseCase
+import dev.zurbaevi.domain.usecase.home.FetchQuoteUseCase
 import dev.zurbaevi.domain.usecase.settings.GetLanguageFromDataStoreUseCase
 import dev.zurbaevi.domain.usecase.settings.SaveLanguageToDataStoreUseCase
 import kotlinx.coroutines.Dispatchers
@@ -36,8 +36,8 @@ object UseCaseModule {
 
     @Provides
     @ViewModelScoped
-    fun provideFetchHomeQuoteUseCase(homeRepository: HomeRepository): FetchHomeQuoteUseCase {
-        return FetchHomeQuoteUseCase(homeRepository, Dispatchers.IO)
+    fun provideFetchHomeQuoteUseCase(homeRepository: HomeRepository): FetchQuoteUseCase {
+        return FetchQuoteUseCase(homeRepository, Dispatchers.IO)
     }
 
     @Provides

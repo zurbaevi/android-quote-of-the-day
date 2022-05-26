@@ -9,7 +9,7 @@ import dev.zurbaevi.domain.usecase.favorite.CheckFavoriteQuoteUseCase
 import dev.zurbaevi.domain.usecase.favorite.DeleteFavoriteQuoteUseCase
 import dev.zurbaevi.domain.usecase.favorite.InsertFavoriteQuoteUseCase
 import dev.zurbaevi.domain.usecase.history.InsertHistoryQuoteUseCase
-import dev.zurbaevi.domain.usecase.home.FetchHomeQuoteUseCase
+import dev.zurbaevi.domain.usecase.home.FetchQuoteUseCase
 import dev.zurbaevi.domain.usecase.settings.GetLanguageFromDataStoreUseCase
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val fetchHomeQuoteUseCase: FetchHomeQuoteUseCase,
+    private val fetchQuoteUseCase: FetchQuoteUseCase,
     private val insertHistoryQuoteUseCase: InsertHistoryQuoteUseCase,
     private val insertFavoriteQuoteUseCase: InsertFavoriteQuoteUseCase,
     private val deleteFavoriteQuoteUseCase: DeleteFavoriteQuoteUseCase,
@@ -47,7 +47,7 @@ class HomeViewModel @Inject constructor(
     private fun fetchQuote() {
         viewModelScope.launch {
             getLanguageFromDataStore { currentLanguage ->
-                fetchHomeQuoteUseCase(currentLanguage)
+                fetchQuoteUseCase(currentLanguage)
                     .onStart { setState { copy(homeState = HomeContract.HomeState.Loading) } }
                     .catch { setStateError(it.message.toString()) }
                     .collect { quote ->
